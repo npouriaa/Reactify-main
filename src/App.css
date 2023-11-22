@@ -1,10 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Jost", sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  text-transform: capitalize;
+  outline: none;
 }
 
 body {
@@ -18,4 +21,87 @@ body {
 .my-container {
   width: 100vw;
   height: 100vh;
+}
+
+header {
+  background-image: url(./Images/bg.png);
+}
+
+
+svg {
+  top: 0;
+  position: absolute;
+}
+
+
+.x {
+  transform: scale(0);
+  transition: transform 400ms;
+}
+
+.line {
+  fill: none;
+  stroke: black;
+  stroke-width: 6px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform-origin: 50%;
+  transition: stroke-dasharray 500ms 200ms, stroke-dashoffset 500ms 200ms,
+    transform 500ms 200ms;
+}
+
+.x .line {
+  stroke-width: 8.5px;
+}
+
+.active .line {
+  transition: stroke-dasharray 500ms, stroke-dashoffset 500ms, transform 500ms;
+}
+
+.active .x {
+  transform: scale(1);
+  transition: transform 400ms 350ms;
+}
+
+.plate5 .line {
+  transition: stroke-dasharray 400ms 100ms, stroke-dashoffset 400ms 100ms,
+    transform 400ms 100ms;
+}
+.plate5 .line1 {
+  stroke-dasharray: 40 40;
+}
+.plate5 .line2 {
+  stroke-dasharray: 21 39;
+}
+.plate5 .line3 {
+  stroke-dasharray: 21 39;
+}
+.plate5 .line4 {
+  stroke-dasharray: 40 40;
+}
+.plate5 .x {
+  transition: transform 400ms 50ms;
+}
+
+.active.plate5 .line {
+  transition: stroke-dasharray 400ms, stroke-dashoffset 400ms, transform 400ms;
+}
+.active.plate5 .line1 {
+  stroke-dasharray: 1 40;
+  stroke-dashoffset: -33px;
+}
+.active.plate5 .line2 {
+  stroke-dasharray: 5 39;
+  stroke-dashoffset: -37px;
+}
+.active.plate5 .line3 {
+  stroke-dasharray: 5 39;
+  stroke-dashoffset: -37px;
+}
+.active.plate5 .line4 {
+  stroke-dasharray: 1 40;
+  stroke-dashoffset: -33px;
+}
+.active.plate5 .x {
+  transition: transform 400ms 50ms;
 }
