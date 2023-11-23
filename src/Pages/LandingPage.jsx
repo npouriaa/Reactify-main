@@ -3,10 +3,16 @@ import logo from "../Images/Reactify-white.png";
 import { Link } from "react-router-dom";
 import hMenuImg from "../Images/02 (1).png";
 import headerImg from "../Images/01 (1).png";
+import { useInView } from "react-intersection-observer";
 
 const LandingPage = () => {
   const hMenuBtnRef = useRef();
   const hMenuRef = useRef();
+
+  const { ref, inView, entry } = useInView({
+    triggerOnce: false, 
+  });
+
   return (
     <div className="w-full overflow-x-hidden h-full font-semibold">
       <header className="gap-10 max-sm:h-[700px] md:h-[750px] lg:h-[1150px] max-sm:bg-cover lg:bg-contain relative items-center bg-no-repeat flex flex-col">
@@ -135,8 +141,7 @@ const LandingPage = () => {
         <div className=" max-sm:w-full p-4 lg:w-5/6 xl:w-3/4 2xl:w-full 2xl:justify-center relative h-[550px] flex items-center gap-4">
           <div className="w-[500px] flex flex-col gap-6 text-white h-[361px] ">
             <h1 className="leading-snug max-sm:text-[30px] md:text-[35px] lg:text-[42px]">
-              Unlock a World of Connections:
-              A Smarter Way To Form Lifelong
+              Unlock a World of Connections: A Smarter Way To Form Lifelong
               Friendships
             </h1>
             <p className="text-xl font-thin">
@@ -144,9 +149,20 @@ const LandingPage = () => {
               Authentic Friendships.
             </p>
           </div>
-          <img className="xl:h-[400px] 2xl:h-[400px] max-sm:hidden 2xl:block" src={headerImg} alt="header-image" />
+          <img
+            className="xl:h-[400px] 2xl:h-[400px] max-sm:hidden 2xl:block"
+            src={headerImg}
+            alt="header-image"
+          />
         </div>
       </header>
+      <div
+        ref={ref}
+        className=""
+        style={{ opacity: inView ? 1 : 0, transition: "opacity 0.3s ease" }} // Changes the element's opacity based on whether it's in view
+      >
+        s;a's;'a';as;a's;a's
+      </div>
     </div>
   );
 };
