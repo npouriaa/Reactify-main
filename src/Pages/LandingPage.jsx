@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import logo from "../Images/Reactify-white.png";
-import headerBg from "../Images/bg.png";
 import { Link } from "react-router-dom";
+import hMenuImg from '../Images/02 (1).png'
 
 const LandingPage = () => {
+  const hMenuBtnRef = useRef();
   const hMenuRef = useRef();
   return (
     <div className="w-full overflow-x-hidden h-full font-semibold">
@@ -44,22 +45,81 @@ const LandingPage = () => {
               </button>
             </Link>
             <button
-              ref={hMenuRef}
-              onClick={() => hMenuRef.current.classList.toggle("active")}
-              className="max-sm:block rounded-full lg:hidden plate plate5 relative h-10 w-10 bg-white"
+              ref={hMenuBtnRef}
+              onClick={() => {
+                hMenuBtnRef.current.classList.toggle("active")
+                hMenuRef.current.classList.toggle('h-screen')
+              }}
+              className="max-sm:block rounded-full lg:hidden plate plate5 relative h-10 w-10 bg-white z-20"
             >
-              <svg className="burger absolute top-0" version="1.1" viewBox="0 0 100 100">
-                <path strokeLinecap="round" strokeLinejoin="round" className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line1" d="M 30,35 H 70 " />
-                <path strokeLinecap="round" strokeLinejoin="round" className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line2" d="M 50,50 H 30 L 34,32" />
-                <path strokeLinecap="round" strokeLinejoin="round" className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line3" d="M 50,50 H 70 L 66,68" />
-                <path strokeLinecap="round" strokeLinejoin="round" className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line4" d="M 30,65 H 70 " />
+              <svg
+                className="burger absolute top-0"
+                version="1.1"
+                viewBox="0 0 100 100"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line1"
+                  d="M 30,35 H 70 "
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line2"
+                  d="M 50,50 H 30 L 34,32"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line3"
+                  d="M 50,50 H 70 L 66,68"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line4"
+                  d="M 30,65 H 70 "
+                />
               </svg>
-              <svg className="x absolute top-0" version="1.1" viewBox="0 0 100 100">
-                <path strokeLinecap="round" strokeLinejoin="round" className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#7932F5]" d="M 34,32 L 66,68" />
-                <path strokeLinecap="round" strokeLinejoin="round" className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#7932F5]" d="M 66,32 L 34,68" />
+              <svg
+                className="x absolute top-0"
+                version="1.1"
+                viewBox="0 0 100 100"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#7932F5]"
+                  d="M 34,32 L 66,68"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#7932F5]"
+                  d="M 66,32 L 34,68"
+                />
               </svg>
             </button>
           </div>
+        </nav>
+        <nav ref={hMenuRef} className="text-white overflow-hidden flex-col gap-10 absolute max-sm:flex justify-center items-center duration-500 lg:hidden w-screen transition-all no-height bg-[#7932F5]">
+          <h1 className="text-3xl text-center">We're here to help you find new friends</h1>
+          <ul className="flex flex-col gap-10 ">
+            <Link>
+              <li>- About us</li>
+            </Link>
+            <Link>
+              <li>- FAQ</li>
+            </Link>
+            <Link>
+              <li>- why us?</li>
+            </Link>
+            <Link>
+              <li>- contact</li>
+            </Link>
+          </ul>
+          <img className="h-[200px]" src={hMenuImg} alt="img" />
         </nav>
       </header>
     </div>
