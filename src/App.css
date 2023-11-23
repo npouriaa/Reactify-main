@@ -27,31 +27,14 @@ header {
   background-image: url(./Images/bg.png);
 }
 
-
-svg {
-  top: 0;
-  position: absolute;
-}
-
-
 .x {
   transform: scale(0);
   transition: transform 400ms;
 }
 
 .line {
-  fill: none;
-  stroke: black;
-  stroke-width: 6px;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transform-origin: 50%;
   transition: stroke-dasharray 500ms 200ms, stroke-dashoffset 500ms 200ms,
     transform 500ms 200ms;
-}
-
-.x .line {
-  stroke-width: 8.5px;
 }
 
 .active .line {

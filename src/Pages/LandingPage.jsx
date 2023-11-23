@@ -46,17 +46,17 @@ const LandingPage = () => {
             <button
               ref={hMenuRef}
               onClick={() => hMenuRef.current.classList.toggle("active")}
-              className="plate plate5 relative h-10 w-10"
+              className="max-sm:block rounded-full lg:hidden plate plate5 relative h-10 w-10 bg-white"
             >
-              <svg className="burger" version="1.1" viewBox="0 0 100 100">
-                <path className="line line1" d="M 30,35 H 70 " />
-                <path className="line line2" d="M 50,50 H 30 L 34,32" />
-                <path className="line line3" d="M 50,50 H 70 L 66,68" />
-                <path className="line line4" d="M 30,65 H 70 " />
+              <svg className="burger absolute top-0" version="1.1" viewBox="0 0 100 100">
+                <path strokeLinecap="round" strokeLinejoin="round" className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line1" d="M 30,35 H 70 " />
+                <path strokeLinecap="round" strokeLinejoin="round" className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line2" d="M 50,50 H 30 L 34,32" />
+                <path strokeLinecap="round" strokeLinejoin="round" className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line3" d="M 50,50 H 70 L 66,68" />
+                <path strokeLinecap="round" strokeLinejoin="round" className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line4" d="M 30,65 H 70 " />
               </svg>
-              <svg className="x" version="1.1" viewBox="0 0 100 100">
-                <path className="line" d="M 34,32 L 66,68" />
-                <path className="line" d="M 66,32 L 34,68" />
+              <svg className="x absolute top-0" version="1.1" viewBox="0 0 100 100">
+                <path strokeLinecap="round" strokeLinejoin="round" className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#7932F5]" d="M 34,32 L 66,68" />
+                <path strokeLinecap="round" strokeLinejoin="round" className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#7932F5]" d="M 66,32 L 34,68" />
               </svg>
             </button>
           </div>
