@@ -2,13 +2,14 @@ import React, { useRef } from "react";
 import logo from "../Images/Reactify-white.png";
 import { Link } from "react-router-dom";
 import hMenuImg from "../Images/02 (1).png";
+import headerImg from "../Images/01 (1).png";
 
 const LandingPage = () => {
   const hMenuBtnRef = useRef();
   const hMenuRef = useRef();
   return (
     <div className="w-full overflow-x-hidden h-full font-semibold">
-      <header className="max-sm:h-[700px] md:h-[750px] lg:h-[1150px] max-sm:bg-cover lg:bg-contain relative justify-center bg-no-repeat flex">
+      <header className="gap-10 max-sm:h-[700px] md:h-[750px] lg:h-[1150px] max-sm:bg-cover lg:bg-contain relative items-center bg-no-repeat flex flex-col">
         <nav className="max-sm:w-full xl:w-4/5 2xl:w-2/3 p-3 h-28 flex items-center max-sm:justify-between lg:justify-around">
           <img className="max-sm:h-10 sm:h-12 md:h-14" src={logo} alt="logo" />
           <ul className="gap-10 lg:flex max-sm:hidden">
@@ -105,7 +106,7 @@ const LandingPage = () => {
         </nav>
         <nav
           ref={hMenuRef}
-          className="text-white overflow-hidden flex-col gap-10 absolute max-sm:flex justify-center items-center duration-500 lg:hidden w-screen transition-all no-height bg-[#7932F5]"
+          className="z-10 text-white overflow-hidden flex-col gap-10 absolute max-sm:flex justify-center items-center duration-500 lg:hidden w-screen transition-all no-height bg-[#7932F5]"
         >
           <div className="">
             <h1 className="text-3xl text-center">We're here to help you</h1>
@@ -131,6 +132,20 @@ const LandingPage = () => {
             alt="img"
           />
         </nav>
+        <div className=" max-sm:w-full p-4 lg:w-5/6 xl:w-3/4 2xl:w-full 2xl:justify-center relative h-[550px] flex items-center gap-4">
+          <div className="w-[500px] flex flex-col gap-6 text-white h-[361px] ">
+            <h1 className="leading-snug max-sm:text-[30px] md:text-[35px] lg:text-[42px]">
+              Unlock a World of Connections:
+              A Smarter Way To Form Lifelong
+              Friendships
+            </h1>
+            <p className="text-xl font-thin">
+              Transform Your Social Experience: Connect, Engage, and Cultivate
+              Authentic Friendships.
+            </p>
+          </div>
+          <img className="xl:h-[400px] 2xl:h-[400px] max-sm:hidden 2xl:block" src={headerImg} alt="header-image" />
+        </div>
       </header>
     </div>
   );
