@@ -13,7 +13,7 @@ const LandingPage = () => {
 
   return (
     <div className="w-full overflow-x-hidden h-full font-semibold">
-      <header className="bg-[url(Images/bg.png)] gap-10 max-sm:h-[700px] md:h-[900px] lg:h-[900px] xl:h-[860px] 2xl:h-[1000px] max-sm:bg-cover lg:bg-contain relative items-center bg-no-repeat flex flex-col">
+      <header className="bg-[url(Images/bg.png)] gap-10 max-sm:h-[700px] md:h-[900px] lg:h-[900px] xl:h-[860px] 2xl:h-[1200px] max-sm:bg-cover lg:bg-contain relative items-center bg-no-repeat flex flex-col">
         <nav className="max-sm:w-full xl:w-4/5 2xl:w-2/3 p-3 h-28 flex items-center max-sm:justify-between lg:justify-around">
           <img className="max-sm:h-10 sm:h-12 md:h-14" src={logo} alt="logo" />
           <ul className="gap-10 lg:flex max-sm:hidden">

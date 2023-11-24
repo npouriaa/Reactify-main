@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 
 const ScrollElement = ({ children , styles}) => {
   const { ref, inView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
   });
 
   return (
