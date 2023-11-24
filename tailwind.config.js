@@ -13,7 +13,7 @@ export default {
 
       'xl': '1025px',
 
-      '2xl': '1200px',
+      '2xl': '1250px',
     },
     extend: {},
   },

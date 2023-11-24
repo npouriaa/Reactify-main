@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import hMenuImg from "../Images/02 (1).png";
 import headerImg from "../Images/01 (1).png";
 import ScrollElement from "../components/ScrollElement";
+import newAgeMessagingImage1 from "../Images/01 (2).png";
+import newAgeMessagingImage2 from "../Images/02 (2).png";
 
 const LandingPage = () => {
   const hMenuBtnRef = useRef();
@@ -11,7 +13,7 @@ const LandingPage = () => {
 
   return (
     <div className="w-full overflow-x-hidden h-full font-semibold">
-      <header className="gap-10 max-sm:h-[700px] md:h-[750px] lg:h-[1150px] max-sm:bg-cover lg:bg-contain relative items-center bg-no-repeat flex flex-col">
+      <header className="bg-[url(Images/bg.png)] gap-10 max-sm:h-[700px] md:h-[900px] lg:h-[900px] xl:h-[860px] 2xl:h-[1000px] max-sm:bg-cover lg:bg-contain relative items-center bg-no-repeat flex flex-col">
         <nav className="max-sm:w-full xl:w-4/5 2xl:w-2/3 p-3 h-28 flex items-center max-sm:justify-between lg:justify-around">
           <img className="max-sm:h-10 sm:h-12 md:h-14" src={logo} alt="logo" />
           <ul className="gap-10 lg:flex max-sm:hidden">
@@ -108,7 +110,7 @@ const LandingPage = () => {
         </nav>
         <nav
           ref={hMenuRef}
-          className="z-10 text-white overflow-hidden flex-col gap-10 absolute max-sm:flex justify-center items-center duration-500 lg:hidden w-screen transition-all no-height bg-[#7932F5]"
+          className="z-10 text-white overflow-hidden flex-col gap-10 fixed max-sm:flex justify-center items-center duration-500 lg:hidden w-screen transition-all no-height bg-[#7932F5]"
         >
           <div className="">
             <h1 className="text-3xl text-center">We're here to help you</h1>
@@ -146,15 +148,17 @@ const LandingPage = () => {
             </p>
           </div>
           <img
-            className="xl:h-[400px] 2xl:h-[400px] max-sm:hidden 2xl:block"
+            className="xl:h-[400px] 2xl:h-[350px] max-sm:hidden 2xl:block"
             src={headerImg}
             alt="header-image"
           />
         </div>
       </header>
-      <section className="w-full p-4 flex justify-center gap-10 flex-wrap items-center">
-        <ScrollElement>
-          <div className="w-[350px] justify-evenly h-[200px] flex flex-col items-start">
+      <section className="w-full max-sm:mt-10 2xl:mt-20">
+        <ScrollElement
+          styles={"p-4 flex justify-center gap-10 flex-wrap items-center"}
+        >
+          <div className="w-[350px] justify-evenly h-[200px] flex flex-col items-start px-4">
             <div className="rounded-full p-4 flex justify-center ites-center bg-[#7048c065]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -177,9 +181,7 @@ const LandingPage = () => {
               enhanced situational awareness
             </p>
           </div>
-        </ScrollElement>
-        <ScrollElement>
-          <div className="w-[350px] justify-evenly h-[200px] flex flex-col items-start">
+          <div className="w-[350px] justify-evenly h-[200px] flex flex-col items-start px-4">
             <div className="rounded-full p-4 flex justify-center ites-center bg-[#45d6d154]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -202,9 +204,7 @@ const LandingPage = () => {
               enhanced situational awareness
             </p>
           </div>
-        </ScrollElement>
-        <ScrollElement>
-          <div className="w-[350px] justify-evenly h-[200px] flex flex-col items-start">
+          <div className="w-[350px] justify-evenly h-[200px] flex flex-col items-start px-4">
             <div className="rounded-full p-4 flex justify-center ites-center bg-[#f7618c5b]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -225,6 +225,92 @@ const LandingPage = () => {
             <p className="font-thin text-gray-600">
               Dozens of leading utility providers like National Grid are gaining
               enhanced situational awareness
+            </p>
+          </div>
+        </ScrollElement>
+      </section>
+      <section className="w-full mt-20 flex p-2 items-center flex-col">
+        <div className="w-full flex p-2 justify-center items-center">
+          <div className="max-sm:w-full flex flex-col gap-14 sm:w-3/4 lg:w-full xl:w-3/4 p-3">
+            <ScrollElement
+              styles={"flex justify-center items-center flex-wrap gap-10"}
+            >
+              <div className="max-sm:w-full p-1 lg:w-1/2 xl:w-1/3 flex flex-col gap-4 leading-7">
+                <h1 className="text-4xl">New-age Messaging</h1>
+                <div className="font-thin text-gray-600">
+                  <p>
+                    New-age Messaging refers to the next level of communication
+                    technology that moves beyond traditional texting, emailing,
+                    and even instant messaging. New-age Messaging is not just
+                    reinventing the way we communicate but is also changing the
+                    way we interact with the digital world.
+                  </p>
+                </div>
+              </div>
+              <img
+                className="h-96"
+                src={newAgeMessagingImage1}
+                alt="new-age-messaging-img"
+              />
+            </ScrollElement>
+            <ScrollElement
+              styles={"flex mt-12 justify-center items-center flex-wrap gap-10"}
+            >
+              <img
+                className="h-80 object-contain"
+                src={newAgeMessagingImage2}
+                alt="new-age-messaging-img"
+              />
+              <div className="max-sm:w-full p-1  lg:w-1/2 xl:w-1/3 flex flex-col gap-4 leading-7">
+                <h1 className="text-4xl">Bridging Connections</h1>
+                <div className="font-thin text-gray-600">
+                  <p>
+                    Connect with friends, family, and your professional network
+                    at your fingertips. Our app brings the world closer to you.
+                    Bridging Connections, as envisioned by our platform,
+                    signifies a world without boundaries, a place where distance
+                    is irrelevant
+                  </p>
+                </div>
+              </div>
+            </ScrollElement>
+          </div>
+        </div>
+      </section>
+      <section className="w-full p-4 mt-20 max-sm:h-[450px] sm:h-[400px] md:h-[300px] bg-cover bg-[url(Images/bg-02.png)]">
+        <ScrollElement
+          styles={
+            "w-full h-full flex flex-wrap gap-4 justify-center items-center"
+          }
+        >
+          <div className="w-28 h-28 rounded-full relative overflow-hidden flex justify-center items-center">
+            <div className="w-full h-full absolute opacity-30 bg-gray-100"></div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="#fff"
+              className="w-14 h-14 scale-x-100"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
+              />
+            </svg>
+          </div>
+          <div className="flex flex-col p-6 gap-4 font-extralight md:w-2/3 lg:w-1/2 xl:w-1/2 2xl:w-2/5 text-white">
+            <p className="text-[18px]">
+              The Internet is becoming the town square for the global village of
+              tomorrow. Social media are the windows into those interactions,
+              shaping our humanity one post and connect at a time.
+            </p>
+            <p className="font-extralight">
+              Adapted from quotes by
+              <span className="font-bold text-[18px]"> Bill Gates </span>
+              and
+              <span className="font-bold text-[18px]"> Neil Patel</span>
             </p>
           </div>
         </ScrollElement>

@@ -18,17 +18,46 @@ body {
   width: 100vw;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsla(333, 100%, 53%, 1);
+
+  background: linear-gradient(
+    90deg,
+    hsla(333, 100%, 53%, 1) 0%,
+    hsla(33, 94%, 57%, 1) 100%
+  );
+
+  background: -moz-linear-gradient(
+    90deg,
+    hsla(333, 100%, 53%, 1) 0%,
+    hsla(33, 94%, 57%, 1) 100%
+  );
+
+  background: -webkit-linear-gradient(
+    90deg,
+    hsla(333, 100%, 53%, 1) 0%,
+    hsla(33, 94%, 57%, 1) 100%
+  );
+
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FF0F7B", endColorstr="#F89B29", GradientType=1 );
+}
+
 .my-container {
   width: 100vw;
   height: 100vh;
 }
 
-header {
-  background-image: url(./Images/bg.png);
-}
-
-.no-height{
-  height: 0 ;
+.no-height {
+  height: 0;
 }
 
 .x {
