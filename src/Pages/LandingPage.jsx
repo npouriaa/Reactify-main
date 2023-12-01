@@ -148,7 +148,7 @@ const LandingPage = () => {
             </p>
           </div>
           <img
-            className="xl:h-[400px] 2xl:h-[350px] max-sm:hidden 2xl:block"
+            className="xl:h-[400px] 2xl:h-[420px] max-sm:hidden 2xl:block"
             src={headerImg}
             alt="header-image"
           />
