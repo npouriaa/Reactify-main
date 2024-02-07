@@ -1,5 +1,5 @@
-import logo from "../../Images/Reactify-white.png";
-import hMenuImg from "../../Images/02 (1).png";
+import logo from "../../assets/images/Reactify-white.png";
+import hMenuImg from "../../assets/images/02 (1).png";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 

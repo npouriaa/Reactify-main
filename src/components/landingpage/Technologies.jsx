@@ -1,5 +1,5 @@
-import newAgeMessagingImage1 from "../../Images/01 (2).png";
-import newAgeMessagingImage2 from "../../Images/02 (2).png";
+import newAgeMessagingImage1 from "../../assets/images/01 (2).png";
+import newAgeMessagingImage2 from "../../assets/images/02 (2).png";
 import ScrollElement from "../../components/ScrollElement";
 
 const Technologies = () => {
