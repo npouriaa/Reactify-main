@@ -9,7 +9,6 @@ const GoToTopButton = () => {
     } else {
       setFixed(false);
     }
-    console.log(window.scrollY);
   };
 
   const scrollToTop = () => {
