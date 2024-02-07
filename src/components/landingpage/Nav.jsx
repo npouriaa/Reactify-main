@@ -110,7 +110,7 @@ const Nav = () => {
           <h1 className="text-3xl text-center">We're here to help you</h1>
           <h1 className="text-3xl text-center">find new friends</h1>
         </div>
-        <ul className="flex flex-col gap-10 ">
+        <ul className="flex flex-col max-sm:gap-10 sm:gap-4">
           <Link>
             <li>- About us</li>
           </Link>
