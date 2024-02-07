@@ -18,7 +18,9 @@ const GoToTopButton = () => {
     });
   };
 
-  window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <button
