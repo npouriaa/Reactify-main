@@ -9,7 +9,9 @@ const Nav = () => {
   return (
     <>
       <nav className="max-sm:w-full xl:w-4/5 2xl:w-2/3 p-3 h-28 flex items-center max-sm:justify-between lg:justify-around">
-        <img className="max-sm:h-10 sm:h-12 md:h-14" src={logo} alt="logo" />
+        <Link to="/">
+          <img className="max-sm:h-10 sm:h-12 md:h-14" src={logo} alt="logo" />
+        </Link>
         <ul className="gap-10 lg:flex max-sm:hidden">
           <Link to="">
             <li className="text-white hover:text-[#162167] transition-all duration-500">
