@@ -1,5 +1,5 @@
-import logo from "../../assets/images/Reactify-white.png";
-import hMenuImg from "../../assets/images/02 (1).png";
+import logo from "../../assets/images/logo/Reactify-white.png";
+import hMenuImg from "../../assets/images/landingpage/header/nav/02 (1).png";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 
@@ -8,7 +8,7 @@ const Nav = () => {
   const hMenuRef = useRef();
   return (
     <>
-      <nav className="max-sm:w-full xl:w-4/5 2xl:w-2/3 p-3 h-28 flex items-center max-sm:justify-between lg:justify-around">
+      <nav className="max-sm:w-full xl:w-4/5 2xl:w-2/3 p-5 h-28 flex items-center max-sm:justify-between lg:justify-around">
         <Link to="/">
           <img className="max-sm:h-10 sm:h-12 md:h-14" src={logo} alt="logo" />
         </Link>

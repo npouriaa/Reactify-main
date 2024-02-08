@@ -2,7 +2,7 @@ import ScrollElement from "../ScrollElement";
 
 const Qoute = () => {
   return (
-    <section className="w-full p-4 mt-20 max-sm:h-[450px] sm:h-[400px] md:h-[300px] bg-cover bg-[url(assets/images/bg-02.png)]">
+    <section className="w-full p-4 mt-20 max-sm:h-[450px] sm:h-[400px] md:h-[300px] bg-cover bg-[url(assets/images/landingpage/qoute/bg-02.png)]">
       <ScrollElement
         styles={
           "w-full h-full flex flex-wrap gap-4 justify-center items-center"
@@ -25,7 +25,7 @@ const Qoute = () => {
             />
           </svg>
         </div>
-        <div className="flex flex-col p-6 gap-4 font-extralight md:w-2/3 lg:w-1/2 xl:w-1/2 2xl:w-2/5 text-white">
+        <div className="flex flex-col p-4 gap-4 font-extralight md:w-2/3 lg:w-1/2 xl:w-1/2 2xl:w-2/5 text-white">
           <p className="text-[18px]">
             The Internet is becoming the town square for the global village of
             tomorrow. Social media are the windows into those interactions,
