@@ -3,7 +3,7 @@ import logo from "../../assets/images/logo/Reactify-black.png";
 
 const Footer = () => {
   return (
-    <footer className="w-full h-60 bg-[#fafafa] flex gap-4 p-3 flex-col justify-center items-center">
+    <footer className="w-full h-80 bg-[#fafafa] flex gap-4 p-3 flex-col justify-center items-center">
       <div className="w-3/4 h-full flex items-center border-b-2 border-b-gray-200">
         <div className="w-96 h-full flex flex-col justify-center gap-4">
           <Link to="/">
