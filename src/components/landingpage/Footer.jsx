@@ -3,12 +3,12 @@ import logo from "../../assets/images/logo/Reactify-black.png";
 
 const Footer = () => {
   return (
-    <footer className="w-full h-80 bg-[#fafafa] flex gap-4 p-3 flex-col justify-center items-center">
-      <div className="w-3/4 h-full flex items-center border-b-2 border-b-gray-200">
-        <div className="w-96 h-full flex flex-col justify-center gap-4">
+    <footer className="w-full max-sm:mt-10 flex gap-4 px-8 py-2 flex-col items-center">
+      <div className="w-full h-full max-sm:gap-6 sm:gap-8 md:gap-14 xl:gap-28 flex max-sm:justify-start lg:justify-center flex-wrap items-start">
+        <div className="h-full flex flex-col gap-4">
           <Link to="/">
             <img
-              className="max-sm:h-10 sm:h-12 md:h-14"
+              className="max-sm:h-10 lg:h-12 md:h-10"
               src={logo}
               alt="logo"
             />
@@ -50,7 +50,9 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-        <div className="links flex gap-48">
+        <div
+          className="flex flex-wrap items-center max-sm:gap-10 sm:gap-16"
+        >
           <div className="flex flex-col gap-5">
             <h4 className="text-blue-900 text-lg">Company</h4>
             <ul className="flex text-xs flex-col gap-3">
@@ -62,6 +64,20 @@ const Footer = () => {
               </Link>
               <Link>
                 <li className="text-gray-400">pricing</li>
+              </Link>
+            </ul>
+          </div>
+          <div className="flex flex-col gap-5">
+            <h4 className="text-blue-900 text-lg">resources</h4>
+            <ul className="flex text-xs flex-col gap-3">
+              <Link>
+                <li className="text-gray-400">FAQs</li>
+              </Link>
+              <Link>
+                <li className="text-gray-400">testimonial</li>
+              </Link>
+              <Link>
+                <li className="text-gray-400">terms & condition</li>
               </Link>
             </ul>
           </div>
@@ -80,27 +96,29 @@ const Footer = () => {
             </ul>
           </div>
           <div className="flex flex-col gap-5">
-            <h4 className="text-blue-900 text-lg">resources</h4>
+            <h4 className="text-blue-900 text-lg">relevent</h4>
             <ul className="flex text-xs flex-col gap-3">
               <Link>
-                <li className="text-gray-400">FAQs</li>
+                <li className="text-gray-400">why</li>
               </Link>
               <Link>
-                <li className="text-gray-400">testimonial</li>
+                <li className="text-gray-400">products</li>
               </Link>
               <Link>
-                <li className="text-gray-400">terms & condition</li>
+                <li className="text-gray-400">customers</li>
               </Link>
             </ul>
           </div>
         </div>
       </div>
-      <p className="text-gray-400">
-        made by{" "}
-        <Link className="text-blue-500" to="https://github.com/npouriaa">
-          Npouriaa
-        </Link>
-      </p>
+      <div className="w-full flex items-center py-4 justify-center border-t-2 border-t-gray-200">
+        <p className="text-gray-400">
+          made by{" "}
+          <Link className="text-blue-500" to="https://github.com/npouriaa">
+            Npouriaa
+          </Link>
+        </p>
+      </div>
     </footer>
   );
 };
