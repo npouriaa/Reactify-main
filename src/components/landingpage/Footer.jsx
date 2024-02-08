@@ -3,8 +3,8 @@ import logo from "../../assets/images/logo/Reactify-black.png";
 
 const Footer = () => {
   return (
-    <footer className="w-full h-60 bg-[#fafafa] flex justify-center items-center">
-      <div className="w-3/4 h-full flex items-center">
+    <footer className="w-full h-60 bg-[#fafafa] flex gap-4 p-3 flex-col justify-center items-center">
+      <div className="w-3/4 h-full flex items-center border-b-2 border-b-gray-300">
         <div className="w-96 h-full flex flex-col justify-center gap-4">
           <Link to="/">
             <img
@@ -95,6 +95,12 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <p className="text-gray-400">
+        made by{" "}
+        <Link className="text-blue-500" to="https://github.com/npouriaa">
+          Npouriaa
+        </Link>
+      </p>
     </footer>
   );
 };
