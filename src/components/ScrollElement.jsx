@@ -12,7 +12,7 @@ const ScrollElement = ({ children, styles,  transition}) => {
       <div
         ref={ref}
         className={`${
-          inView ? "opacity-1" : transitions 
+          inView ? "opacity-1 tra" : transitions 
         } transition-all duration-500 ${styles}`}
       >
         {children}

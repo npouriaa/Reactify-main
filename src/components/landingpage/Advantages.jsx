@@ -22,7 +22,7 @@ const Advantages = () => {
         </svg>
       ),
       bg_color: "7048c065",
-      transition: "translate-y-10",
+      transition: "translate-y-8",
     },
     {
       title: "secure",
@@ -67,7 +67,7 @@ const Advantages = () => {
         </svg>
       ),
       bg_color: "f7618c5b",
-      transition: "translate-y-32",
+      transition: "translate-y-28",
     },
   ];
 
