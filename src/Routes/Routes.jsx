@@ -1,22 +1,24 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../Pages/Login";
-import SignUp from "../Pages/SignUp";
-import App from "../App";
+import Register from "../Pages/Register";
+import LandingPage from "../Pages/LandingPage";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <SignUp />,
-  },
-]);
+const pushRoutesIntoArray = (array, pathes, components) => {
+  for (let i = 0; i < pathes.length; i++) {
+    const routeObject = {
+      path: `/${pathes[i]}`,
+      element: components[i],
+    };
+    array.push(routeObject);
+  }
+};
+const pathesArray = ["", "login", "register"];
+const componentsArray = [<LandingPage />, <Login />, <Register />];
+
+const routesArray = [];
+pushRoutesIntoArray(routesArray, pathesArray, componentsArray);
+
+const router = createBrowserRouter(routesArray);
 
 export default router;
