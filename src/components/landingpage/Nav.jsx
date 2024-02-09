@@ -6,7 +6,7 @@ import { useRef } from "react";
 const Nav = () => {
   const hMenuBtnRef = useRef();
   const hMenuRef = useRef();
-  
+
   return (
     <>
       <nav className="max-sm:w-full xl:w-4/5 2xl:w-2/3 p-5 h-28 flex items-center max-sm:justify-between lg:justify-around">
@@ -42,9 +42,11 @@ const Nav = () => {
             </button>
           </Link>
           <Link to="signup">
-            <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500">
-              Sign up
-            </button>
+            <Link to="/register">
+              <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500">
+                register
+              </button>
+            </Link>
           </Link>
           <button
             ref={hMenuBtnRef}
