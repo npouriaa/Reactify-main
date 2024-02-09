@@ -1,18 +1,19 @@
 import React from "react";
 import { useInView } from "react-intersection-observer";
 
-const ScrollElement = ({ children , styles}) => {
+const ScrollElement = ({ children, styles,  transition}) => {
   const { ref, inView } = useInView({
     triggerOnce: false,
   });
+  const transitions = `opacity-0 ${transition ? transition : 'translate-y-10'}`
 
   return (
     <>
       <div
         ref={ref}
         className={`${
-          inView ? "opacity-1" : "opacity-0 translate-y-10"
-        } transition-all duration-450 ${styles}`}
+          inView ? "opacity-1" : transitions 
+        } transition-all duration-500 ${styles}`}
       >
         {children}
       </div>
