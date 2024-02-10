@@ -1,11 +1,22 @@
 import logo from "../../assets/images/logo/Reactify-white.png";
 import hMenuImg from "../../assets/images/landingpage/header/nav/02 (1).png";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Nav = () => {
   const hMenuBtnRef = useRef();
   const hMenuRef = useRef();
+  const [disableScroll, setDisableScroll] = useState(false);
+
+  const disableScrollHandler = () => {
+    if (disableScroll) {
+      setDisableScroll(false)
+      document.body.style.overflow = "visible";
+    }else{
+      setDisableScroll(true)
+      document.body.style.overflow = "hidden";
+    }
+  };
 
   return (
     <>
@@ -53,8 +64,9 @@ const Nav = () => {
             onClick={() => {
               hMenuBtnRef.current.classList.toggle("active");
               hMenuRef.current.classList.toggle("h-screen");
+              disableScrollHandler()
             }}
-            className="max-sm:block rounded-full lg:hidden plate plate5 relative h-10 w-10 bg-white z-20"
+            className="max-sm:block rounded-full lg:hidden plate plate5  h-10 w-10 bg-white z-20 relative"
           >
             <svg
               className="burger absolute top-0"
@@ -106,34 +118,34 @@ const Nav = () => {
             </svg>
           </button>
         </div>
-      </nav>
-      <nav
-        ref={hMenuRef}
-        className="z-10 text-white overflow-hidden flex-col gap-10 fixed max-sm:flex justify-center items-center duration-500 lg:hidden w-screen transition-all no-height bg-[#7932F5]"
-      >
-        <div className="">
-          <h1 className="text-3xl text-center">We're here to help you</h1>
-          <h1 className="text-3xl text-center">find new friends</h1>
+        <div
+          ref={hMenuRef}
+          className="z-10 text-white overflow-hidden flex-col gap-10 fixed max-sm:flex justify-center items-center duration-500 lg:hidden w-screen top-0 left-0 transition-all no-height bg-[#7932F5]"
+        >
+          <div className="">
+            <h1 className="text-3xl text-center">We're here to help you</h1>
+            <h1 className="text-3xl text-center">find new friends</h1>
+          </div>
+          <ul className="flex flex-col max-sm:gap-10 sm:gap-4">
+            <Link>
+              <li>- About us</li>
+            </Link>
+            <Link>
+              <li>- FAQ</li>
+            </Link>
+            <Link>
+              <li>- why us?</li>
+            </Link>
+            <Link>
+              <li>- contact</li>
+            </Link>
+          </ul>
+          <img
+            className="max-sm:h-[200px] sm:h-[350px]"
+            src={hMenuImg}
+            alt="img"
+          />
         </div>
-        <ul className="flex flex-col max-sm:gap-10 sm:gap-4">
-          <Link>
-            <li>- About us</li>
-          </Link>
-          <Link>
-            <li>- FAQ</li>
-          </Link>
-          <Link>
-            <li>- why us?</li>
-          </Link>
-          <Link>
-            <li>- contact</li>
-          </Link>
-        </ul>
-        <img
-          className="max-sm:h-[200px] sm:h-[350px]"
-          src={hMenuImg}
-          alt="img"
-        />
       </nav>
     </>
   );
