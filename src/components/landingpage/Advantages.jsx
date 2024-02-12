@@ -1,4 +1,5 @@
 import ScrollElement from "../../components/ScrollElement";
+import "../../css/landingpage/advantages.css";
 
 const Advantages = () => {
   const dataArray = [
@@ -21,7 +22,7 @@ const Advantages = () => {
           />
         </svg>
       ),
-      bg_color: "7048c065",
+      className: "real-time",
       transition: "translate-y-8",
     },
     {
@@ -43,8 +44,7 @@ const Advantages = () => {
           />
         </svg>
       ),
-      bg_color: "45d6d154",
-
+      className: "secure",
       transition: "translate-y-20",
     },
     {
@@ -66,7 +66,7 @@ const Advantages = () => {
           />
         </svg>
       ),
-      bg_color: "f7618c5b",
+      className: "contextual-interface",
       transition: "translate-y-28",
     },
   ];
@@ -78,7 +78,7 @@ const Advantages = () => {
           <ScrollElement key={index} transition={item.transition}>
             <div className="w-[350px] justify-evenly h-[200px] flex flex-col items-start px-4">
               <div
-                className={`rounded-full p-4 flex justify-center ites-center bg-[#${item.bg_color}]`}
+                className={`rounded-full p-4 flex justify-center ites-center ${item.className}`}
               >
                 {item.icon}
               </div>

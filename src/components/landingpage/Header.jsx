@@ -17,7 +17,7 @@ const Header = () => {
           </p>
         </div>
         <img
-          className="md:h-[300px] xl:h-[400px] max-sm:hidden md:block"
+          className="md:h-[300px] xl:h-[400px] 3xl:h-[450px] max-sm:hidden md:block"
           src={headerImg}
           alt="header-image"
         />
