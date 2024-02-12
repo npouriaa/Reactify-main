@@ -4,6 +4,7 @@ export default {
   theme: {
     screens: {
       'max-sm': '360px',
+      "sm2" : "390px",
       'sm': '481px',
       'md': '641px',
       'lg': '961px',

@@ -8,7 +8,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "poppins";
-  font-size: 15px;
+  /* font-size: 15px; */
   text-transform: capitalize;
   outline: none;
 }
@@ -145,4 +145,8 @@ body {
   );
 
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FF0F7B", endColorstr="#F89B29", GradientType=1 );
+}
+
+.antd-btn:hover {
+  color: #fff !important;
 }
