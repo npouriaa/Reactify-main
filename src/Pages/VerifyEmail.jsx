@@ -18,7 +18,7 @@ const VerifyEmail = () => {
         <h1 className="text-2xl font-bold">Check your email</h1>
         <div className="text-center">
           <p>we've sent an email with a verification link to pouria@gmail</p>
-          <p> please confirm it to complete your register register</p>
+          <p> please confirm it to complete your register</p>
         </div>
       </div>
     </div>
