@@ -2,23 +2,58 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo/Reactify-black.png";
 import { Button, Form, Input, Tooltip, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useContext, useRef } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useRef } from "react";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, storage, db } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const Register = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const frmRef = useRef();
-  const { setRegistetrInfo } = useContext(AuthContext);
+
+  const setUser = async (email, password, displayName, file) => {
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const storageRef = ref(storage, displayName);
+
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        (err) => {
+          openNotificationError("top", "Error on upload !");
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateProfile(response.user, {
+              displayName: displayName,
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, "users", response.user.uid), {
+              uid: response.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, "userChats", response.user.uid), {});
+          });
+        }
+      );
+      console.log(true);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const onFinish = (values) => {
     const { username, email, password, upload } = values;
-    let registerInfoObj = {
-      username: username,
-      email: email,
-      password: password,
-      avatar: upload.file,
-    };
-    setRegistetrInfo(registerInfoObj);
+    setUser(email, password, username, upload.file);
+    frmRef.current.resetFields();
     navigate('/verify-email')
   };
   return (
