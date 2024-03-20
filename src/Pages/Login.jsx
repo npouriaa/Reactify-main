@@ -39,7 +39,7 @@ const Login = () => {
           </p>
         </div>
         <Form
-          className="max-sm:w-full md:w-5/6 flex flex-col gap-2"
+          className="max-sm:w-full md:w-5/6 flex flex-col"
           layout="vertical"
           name="login_form"
         >

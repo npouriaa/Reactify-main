@@ -5,8 +5,6 @@ import { auth } from "../firebase";
 const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-  const [registerInfo, setRegistetrInfo] = useState({});
-
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
@@ -21,7 +19,7 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ registerInfo, setRegistetrInfo }}>
+    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -149,3 +149,9 @@ body {
 .antd-btn:hover {
   color: #fff !important;
 }
+
+.ant-form-item-feedback-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

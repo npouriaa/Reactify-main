@@ -3,16 +3,23 @@ import { notification } from "antd";
 const useNotification = () => {
   const [api, contextHolder] = notification.useNotification();
 
-  const openNotification = (placement) => {
+  const openNotificationSuccess = (message, description, placement) => {
     api.success({
-      message: `Notification ${placement}`,
-      description:
-        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+      message: `${message} ${placement}`,
+      description: `${description}`,
       placement,
     });
   };
 
-  return { openNotification, contextHolder };
+  const openNotificationError = (message, description, placement) => {
+    api.error({
+      message: `${message} ${placement}`,
+      description: `${description}`,
+      placement,
+    });
+  };
+
+  return { openNotificationSuccess, openNotificationError, contextHolder };
 };
 
 export default useNotification;
