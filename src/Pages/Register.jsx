@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../assets/images/logo/Reactify-black.png";
 import { Button, Form, Input, Tooltip, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -9,7 +9,6 @@ import { auth, storage, db } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const Register = () => {
-  const navigate = useNavigate();
   const frmRef = useRef();
 
   const setUser = async (email, password, displayName, file) => {
@@ -26,7 +25,7 @@ const Register = () => {
 
       uploadTask.on(
         (err) => {
-          openNotificationError("top", "Error on upload !");
+          console.log('Error on upload')
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -40,7 +39,6 @@ const Register = () => {
               email,
               photoURL: downloadURL,
             });
-            await setDoc(doc(db, "userChats", response.user.uid), {});
           });
         }
       );
@@ -54,8 +52,8 @@ const Register = () => {
     const { username, email, password, upload } = values;
     setUser(email, password, username, upload.file);
     frmRef.current.resetFields();
-    navigate('/verify-email')
   };
+  
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#7932F5] via-[#F5658C] to-[#F5658C]">
       <div className="flex gap-3 items-center flex-col rounded-2xl max-sm:w-[350px] sm:w-[440px] sm2:w-[380px] md:w-[500px] shadow-xl bg-white py-6 px-8">
