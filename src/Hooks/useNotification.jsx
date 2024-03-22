@@ -5,7 +5,7 @@ const useNotification = () => {
 
   const openNotificationSuccess = (message, description, placement) => {
     api.success({
-      message: `${message} ${placement}`,
+      message: `${message}`,
       description: `${description}`,
       placement,
     });
@@ -13,7 +13,7 @@ const useNotification = () => {
 
   const openNotificationError = (message, description, placement) => {
     api.error({
-      message: `${message} ${placement}`,
+      message: `${message}`,
       description: `${description}`,
       placement,
     });

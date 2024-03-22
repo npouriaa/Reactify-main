@@ -1,21 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo/Reactify-black.png";
 import { Button, Form, Input, Tooltip, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import useNotification from "../Hooks/useNotification";
 import LoaderModal from "../components/LoaderModal";
+import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
   const frmRef = useRef();
+  const { currentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const { openNotificationSuccess, openNotificationError, contextHolder } =
-    useNotification();
-
+  const { openNotificationError, contextHolder } = useNotification();
+  const navigate = useNavigate();
   const createNewUser = async (email, password, displayName, file) => {
     setLoading(true);
     try {
@@ -48,7 +53,8 @@ const Register = () => {
           });
         }
       );
-      openNotificationSuccess("Success", "registered successfuly", "top");
+      await sendEmailVerification(currentUser);
+      navigate("/verify-email");
     } catch (err) {
       openNotificationError("Error", err.message, "top");
     }
@@ -65,7 +71,7 @@ const Register = () => {
       {loading && <LoaderModal />}
       {contextHolder}
       <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#7932F5] via-[#F5658C] to-[#F5658C]">
-        <div className="flex gap-3 items-center flex-col rounded-2xl max-sm:w-[350px] sm:w-[440px] sm2:w-[380px] md:w-[500px] max-sm:py-6 2xl:py-4 shadow-xl bg-white px-8">
+        <div className="flex gap-2 items-center flex-col rounded-2xl max-sm:w-[350px] sm:w-[440px] sm2:w-[380px] md:w-[500px] max-sm:py-6 2xl:py-4 shadow-xl bg-white px-8">
           <div className="w-full flex items-center justify-center relative">
             <Link to="/">
               <img className="max-sm:h-10 sm:h-12" src={logo} alt="logo" />
@@ -97,6 +103,7 @@ const Register = () => {
             <p className="text-gray-700 max-sm:text-sm md:text-base">
               Join us to connect, share, and discover.
             </p>
+            <button onClick={() => sendVerification()}>log that shit</button>
           </div>
           <Form
             onFinish={onFinish}
