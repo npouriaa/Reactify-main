@@ -14,9 +14,7 @@ const VerifyEmail = () => {
     setLoading(true);
     try {
       await sendEmailVerification(currentUser);
-      console.log("done");
     } catch (err) {
-      console.log(err);
       openNotificationError("Error", err.message, "top");
       setError(true);
     }
