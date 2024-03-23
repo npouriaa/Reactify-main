@@ -6,14 +6,14 @@ const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
-  const lsToken = localStorage.getItem("accessToken");
+  // const lsToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
-      if (!lsToken) {
-        localStorage.setItem("accessToken", await user.accessToken);
-      }
+      // if (!lsToken) {
+      //   localStorage.setItem("accessToken", await user.accessToken);
+      // }
       console.log(user);
     });
 

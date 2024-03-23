@@ -2,22 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo/Reactify-black.png";
 import { Button, Form, Input, Tooltip, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import useNotification from "../Hooks/useNotification";
 import LoaderModal from "../components/LoaderModal";
-import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
   const frmRef = useRef();
-  const { currentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const { openNotificationError, contextHolder } = useNotification();
   const navigate = useNavigate();
@@ -53,7 +47,6 @@ const Register = () => {
           });
         }
       );
-      await sendEmailVerification(currentUser);
       navigate("/verify-email");
     } catch (err) {
       openNotificationError("Error", err.message, "top");
@@ -103,7 +96,6 @@ const Register = () => {
             <p className="text-gray-700 max-sm:text-sm md:text-base">
               Join us to connect, share, and discover.
             </p>
-            <button onClick={() => sendVerification()}>log that shit</button>
           </div>
           <Form
             onFinish={onFinish}
