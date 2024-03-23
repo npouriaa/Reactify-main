@@ -2,19 +2,22 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo/Reactify-black.png";
 import { Button, Form, Input, Tooltip, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import useNotification from "../Hooks/useNotification";
 import LoaderModal from "../components/LoaderModal";
+import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
   const frmRef = useRef();
   const [loading, setLoading] = useState(false);
   const { openNotificationError, contextHolder } = useNotification();
+  const { setSendVerificationLink } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const createNewUser = async (email, password, displayName, file) => {
     setLoading(true);
     try {
@@ -47,6 +50,7 @@ const Register = () => {
           });
         }
       );
+      setSendVerificationLink(true)
       navigate("/verify-email");
     } catch (err) {
       openNotificationError("Error", err.message, "top");

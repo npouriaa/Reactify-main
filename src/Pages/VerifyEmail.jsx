@@ -3,11 +3,13 @@ import { AuthContext } from "../context/AuthContext";
 import { sendEmailVerification } from "firebase/auth";
 import useNotification from "../Hooks/useNotification";
 import LoaderModal from "../components/LoaderModal";
+import { useNavigate } from "react-router-dom";
 
 const VerifyEmail = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, sendVerificationLink } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const { openNotificationError, contextHolder } = useNotification();
+  const navigate = useNavigate();
 
   const sendEmailVerificationLink = async () => {
     setLoading(true);
@@ -20,7 +22,11 @@ const VerifyEmail = () => {
   };
 
   useEffect(() => {
-    sendEmailVerificationLink();
+    if (sendVerificationLink) {
+      sendEmailVerificationLink();
+    } else {
+      navigate("/register");
+    }
   }, []);
 
   if (loading) {

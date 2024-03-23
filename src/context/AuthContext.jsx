@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
+  const [sendVerificationLink, setSendVerificationLink] = useState(false);
   // const lsToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -23,7 +24,14 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+    <AuthContext.Provider
+      value={{
+        currentUser,
+        setCurrentUser,
+        sendVerificationLink,
+        setSendVerificationLink,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
