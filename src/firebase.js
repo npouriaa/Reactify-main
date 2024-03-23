@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBx-HyA0GW5Q2hsX19UnWCiHPOulBVa5gw",
-  authDomain: "reactify-f0dc5.firebaseapp.com",
-  projectId: "reactify-f0dc5",
-  storageBucket: "reactify-f0dc5.appspot.com",
-  messagingSenderId: "665197616908",
-  appId: "1:665197616908:web:625cdbaad50d8c02217329",
+  apiKey: "AIzaSyDJVMXpkqp2-xo5twy6QJbM6xfrl2m-ufA",
+  authDomain: "reactify-2dc51.firebaseapp.com",
+  projectId: "reactify-2dc51",
+  storageBucket: "reactify-2dc51.appspot.com",
+  messagingSenderId: "744722807710",
+  appId: "1:744722807710:web:c2522df11c5b353b25b48f"
 };
 
 const app = initializeApp(firebaseConfig);
