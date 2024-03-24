@@ -10,7 +10,7 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, async (user) => {
-      if (user.emailVerified) {
+      if (user?.emailVerified) {
         setCurrentUser(user);
       }
       console.log(user);
