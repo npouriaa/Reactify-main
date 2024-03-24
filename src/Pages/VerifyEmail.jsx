@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { sendEmailVerification } from "firebase/auth";
 import useNotification from "../Hooks/useNotification";
 import LoaderModal from "../components/LoaderModal";
 import { Navigate } from "react-router-dom";
-import { Modal } from "antd";
+import { Modal, Tooltip } from "antd";
 import { auth } from "../firebase";
 
 const modalConfig = {
@@ -18,6 +18,51 @@ const VerifyEmail = () => {
   const [loading, setLoading] = useState(false);
   const { openNotificationError, contextHolder } = useNotification();
   const [modal, modalContextHolder] = Modal.useModal();
+  const timerRef = useRef(null);
+  const resendBtnRef = useRef();
+  const [timer, setTimer] = useState("00:00");
+
+  const getTimeRemaining = (e) => {
+    const total = Date.parse(e) - Date.parse(new Date());
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    return {
+      total,
+      minutes,
+      seconds,
+    };
+  };
+
+  const startTimer = (e) => {
+    let { total, minutes, seconds } = getTimeRemaining(e);
+    if (total >= 0) {
+      setTimer(
+        (minutes > 9 ? minutes : "0" + minutes) +
+          ":" +
+          (seconds > 9 ? seconds : "0" + seconds)
+      );
+      resendBtnRef.current.disabled = true
+    } else {
+      setTimer(null);
+      resendBtnRef.current.disabled = false
+      // console.log(resendBtnRef)
+    }
+  };
+
+  const clearTimer = (e) => {
+    setTimer("03:00");
+    if (timerRef.current) clearInterval(timerRef.current);
+    const id = setInterval(() => {
+      startTimer(e);
+    }, 1000);
+    timerRef.current = id;
+  };
+
+  const getDeadTime = () => {
+    let deadline = new Date();
+    deadline.setSeconds(deadline.getSeconds() + 180);
+    return deadline;
+  };
 
   const sendEmailVerificationLink = async () => {
     setLoading(true);
@@ -27,8 +72,18 @@ const VerifyEmail = () => {
       openNotificationError("Error", err.message, "top");
     }
     setLoading(false);
-    modal.warning(modalConfig);
   };
+
+  const resendVerificationLink = () => {
+    setTimer("03:00")
+    clearTimer(getDeadTime());
+    sendEmailVerificationLink()
+  }
+
+  useEffect(() => {
+    clearTimer(getDeadTime());
+    modal.warning(modalConfig);
+  }, []);
 
   useEffect(() => {
     sendEmailVerificationLink();
@@ -74,16 +129,26 @@ const VerifyEmail = () => {
             </svg>
             <h1 className="text-2xl font-bold">Check your email</h1>
             <div className="text-center">
+              <p>Your registeration is complete !</p>
               <p>
-                We've sent an email with a verification link to{" "}
-                {auth.currentUser.email}
+                we've sent an email with a verification link to{" "}
+                {auth?.currentUser?.email}
               </p>
-              <p>
-                {" "}
-                please confirm it to complete your register.
-              </p>
+              <p> please confirm it to start using the app.</p>
             </div>
-            <p>{currentUser.emailVerified ? "verified" : "not verified"}</p>
+            <p>{currentUser?.emailVerified ? "verified" : "not verified"}</p>
+            <div className="flex flex-col gap-1">
+            <p className="text-sm text-gray-500">Haven't received the code yet?</p>
+            <Tooltip title="click to resend verification link">
+              <button
+                ref={resendBtnRef}
+                onClick={() => resendVerificationLink()}
+                className="bg-[#7932F5] text-white hover:bg-[#FB3C7F] disabled:bg-red-500 transition-all duration-500 p-2 rounded-lg"
+              >
+                Resend Link {timer ? `in ${timer}` : ''}
+              </button>
+            </Tooltip>
+                </div>
           </div>
         )}
       </div>
