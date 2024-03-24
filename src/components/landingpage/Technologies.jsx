@@ -44,7 +44,7 @@ const Technologies = () => {
                   your fingertips. Our app brings the world closer to you.
                   Bridging Connections, as envisioned by our platform, signifies
                   a world without boundaries, a place where distance is
-                  irrelevant
+                  irrelevant.
                 </p>
               </div>
             </div>

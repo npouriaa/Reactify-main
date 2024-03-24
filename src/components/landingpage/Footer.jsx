@@ -55,57 +55,57 @@ const Footer = () => {
           <div className="flex flex-wrap items-center max-sm:gap-10 sm:gap-16">
             <div className="flex flex-col gap-5">
               <h4 className="text-blue-900 text-lg">Company</h4>
-              <ul className="flex text-xs flex-col gap-3">
+              <ul className="text-sm flex flex-col gap-3">
                 <Link>
                   <li className="text-gray-400">About us</li>
                 </Link>
                 <Link>
-                  <li className="text-gray-400">features</li>
+                  <li className="text-gray-400">Features</li>
                 </Link>
                 <Link>
-                  <li className="text-gray-400">pricing</li>
+                  <li className="text-gray-400">Pricing</li>
                 </Link>
               </ul>
             </div>
             <div className="flex flex-col gap-5">
-              <h4 className="text-blue-900 text-lg">resources</h4>
-              <ul className="flex text-xs flex-col gap-3">
+              <h4 className="text-blue-900 text-lg">Resources</h4>
+              <ul className="text-sm flex flex-col gap-3">
                 <Link>
                   <li className="text-gray-400">FAQs</li>
                 </Link>
                 <Link>
-                  <li className="text-gray-400">testimonial</li>
+                  <li className="text-gray-400">Testimonial</li>
                 </Link>
                 <Link>
-                  <li className="text-gray-400">terms & condition</li>
-                </Link>
-              </ul>
-            </div>
-            <div className="flex flex-col gap-5">
-              <h4 className="text-blue-900 text-lg">products</h4>
-              <ul className="flex text-xs flex-col gap-3">
-                <Link>
-                  <li className="text-gray-400">blog</li>
-                </Link>
-                <Link>
-                  <li className="text-gray-400">help center</li>
-                </Link>
-                <Link>
-                  <li className="text-gray-400">contact</li>
+                  <li className="text-gray-400">Terms & Condition</li>
                 </Link>
               </ul>
             </div>
             <div className="flex flex-col gap-5">
-              <h4 className="text-blue-900 text-lg">relevent</h4>
-              <ul className="flex text-xs flex-col gap-3">
+              <h4 className="text-blue-900 text-lg">Products</h4>
+              <ul className="flex text-sm flex-col gap-3">
                 <Link>
-                  <li className="text-gray-400">why</li>
+                  <li className="text-gray-400">Blog</li>
                 </Link>
                 <Link>
-                  <li className="text-gray-400">products</li>
+                  <li className="text-gray-400">Help center</li>
                 </Link>
                 <Link>
-                  <li className="text-gray-400">customers</li>
+                  <li className="text-gray-400">Contact</li>
+                </Link>
+              </ul>
+            </div>
+            <div className="flex flex-col gap-5">
+              <h4 className="text-blue-900 text-lg">Relevent</h4>
+              <ul className="flex text-sm flex-col gap-3">
+                <Link>
+                  <li className="text-gray-400">Why</li>
+                </Link>
+                <Link>
+                  <li className="text-gray-400">Products</li>
+                </Link>
+                <Link>
+                  <li className="text-gray-400">Customers</li>
                 </Link>
               </ul>
             </div>
@@ -113,7 +113,7 @@ const Footer = () => {
         </div>
         <div className="w-full flex items-center py-4 justify-center border-t-2 border-t-gray-200">
           <p className="text-gray-400">
-            made by{" "}
+            Made by{" "}
             <Link className="text-blue-500" to="https://github.com/npouriaa">
               Npouriaa
             </Link>

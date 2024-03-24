@@ -45,7 +45,7 @@ const Login = () => {
         >
           <Form.Item
             hasFeedback
-            label="email :"
+            label="Email :"
             name="email"
             rules={[
               {
@@ -84,12 +84,12 @@ const Login = () => {
           </div>
         </Form>
         <p className="text-sm">
-          not a member yet ?{" "}
+          Not a member yet ?{" "}
           <Link
             className="text-[#7932F5] hover:text-[#FB3C7F] transition-all duration-500"
             to="/register"
           >
-            register
+            Register
           </Link>
         </p>
       </div>

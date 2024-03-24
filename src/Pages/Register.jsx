@@ -50,7 +50,7 @@ const Register = () => {
           });
         }
       );
-      setSendVerificationLink(true)
+      setSendVerificationLink(true);
       navigate("/verify-email");
     } catch (err) {
       openNotificationError("Error", err.message, "top");
@@ -110,7 +110,7 @@ const Register = () => {
           >
             <Form.Item
               hasFeedback
-              label="username :"
+              label="Username :"
               name="username"
               rules={[
                 {
@@ -123,7 +123,7 @@ const Register = () => {
             </Form.Item>
             <Form.Item
               hasFeedback
-              label="email :"
+              label="Email :"
               name="email"
               rules={[
                 {
@@ -207,12 +207,12 @@ const Register = () => {
             </div>
           </Form>
           <p className="text-sm">
-            already have an account ?{" "}
+            Already have an account ?{" "}
             <Link
               className="text-[#7932F5] hover:text-[#FB3C7F] transition-all duration-500"
               to="/login"
             >
-              login
+              Login
             </Link>
           </p>
         </div>

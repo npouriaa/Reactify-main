@@ -3,7 +3,7 @@ import ScrollElement from "../../components/ScrollElement";
 const Advantages = () => {
   const dataArray = [
     {
-      title: "real time",
+      title: "Real time",
       text: "Dozens of leading utility providers like National Grid are gaining enhanced situational awareness",
       icon: (
         <svg
@@ -25,7 +25,7 @@ const Advantages = () => {
       transition: "translate-y-8",
     },
     {
-      title: "secure",
+      title: "Secure",
       text: "Dozens of leading utility providers like National Grid are gaining enhanced situational awareness",
       icon: (
         <svg
