@@ -7,14 +7,12 @@ const AuthContext = createContext();
 const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
   const [sendVerificationLink, setSendVerificationLink] = useState(false);
-  // const lsToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
-      // if (!lsToken) {
-      //   localStorage.setItem("accessToken", await user.accessToken);
-      // }
+      if (user.emailVerified) {
+        setCurrentUser(user);
+      }
       console.log(user);
     });
 

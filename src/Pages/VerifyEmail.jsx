@@ -5,6 +5,7 @@ import useNotification from "../Hooks/useNotification";
 import LoaderModal from "../components/LoaderModal";
 import { Navigate } from "react-router-dom";
 import { Modal } from "antd";
+import { auth } from "../firebase";
 
 const modalConfig = {
   title: "Warning",
@@ -12,7 +13,8 @@ const modalConfig = {
 };
 
 const VerifyEmail = () => {
-  const { currentUser, sendVerificationLink } = useContext(AuthContext);
+  const { currentUser, setCurrentUser, sendVerificationLink } =
+    useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const { openNotificationError, contextHolder } = useNotification();
   const [modal, modalContextHolder] = Modal.useModal();
@@ -20,7 +22,7 @@ const VerifyEmail = () => {
   const sendEmailVerificationLink = async () => {
     setLoading(true);
     try {
-      await sendEmailVerification(currentUser);
+      await sendEmailVerification(auth.currentUser);
     } catch (err) {
       openNotificationError("Error", err.message, "top");
     }
@@ -30,7 +32,19 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     sendEmailVerificationLink();
-  }, []);
+
+    const interval = setInterval(() => {
+      auth.currentUser.reload().then(() => {
+        if (auth.currentUser.emailVerified) {
+          setCurrentUser(auth.currentUser);
+        }
+      });
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [setCurrentUser]);
 
   if (!sendVerificationLink) {
     return <Navigate to="/register" />;
@@ -62,17 +76,14 @@ const VerifyEmail = () => {
             <div className="text-center">
               <p>
                 We've sent an email with a verification link to{" "}
-                {currentUser?.email}
+                {auth.currentUser.email}
               </p>
               <p>
                 {" "}
-                please confirm it to complete your register , after that click
-                on the button below to check your verification.
+                please confirm it to complete your register.
               </p>
             </div>
-            <button className="bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500 p-3 rounded-lg text-sm">
-              Check my verification
-            </button>
+            <p>{currentUser.emailVerified ? "verified" : "not verified"}</p>
           </div>
         )}
       </div>
