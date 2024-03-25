@@ -13,7 +13,7 @@ const modalConfig = {
 };
 
 const VerifyEmail = () => {
-  const { currentUser, setCurrentUser, sendVerificationLink } =
+  const { setCurrentUser, sendVerificationLink } =
     useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const { openNotificationError, contextHolder } = useNotification();
