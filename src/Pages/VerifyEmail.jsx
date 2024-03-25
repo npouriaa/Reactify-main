@@ -41,11 +41,10 @@ const VerifyEmail = () => {
           ":" +
           (seconds > 9 ? seconds : "0" + seconds)
       );
-      resendBtnRef.current.disabled = true
+      resendBtnRef.current.disabled = true;
     } else {
       setTimer(null);
-      resendBtnRef.current.disabled = false
-      // console.log(resendBtnRef)
+      resendBtnRef.current.disabled = false;
     }
   };
 
@@ -75,10 +74,10 @@ const VerifyEmail = () => {
   };
 
   const resendVerificationLink = () => {
-    setTimer("03:00")
+    setTimer("03:00");
     clearTimer(getDeadTime());
-    sendEmailVerificationLink()
-  }
+    sendEmailVerificationLink();
+  };
 
   useEffect(() => {
     clearTimer(getDeadTime());
@@ -113,7 +112,7 @@ const VerifyEmail = () => {
         {loading ? (
           <LoaderModal />
         ) : (
-          <div className="w-[600px] h-[300px] bg-white rounded-2xl shadow-xl flex flex-col justify-center items-center p-3 gap-3">
+          <div className="max-sm:w-[330px] sm2:w-[360px] sm:w-[460px] md:w-[600px] max-sm:py-8 max-sm:px-5 sm:py-5 sm:px-6 md:px-8 md:py-6 gap-2 bg-white rounded-2xl shadow-xl flex flex-col justify-center items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -128,27 +127,26 @@ const VerifyEmail = () => {
               />
             </svg>
             <h1 className="text-2xl font-bold">Check your email</h1>
-            <div className="text-center">
-              <p>Your registeration is complete !</p>
+            <div className="max-sm:text-sm md:text-base text-center">
+              <p>Your registeration is complete ! </p>
               <p>
                 we've sent an email with a verification link to{" "}
-                {auth?.currentUser?.email}
+                {auth?.currentUser?.email} please confirm it to start using the
+                app.
               </p>
-              <p> please confirm it to start using the app.</p>
             </div>
-            <p>{currentUser?.emailVerified ? "verified" : "not verified"}</p>
             <div className="flex flex-col gap-1">
-            <p className="text-sm text-gray-500">Haven't received the code yet?</p>
-            <Tooltip title="click to resend verification link">
+              <p className="max-sm:text-sm text-gray-500">
+                Haven't received the code yet ?
+              </p>
               <button
                 ref={resendBtnRef}
                 onClick={() => resendVerificationLink()}
-                className="bg-[#7932F5] text-white hover:bg-[#FB3C7F] disabled:bg-red-500 transition-all duration-500 p-2 rounded-lg"
+                className="max-sm:text-sm md:text-base p-2 bg-[#7932F5] text-white hover:bg-[#FB3C7F] disabled:bg-red-500 transition-all duration-500 rounded-lg"
               >
-                Resend Link {timer ? `in ${timer}` : ''}
+                Resend link {timer ? `in ${timer}` : ""}
               </button>
-            </Tooltip>
-                </div>
+            </div>
           </div>
         )}
       </div>
