@@ -2,7 +2,7 @@ import ScrollElement from "../ScrollElement";
 
 const Qoute = () => {
   return (
-    <section className="w-full p-4 mt-20 max-sm:h-[450px] sm:h-[400px] md:h-[300px] bg-cover bg-[url(assets/images/landingpage/qoute/bg-02.png)]">
+    <section className="w-full p-4 mt-20 max-sm:h-[450px] sm:h-[400px] md:h-[300px] bg-cover bg-[url(../images/landingpage/qoute/bg-02.png)]">
       <ScrollElement
         styles={
           "w-full h-full flex flex-wrap gap-4 justify-center items-center"
