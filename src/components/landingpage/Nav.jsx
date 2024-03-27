@@ -53,9 +53,9 @@ const Nav = () => {
             </button>
           </Link>
           <Link to="signup">
-            <Link to="/register">
+            <Link to="/sign-up">
               <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500">
-                register
+                Sign up
               </button>
             </Link>
           </Link>

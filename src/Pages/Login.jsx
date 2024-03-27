@@ -120,9 +120,9 @@ const Login = () => {
             Not a member yet ?{" "}
             <Link
               className="text-[#7932F5] hover:text-[#FB3C7F] transition-all duration-500"
-              to="/register"
+              to="/sign-up"
             >
-              Register
+              Sign up
             </Link>
           </p>
         </div>

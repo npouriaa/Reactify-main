@@ -11,7 +11,7 @@ import useNotification from "../Hooks/useNotification";
 import LoaderModal from "../components/LoaderModal";
 import { AuthContext } from "../context/AuthContext";
 
-const Register = () => {
+const SignUp = () => {
   const frmRef = useRef();
   const [loading, setLoading] = useState(false);
   const { openNotificationError, contextHolder } = useNotification();
@@ -221,4 +221,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;
