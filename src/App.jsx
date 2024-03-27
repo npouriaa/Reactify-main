@@ -1,4 +1,4 @@
-import "./App.css";
+import "./assets/styles/App.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./Routes/Routes";
 import { AuthContextProvider } from "./context/AuthContext";
