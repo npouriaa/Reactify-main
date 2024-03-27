@@ -4,7 +4,7 @@ import Login from "../Pages/MainPages/Login";
 import SignUp from "../Pages/MainPages/SignUp";
 import LandingPage from "../Pages/MainPages/LandingPage";
 import VerifyEmail from "../Pages/UserPages/VerifyEmail";
-import ProtectedRoute from "../Pages/UserPages/ProtectedRoute";
+import ProtectedRoute from "../components/ProtectedRoute";
 import Home from "../Pages/UserPages/Home";
 
 const router = createBrowserRouter([
