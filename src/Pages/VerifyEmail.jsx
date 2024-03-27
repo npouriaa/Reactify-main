@@ -101,7 +101,7 @@ const VerifyEmail = () => {
   }, [setCurrentUser]);
 
   if (!sendVerificationLink) {
-    return <Navigate to="/register" />;
+    return <Navigate to="/sign-up" />;
   }
 
   return (

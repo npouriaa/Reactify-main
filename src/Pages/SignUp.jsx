@@ -202,7 +202,7 @@ const SignUp = () => {
             </Form.Item>
             <div className="w-full flex items-center justify-center">
               <button className="w-full bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500 py-2 rounded-lg">
-                Register
+                Sign up
               </button>
             </div>
           </Form>
