@@ -1,12 +1,12 @@
 import { Form, Input, Tooltip } from "antd";
-import logo from "../assets/images/logo/Reactify-black.png";
+import logo from "../../assets/images/logo/Reactify-black.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import useNotification from "../Hooks/useNotification";
-import { AuthContext } from "../context/AuthContext";
+import useNotification from "../../Hooks/useNotification";
+import { AuthContext } from "../../context/AuthContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
-import LoaderModal from "../components/LoaderModal";
+import { auth } from "../../firebase";
+import LoaderModal from "../../components/LoaderModal";
 
 const Login = () => {
   const { openNotificationError, contextHolder } = useNotification();

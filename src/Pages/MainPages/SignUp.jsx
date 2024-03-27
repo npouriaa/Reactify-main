@@ -1,15 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/images/logo/Reactify-black.png";
+import logo from "../../assets/images/logo/Reactify-black.png";
 import { Button, Form, Input, Tooltip, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useContext, useRef, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, storage, db } from "../firebase";
+import { auth, storage, db } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import useNotification from "../Hooks/useNotification";
-import LoaderModal from "../components/LoaderModal";
-import { AuthContext } from "../context/AuthContext";
+import useNotification from "../../Hooks/useNotification";
+import LoaderModal from "../../components/LoaderModal";
+import { AuthContext } from "../../context/AuthContext";
 
 const SignUp = () => {
   const frmRef = useRef();

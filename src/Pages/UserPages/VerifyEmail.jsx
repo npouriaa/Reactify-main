@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import { sendEmailVerification } from "firebase/auth";
-import useNotification from "../Hooks/useNotification";
-import LoaderModal from "../components/LoaderModal";
+import useNotification from "../../Hooks/useNotification";
+import LoaderModal from "../../components/LoaderModal";
 import { Navigate } from "react-router-dom";
 import { Modal, Tooltip } from "antd";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
 const modalConfig = {
   title: "Warning",

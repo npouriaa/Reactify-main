@@ -1,9 +1,9 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../Pages/Login";
-import SignUp from "../Pages/SignUp";
-import LandingPage from "../Pages/LandingPage";
-import VerifyEmail from "../Pages/VerifyEmail";
+import Login from "../Pages/MainPages/Login";
+import SignUp from "../Pages/MainPages/SignUp";
+import LandingPage from "../Pages/MainPages/LandingPage";
+import VerifyEmail from "../Pages/UserPages/VerifyEmail";
 
 const router = createBrowserRouter([
   {
