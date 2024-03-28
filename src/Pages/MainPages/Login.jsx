@@ -1,25 +1,31 @@
 import { Form, Input, Tooltip } from "antd";
 import logo from "../../assets/images/logo/Reactify-black.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import useNotification from "../../Hooks/useNotification";
-import { AuthContext } from "../../context/AuthContext";
+import { RequestsContext } from "../../context/RequestsContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import LoaderModal from "../../components/LoaderModal";
 
 const Login = () => {
   const { openNotificationError, contextHolder } = useNotification();
-  const { setSendVerificationLink } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState();
+  const { setCurrentUser, loading, setLoading, setSendVerificationLink } =
+    useContext(RequestsContext);
 
   const loginUser = async (email, password) => {
     setLoading(true);
     try {
-      signInWithEmailAndPassword(auth, email, password);
-      setSendVerificationLink(true);
-      navigate("/verify-email");
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log(response);
+      if (response.user.emailVerified) {
+        setCurrentUser(response.user);
+        navigate("/home");
+      } else {
+        setSendVerificationLink(true);
+        navigate("/verify-email");
+      }
     } catch (err) {
       openNotificationError("Error", err.message, "top");
       console.log(err);

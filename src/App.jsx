@@ -1,13 +1,13 @@
 import "./assets/styles/App.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./Routes/Routes";
-import { AuthContextProvider } from "./context/AuthContext";
+import { RequestsContextProvider } from "./context/RequestsContext";
 
 const App = () => {
   return (
-    <AuthContextProvider>
+    <RequestsContextProvider>
       <RouterProvider router={router} />
-    </AuthContextProvider>
+    </RequestsContextProvider>
   );
 };
 

@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { RequestsContext } from "../../context/RequestsContext";
 import { sendEmailVerification } from "firebase/auth";
 import useNotification from "../../Hooks/useNotification";
 import LoaderModal from "../../components/LoaderModal";
-import { Navigate } from "react-router-dom";
-import { Modal, Tooltip } from "antd";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Modal } from "antd";
 import { auth } from "../../firebase";
 
 const modalConfig = {
@@ -13,14 +13,13 @@ const modalConfig = {
 };
 
 const VerifyEmail = () => {
-  const { setCurrentUser, sendVerificationLink } =
-    useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const { setCurrentUser, sendVerificationLink, loading, setLoading } =
+    useContext(RequestsContext);
   const { openNotificationError, contextHolder } = useNotification();
   const [modal, modalContextHolder] = Modal.useModal();
   const timerRef = useRef(null);
-  const resendBtnRef = useRef();
   const [timer, setTimer] = useState("00:00");
+  const navigate = useNavigate();
 
   const getTimeRemaining = (e) => {
     const total = Date.parse(e) - Date.parse(new Date());
@@ -41,10 +40,8 @@ const VerifyEmail = () => {
           ":" +
           (seconds > 9 ? seconds : "0" + seconds)
       );
-      resendBtnRef.current.disabled = true;
     } else {
       setTimer(null);
-      resendBtnRef.current.disabled = false;
     }
   };
 
@@ -91,6 +88,8 @@ const VerifyEmail = () => {
       auth.currentUser.reload().then(() => {
         if (auth.currentUser.emailVerified) {
           setCurrentUser(auth.currentUser);
+          localStorage.setItem("accessToken", auth.currentUser.accessToken);
+          navigate("/home");
         }
       });
     }, 3000);
@@ -140,7 +139,7 @@ const VerifyEmail = () => {
                 Haven't received the code yet ?
               </p>
               <button
-                ref={resendBtnRef}
+                disabled={timer ? true : false}
                 onClick={() => resendVerificationLink()}
                 className="max-sm:text-sm md:text-base p-2 bg-[#7932F5] text-white hover:bg-[#FB3C7F] disabled:bg-red-500 transition-all duration-500 rounded-lg"
               >

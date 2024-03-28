@@ -2,18 +2,21 @@ import { onAuthStateChanged } from "@firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
 
-const AuthContext = createContext();
+const RequestsContext = createContext();
 
-const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({});
+const RequestsContextProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
   const [sendVerificationLink, setSendVerificationLink] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, async (user) => {
       if (user?.emailVerified) {
         setCurrentUser(user);
+        localStorage.setItem("accessToken", user.accessToken);
+      } else {
+        localStorage.removeItem("accessToken");
       }
-      console.log(user);
     });
 
     return () => {
@@ -22,17 +25,19 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider
+    <RequestsContext.Provider
       value={{
         currentUser,
         setCurrentUser,
         sendVerificationLink,
         setSendVerificationLink,
+        loading,
+        setLoading,
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </RequestsContext.Provider>
   );
 };
 
-export { AuthContextProvider, AuthContext };
+export { RequestsContextProvider, RequestsContext };

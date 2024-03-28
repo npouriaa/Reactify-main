@@ -9,13 +9,13 @@ import { auth, storage, db } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import useNotification from "../../Hooks/useNotification";
 import LoaderModal from "../../components/LoaderModal";
-import { AuthContext } from "../../context/AuthContext";
+import { RequestsContext } from "../../context/RequestsContext";
 
 const SignUp = () => {
   const frmRef = useRef();
-  const [loading, setLoading] = useState(false);
   const { openNotificationError, contextHolder } = useNotification();
-  const { setSendVerificationLink } = useContext(AuthContext);
+  const { setSendVerificationLink, loading, setLoading } =
+    useContext(RequestsContext);
   const navigate = useNavigate();
 
   const createNewUser = async (email, password, displayName, file) => {
