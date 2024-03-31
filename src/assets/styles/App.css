@@ -15,6 +15,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #f9fafc;
 }
 
 ::-webkit-scrollbar {
@@ -155,10 +156,10 @@ body {
   align-items: center;
 }
 
-.verify-email .ant-btn {
-  background-color: #7932F5 !important;
+.ant-modal-content .ant-btn {
+  background-color: #7932f5 !important;
 }
 
-.verify-email .ant-btn:hover {
-  background-color: #FB3C7F !important;
+.ant-modal-content .ant-btn:hover {
+  background-color: #fb3c7f !important;
 }

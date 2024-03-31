@@ -104,7 +104,7 @@ const VerifyEmail = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#7932F5] via-[#F5658C] to-[#F5658C] verify-email">
+    <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#7932F5] via-[#F5658C] to-[#F5658C]">
       {contextHolder}
       {modalContextHolder}
       {loading ? (
