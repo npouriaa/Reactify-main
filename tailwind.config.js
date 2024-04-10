@@ -42,12 +42,11 @@ export default {
         },
       },
       animation: {
-        slideIn: 'slideIn 600ms forwards',
-        slideOut: 'slideOut 600ms forwards',
-        showText: 'showText 600ms forwards',
-        hideText: 'hideText 400ms forwards',
-        justifyStart: 'justifyStart 600ms forwards',
-        justifyEnd: 'justifyEnd 600ms forwards',
+        slideIn: 'slideIn 800ms forwards',
+        slideOut: 'slideOut 800ms forwards',
+        showText: 'showText 800ms forwards',
+        hideText: 'hideText 500ms forwards',
+        justifyEnd: 'justifyEnd 800ms forwards',
       }
     },
   },
