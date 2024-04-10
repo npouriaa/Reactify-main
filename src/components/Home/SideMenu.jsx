@@ -3,6 +3,11 @@ import "../../assets/styles/sideMenu.css";
 import logo from "../../assets/images/logo/Reactify-black.png";
 import { Link } from "react-router-dom";
 import { BiNews } from "react-icons/bi";
+import { PiChatsCircleDuotone } from "react-icons/pi";
+import { RiUserSettingsLine } from "react-icons/ri";
+import { LuClipboardList } from "react-icons/lu";
+import { PiUsersBold } from "react-icons/pi";
+import { Tooltip } from "antd";
 
 const SideMenu = () => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
@@ -15,6 +20,34 @@ const SideMenu = () => {
     setInitialSideMenuOpen(true);
     setOpenSideMenu(!openSideMenu);
   };
+
+  const items = [
+    {
+      text: "Feed",
+      icon: <BiNews size={25} />,
+      to: "/home",
+    },
+    {
+      text: "My posts",
+      icon: <LuClipboardList size={25} />,
+      to: "/my-posts",
+    },
+    {
+      text: "Chats",
+      icon: <PiChatsCircleDuotone size={25} />,
+      to: "/chats",
+    },
+    {
+      text: "Friends",
+      icon: <PiUsersBold size={25} />,
+      to: "/friends",
+    },
+    {
+      text: "Profile setting",
+      icon: <RiUserSettingsLine size={25} />,
+      to: "/profile-setting",
+    },
+  ];
 
   return (
     <div
@@ -55,31 +88,40 @@ const SideMenu = () => {
           </svg>
         </button>
       </div>
-      <ul className="w-full px-4  flex flex-col h-10 py-8 text-[#909090] ">
-        <Link>
-          <li
-            className={`${
-              initialSideMenuOpen
-                ? openSideMenu
-                  ? "justify-start"
-                  : "animate-justifyEnd"
-                : "justify-end"
-            } flex items-center gap-2 transition-all duration-300 hover:text-[#F5658C] px-[.6rem]`}
+      <ul className="w-full px-4 gap-6 flex flex-col h-10 py-8 text-[#909090] ">
+        {items.map((item, index) => (
+          <Tooltip
+            trigger={openSideMenu ? "" : "hover"}
+            color="#F5658C"
+            placement="rightBottom"
+            title={item.text}
           >
-            <BiNews size={28} />
-            <span
-              className={`${
-                initialSideMenuOpen
-                  ? openSideMenu
-                    ? "animate-showText"
-                    : "animate-hideText"
-                  : "hidden"
-              }`}
-            >
-              dsds
-            </span>
-          </li>
-        </Link>
+            <Link key={index} to={item.to}>
+              <li
+                className={`${
+                  initialSideMenuOpen
+                    ? openSideMenu
+                      ? "justify-start"
+                      : "animate-justifyEnd"
+                    : "justify-end"
+                } flex items-center gap-2 transition-all duration-300 hover:text-[#F5658C] px-[.6rem]`}
+              >
+                {item.icon}
+                <span
+                  className={`${
+                    initialSideMenuOpen
+                      ? openSideMenu
+                        ? "animate-showText"
+                        : "animate-hideText"
+                      : "hidden"
+                  }`}
+                >
+                  {item.text}
+                </span>
+              </li>
+            </Link>
+          </Tooltip>
+        ))}
       </ul>
     </div>
   );
