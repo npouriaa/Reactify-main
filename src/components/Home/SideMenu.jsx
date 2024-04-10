@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import "../../assets/styles/sideMenu.css";
 import logo from "../../assets/images/logo/Reactify-black.png";
 import { Link } from "react-router-dom";
+import { BiNews } from "react-icons/bi";
 
 const SideMenu = () => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
@@ -19,8 +20,12 @@ const SideMenu = () => {
     <div
       ref={sideMenuRef}
       className={`${
-        initialSideMenuOpen ? (openSideMenu ? "animate-slideIn" : "animate-slideOut") : "left-[-11rem]"
-      } absolute home-side-menu flex flex-col items-center shadow-lg px-4 py-6 transition-all duration-500 h-screen bg-white`}
+        initialSideMenuOpen
+          ? openSideMenu
+            ? "animate-slideIn"
+            : "animate-slideOut"
+          : "left-[-11rem]"
+      } absolute home-side-menu flex gap-3 flex-col items-center shadow-lg px-4 py-6 transition-all duration-500 h-screen bg-white`}
     >
       <div className="w-full flex gap-11 justify-between">
         <Link to="/">
@@ -50,6 +55,32 @@ const SideMenu = () => {
           </svg>
         </button>
       </div>
+      <ul className="w-full flex flex-col h-10 py-8 text-[#909090] ">
+        <Link>
+          <li
+            className={`${
+              initialSideMenuOpen
+                ? openSideMenu
+                  ? "animate-justifyStart"
+                  : "animate-justifyEnd"
+                : "justify-end"
+            } flex items-center gap-2 transition-all duration-300 hover:text-[#F5658C] px-[.7rem]`}
+          >
+            <BiNews size={28} />
+            <span
+              className={`${
+                initialSideMenuOpen
+                  ? openSideMenu
+                    ? "animate-showText"
+                    : "animate-hideText"
+                  : "hidden"
+              }`}
+            >
+              dsds
+            </span>
+          </li>
+        </Link>
+      </ul>
     </div>
   );
 };
