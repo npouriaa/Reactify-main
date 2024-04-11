@@ -43,9 +43,9 @@ const SideMenu = () => {
       to: "/friends",
     },
     {
-      text: "Profile setting",
+      text: "Profile settings",
       icon: <RiUserSettingsLine size={25} />,
-      to: "/profile-setting",
+      to: "/profile-settings",
     },
   ];
 
@@ -58,9 +58,9 @@ const SideMenu = () => {
             ? "animate-slideIn"
             : "animate-slideOut"
           : "left-[-11rem]"
-      } absolute home-side-menu flex gap-3 flex-col items-center shadow-lg py-6 transition-all duration-500 h-screen bg-white`}
+      } absolute flex flex-col items-center transition-all duration-500 h-screen `}
     >
-      <div className="w-full flex gap-11 justify-between px-4 ">
+      <div className="w-full max-sm:h-[4.6rem] lg:h-20 bg-white flex items-center gap-11 justify-between px-4 ">
         <Link to="/">
           <img className="h-11" src={logo} alt="logo" />
         </Link>
@@ -88,7 +88,15 @@ const SideMenu = () => {
           </svg>
         </button>
       </div>
-      <ul className="w-full px-4 gap-6 flex flex-col h-10 py-8 text-[#909090] ">
+      <ul
+        className={`${
+          initialSideMenuOpen
+            ? openSideMenu
+              ? "max-sm:animate-showText lg:animate-none"
+              : "max-sm:animate-hideText lg:animate-none"
+            : "max-sm:hidden lg:flex"
+        } shadow-lg bg-white h-full flex w-full gap-6 flex-col py-8 text-[#909090]`}
+      >
         {items.map((item, index) => (
           <Tooltip
             trigger={openSideMenu ? "" : "hover"}
@@ -104,7 +112,7 @@ const SideMenu = () => {
                       ? "justify-start"
                       : "animate-justifyEnd"
                     : "justify-end"
-                } flex items-center gap-2 transition-all duration-300 hover:text-[#F5658C] px-[.6rem]`}
+                } flex items-center  gap-2 transition-all duration-300 hover:text-[#F5658C] pr-7 pl-[1rem]`}
               >
                 {item.icon}
                 <span

@@ -1,12 +1,35 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo/Reactify-white.png";
+import user from "../../assets/images/user-home/user.jpg";
+import { IoPower } from "react-icons/io5";
+import { IoSearchOutline } from "react-icons/io5";
+import { Tooltip } from "antd";
 
 const Header = () => {
   return (
-    <header className="w-screen justify-between flex py-4 px-28 h-20 bg-[#7932F5]">
-      <Link to="/">
-        <img className="h-full" src={logo} alt="Reactify-logo" />
+    <header className="w-screen max-sm:justify-end lg:justify-between flex items-center py-4 pl-24 max-sm:pr-4 md:pr-8 max-sm:h-[4.6rem] lg:h-20 bg-[#7932F5]">
+      <Link className="max-sm:hidden lg:block" to="/">
+        <img className="h-12" src={logo} alt="Reactify-logo" />
       </Link>
+      <div className="flex items-center gap-4">
+        <div className="max-sm:hidden lg:flex h-full px-3 py-[.2rem] items-center bg-white w-[16rem] rounded-3xl overflow-hidden">
+          <input placeholder="Search for friends..." className="w-[90%] py-2 px-2 text-sm" type="text" />
+          <button>
+            <IoSearchOutline color="#7932F5" size={25} />
+          </button>
+        </div>
+        <div className="flex items-center text-white gap-3">
+          <div className="h-12 w-12 overflow-hidden rounded-full">
+            <img className="object-cover h-full" src={user} alt="user" />
+          </div>
+          <p>Rebeca</p>
+          <Tooltip color="#ef4444" title="log out">
+            <button className="h-full hover:text-red-500 duration-300">
+              <IoPower size={25} />
+            </button>
+          </Tooltip>
+        </div>
+      </div>
     </header>
   );
 };
