@@ -7,17 +7,26 @@ const RequestsContext = createContext();
 const RequestsContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [sendVerificationLink, setSendVerificationLink] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unSub = onAuthStateChanged(auth, async (user) => {
-      if (user?.emailVerified) {
-        setCurrentUser(user);
-        localStorage.setItem("accessToken", user.accessToken);
-      } else {
-        localStorage.removeItem("accessToken");
+    const asyncHandler = async (user) => {
+      setLoading(true);
+      try {
+        const data = await user;
+        if (data?.emailVerified) {
+          setCurrentUser(user);
+          localStorage.setItem("accessToken", user.accessToken);
+        } else {
+          localStorage.removeItem("accessToken");
+        }
+      } catch (err) {
+        console.log(err);
       }
-    });
+      setLoading(false);
+    };
+
+    const unSub = onAuthStateChanged(auth, asyncHandler);
 
     return () => {
       unSub();
