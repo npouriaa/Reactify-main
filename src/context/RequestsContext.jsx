@@ -14,6 +14,7 @@ const RequestsContextProvider = ({ children }) => {
       setLoading(true);
       try {
         const data = await user;
+        console.log(user);
         if (data?.emailVerified) {
           setCurrentUser(user);
           localStorage.setItem("accessToken", user.accessToken);

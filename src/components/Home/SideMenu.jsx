@@ -99,12 +99,13 @@ const SideMenu = () => {
       >
         {items.map((item, index) => (
           <Tooltip
+            key={index}
             trigger={openSideMenu ? "" : "hover"}
             color="#F5658C"
             placement="rightBottom"
             title={item.text}
           >
-            <Link key={index} to={item.to}>
+            <Link to={item.to}>
               <li
                 className={`${
                   initialSideMenuOpen

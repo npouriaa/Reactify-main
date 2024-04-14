@@ -89,7 +89,8 @@ const VerifyEmail = () => {
         if (auth.currentUser.emailVerified) {
           setCurrentUser(auth.currentUser);
           localStorage.setItem("accessToken", auth.currentUser.accessToken);
-          navigate("/home");
+          navigate(`/${auth.currentUser.displayName}-${auth.currentUser.uid}`);
+          auth.currentUser.uid;
         }
       });
     }, 3000);

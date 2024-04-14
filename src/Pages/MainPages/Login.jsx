@@ -21,7 +21,7 @@ const Login = () => {
       console.log(response);
       if (response.user.emailVerified) {
         setCurrentUser(response.user);
-        navigate("/home");
+        navigate(`/${response.user.displayName}-${response.user.uid}`);
       } else {
         setSendVerificationLink(true);
         navigate("/verify-email");

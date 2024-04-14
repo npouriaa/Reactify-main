@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo/Reactify-white.png";
-import user from "../../assets/images/user-home/user.jpg";
 import { IoPower } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
 import { Tooltip } from "antd";
@@ -18,6 +17,8 @@ const Header = () => {
     setLoading(true);
     try {
       await signOut(auth);
+      localStorage.removeItem("accessToken");
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +56,10 @@ const Header = () => {
               <IoIosNotificationsOutline size={25} />
             </button>
             <Tooltip color="#ef4444" title="Log out">
-              <button onClick={logOutUser} className="h-full hover:text-red-500 duration-300">
+              <button
+                onClick={logOutUser}
+                className="h-full hover:text-red-500 duration-300"
+              >
                 <IoPower size={25} />
               </button>
             </Tooltip>

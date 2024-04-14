@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     element: <VerifyEmail />,
   },
   {
-    path: "/home",
+    path: ":username",
     element: (
       <ProtectedRoute>
         <Home />
