@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-start p-8">
-      <div className="flex bg-red-500 max-sm:w-full sm2:w-5/6 md2:w-3/4 xl:w-3/5">
+      <div className="flex max-sm:w-full sm2:w-5/6 md2:w-3/4 xl:w-3/5">
         <div className="max-sm:flex md:hidden h-12 px-3 py-[.2rem] bg-white items-center justify-between rounded-3xl overflow-hidden">
           <input
             placeholder="Search for friends..."
