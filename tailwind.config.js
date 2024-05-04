@@ -4,10 +4,11 @@ export default {
   theme: {
     screens: {
       "max-sm": "360px",
-      "sm2": "390px",
+      "max-sm2": "390px",
       "sm": "481px",
-      "md2": "500px",
+      "sm2": "500px",
       "md": "641px",
+      "md2": "768px",
       "lg": "961px",
       "xl": "1025px",
       "2xl": "1250px",

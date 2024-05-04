@@ -43,7 +43,7 @@ const Login = () => {
       {contextHolder}
       {loading && <LoaderModal />}
       <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#7932F5] via-[#F5658C] to-[#F5658C]">
-        <div className="flex gap-2 items-center flex-col rounded-2xl max-sm:w-[350px] sm:w-[440px] sm2:w-[380px] md:w-[500px] shadow-xl bg-white py-10 px-8">
+        <div className="flex gap-2 items-center flex-col rounded-2xl max-sm:w-[350px] sm:w-[440px] max-sm2:w-[380px] md:w-[500px] shadow-xl bg-white py-10 px-8">
           <div className="w-full flex items-center justify-center relative">
             <Link to="/">
               <img className="max-sm:h-10 sm:h-12" src={logo} alt="logo" />

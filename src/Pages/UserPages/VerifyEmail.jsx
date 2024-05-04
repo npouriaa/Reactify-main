@@ -111,7 +111,7 @@ const VerifyEmail = () => {
       {loading ? (
         <LoaderModal />
       ) : (
-        <div className="max-sm:w-[330px] sm2:w-[360px] sm:w-[460px] md:w-[600px] max-sm:py-8 max-sm:px-5 sm:py-5 sm:px-6 md:px-8 md:py-6 gap-2 bg-white rounded-2xl shadow-xl flex flex-col justify-center items-center">
+        <div className="max-sm:w-[330px] max-sm2:w-[360px] sm:w-[460px] md:w-[600px] max-sm:py-8 max-sm:px-5 sm:py-5 sm:px-6 md:px-8 md:py-6 gap-2 bg-white rounded-2xl shadow-xl flex flex-col justify-center items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
