@@ -4,7 +4,7 @@ const GoToTopButton = () => {
   const [isFixed, setFixed] = useState(false);
 
   const handleScroll = () => {
-    if (window.scrollY >= 600) {
+    if (window.scrollY >= 100) {
       setFixed(true);
     } else {
       setFixed(false);

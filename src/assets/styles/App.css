@@ -15,7 +15,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f9fafc;
+  background-color: #fff;
 }
 
 ::-webkit-scrollbar {

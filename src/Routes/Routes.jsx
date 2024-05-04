@@ -6,6 +6,7 @@ import LandingPage from "../Pages/MainPages/LandingPage";
 import VerifyEmail from "../Pages/UserPages/VerifyEmail";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Home from "../Pages/UserPages/Home";
+import UserMainLayout from "../Pages/UserPages/UserMainLayout";
 
 const router = createBrowserRouter([
   {
@@ -28,9 +29,16 @@ const router = createBrowserRouter([
     path: ":username",
     element: (
       <ProtectedRoute>
-        <Home />
+        <UserMainLayout />
       </ProtectedRoute>
     ),
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      
+    ],
   },
 ]);
 
