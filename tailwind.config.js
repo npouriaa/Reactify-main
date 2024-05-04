@@ -6,7 +6,7 @@ export default {
       "max-sm": "360px",
       "sm2": "390px",
       "sm": "481px",
-      "": "500px",
+      "md2": "500px",
       "md": "641px",
       "lg": "961px",
       "xl": "1025px",
