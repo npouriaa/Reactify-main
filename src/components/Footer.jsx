@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo/Reactify-black.png";
-import ScrollElement from "../ScrollElement";
+import logo from "../assets/images/logo/Reactify-black.png";
+import ScrollElement from "./ScrollElement";
 
 const Footer = () => {
   return (
     <ScrollElement>
-      <footer className="w-full max-sm:mt-10 flex gap-4 px-8 py-2 flex-col items-center">
+      <footer className="w-full max-sm:mt-10 flex gap-4 px-8 py-2 flex-col items-center bg-white">
         <div className="w-full h-full max-sm:gap-6 sm:gap-8 md:gap-14 xl:gap-28 flex max-sm:justify-start lg:justify-center flex-wrap items-start">
           <div className="h-full flex flex-col gap-4">
             <Link to="/">

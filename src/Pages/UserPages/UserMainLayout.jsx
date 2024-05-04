@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
 import Header from "../../components/Home/Header";
 import SideMenu from "../../components/Home/SideMenu";
-import Footer from "../../components/landingpage/Footer";
+import Footer from "../../components/Footer";
 
 const UserMainLayout = () => {
   return (
