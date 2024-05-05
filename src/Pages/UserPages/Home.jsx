@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import useNotification from "../../Hooks/useNotification";
 import { IoSearchOutline } from "react-icons/io5";
 import FeedBanner from "../../components/Home/FeedBanner";
+import AddPost from "../../components/Home/AddPost";
 
 const Home = () => {
   // const { openNotificationSuccess, contextHolder } = useNotification();
@@ -24,6 +25,7 @@ const Home = () => {
           </button>
         </div>
         <FeedBanner />
+        <AddPost/>
       </div>
     </div>
   );

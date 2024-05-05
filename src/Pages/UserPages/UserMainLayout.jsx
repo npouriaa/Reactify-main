@@ -6,11 +6,11 @@ import Footer from "../../components/Footer";
 
 const UserMainLayout = () => {
   return (
-    <Layout className="w-full">
+    <Layout className="w-screen ">
       <SideMenu />
-      <Layout>
+      <Layout className="w-full ">
         <Header />
-        <div className="w-full  h-96 flex justify-center items-center">
+        <div className="w-full flex justify-center items-center">
           <Outlet />
         </div>
         <Footer />

@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <>
       {loading && <LoaderModal />}
-      <header className="w-screen max-sm:justify-end lg:justify-between flex items-center py-4 pl-24 max-sm:pr-4 md:pr-8 max-sm:h-[4.6rem] lg:h-20 bg-[#7932F5]">
+      <header className="max-sm:justify-end lg:justify-between flex items-center py-4 pl-24 max-sm:pr-4 md:pr-8 max-sm:h-[4.6rem] lg:h-20 bg-[#7932F5]">
         <Link className="max-sm:hidden lg:block" to="/">
           <img className="h-12" src={logo} alt="Reactify-logo" />
         </Link>
