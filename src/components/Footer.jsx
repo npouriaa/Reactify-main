@@ -5,8 +5,8 @@ import ScrollElement from "./ScrollElement";
 const Footer = () => {
   return (
     <ScrollElement>
-      <footer className="w-full max-sm:mt-10 flex gap-4 px-8 py-2 flex-col items-center bg-white">
-        <div className="w-full h-full max-sm:gap-6 sm:gap-8 md:gap-14 xl:gap-28 flex max-sm:justify-start lg:justify-center flex-wrap items-start">
+      <footer className="w-full flex gap-4 py-8 flex-col items-center bg-white">
+        <div className="w-full h-full max-sm:gap-6 px-8 sm:gap-8 md:gap-14 xl:gap-28 flex max-sm:justify-start lg:justify-center flex-wrap items-start">
           <div className="h-full flex flex-col gap-4">
             <Link to="/">
               <img
@@ -111,7 +111,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="w-full flex items-center py-4 justify-center border-t-2 border-t-gray-200">
+        <div className="w-full flex  items-center py-4 justify-center border-t-2 border-t-gray-200">
           <p className="text-gray-400">
             Made by{" "}
             <Link className="text-blue-500" to="https://github.com/npouriaa">
