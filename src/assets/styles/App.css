@@ -9,6 +9,8 @@
   box-sizing: border-box;
   font-family: "poppins";
   outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 body {
