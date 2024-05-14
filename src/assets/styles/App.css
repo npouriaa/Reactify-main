@@ -7,7 +7,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "poppins";
+  font-family: "poppins" !important;
   outline: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
@@ -165,4 +165,50 @@ body {
 
 .ant-modal-content .ant-btn:hover {
   background-color: #fb3c7f !important;
+}
+
+#add-post-form_post_caption {
+  border: none !important;
+}
+#add-post-form_post_caption:focus {
+  box-shadow: none;
+}
+#add-post-form_post_caption::placeholder {
+  color: #7b7b7b;
+}
+.ant-upload-select {
+  border-color: #7932f5 !important;
+}
+.ant-upload-list-item-container , .ant-upload-select {
+  width:5.5rem !important;
+  height:5.5rem !important;
+}
+.ant-image-preview-root .ant-image-preview-img {
+  max-width: 70% !important;
+}
+
+.ant-image-mask-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-image-preview-switch-right:hover,
+.ant-image-preview-switch-left:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.ant-image-preview-switch-right span svg,
+.ant-image-preview-switch-left span svg {
+  fill: #fff;
+}
+
+.ant-image-preview-close {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.ant-image-preview-operations,
+.ant-image-preview-switch-left,
+.ant-image-preview-switch-right {
+  background-color: rgba(0, 0, 0, 0.8);
 }
