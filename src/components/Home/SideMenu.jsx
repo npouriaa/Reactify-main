@@ -58,7 +58,7 @@ const SideMenu = () => {
             ? "animate-slideIn"
             : "animate-slideOut"
           : "left-[-11rem]"
-      } fixed flex flex-col items-center transition-all duration-500 h-screen z-[1000]`}
+      } max-sm:absolute lg:fixed flex flex-col items-center transition-all duration-500 h-screen z-[1000]`}
     >
       <div className="w-full max-sm:h-[4.6rem] lg:h-20 bg-white flex items-center gap-11 justify-between px-4 ">
         <Link to="/">
