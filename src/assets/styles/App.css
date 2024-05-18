@@ -179,9 +179,15 @@ body {
 .ant-upload-select {
   border-color: #7932f5 !important;
 }
-.ant-upload-list-item-container , .ant-upload-select {
-  width:5.5rem !important;
-  height:5.5rem !important;
+.ant-upload-list-item-container,
+.ant-upload-select {
+  width: 5.5rem !important;
+  height: 5.5rem !important;
+}
+.ant-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .ant-image-preview-root .ant-image-preview-img {
   max-width: 70% !important;
@@ -211,4 +217,27 @@ body {
 .ant-image-preview-switch-left,
 .ant-image-preview-switch-right {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.ant-image-img {
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 360px) {
+  .ant-image-img {
+    max-width: 20rem;
+  }
+}
+
+@media (min-width: 420px) {
+  .ant-image-img {
+    max-width: 22rem;
+  }
+}
+
+@media (min-width: 600px) {
+  .ant-image-img {
+    max-width: 25rem;
+  }
 }
