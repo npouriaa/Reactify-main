@@ -1,5 +1,5 @@
-import { Button, Form, Input } from "antd";
-import React, { useState } from "react";
+import { Form, Input } from "antd";
+import { useState } from "react";
 import { Upload, Image } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -57,7 +57,7 @@ const AddPost = () => {
         layout="vertical"
         name="add-post-form"
         onFinish={onFinish}
-        className="flex flex-col gap-4 justify-center"
+        className="flex flex-col gap-4 justify-center add-post-form"
       >
         <Form.Item
           required
@@ -82,7 +82,7 @@ const AddPost = () => {
             beforeUpload={() => false}
             accept=".jpg,.jpeg,.png,.webp,.mp4,.avi,.mov,.wmv,.webm"
           >
-            {fileList.length >= 8 ? null : uploadButton}
+            {fileList.length >= 4 ? null : uploadButton}
           </Upload>
           {previewImage && (
             <div>

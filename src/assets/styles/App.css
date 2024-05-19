@@ -176,11 +176,11 @@ body {
 #add-post-form_post_caption::placeholder {
   color: #7b7b7b;
 }
-.ant-upload-select {
+.add-post-form .ant-upload-select {
   border-color: #7932f5 !important;
 }
-.ant-upload-list-item-container,
-.ant-upload-select {
+.add-post-form .ant-upload-list-item-container,
+.add-post-form .ant-upload-select {
   width: 5.5rem !important;
   height: 5.5rem !important;
 }
