@@ -61,8 +61,12 @@ const AddPost = () => {
         onFinish={onFinish}
         className="flex flex-col gap-4 justify-center add-post-form"
       >
-        <div className="w-full flex">
-          <img className="h-10 w-10 border-[1px] rounded-full object-cover" src={currentUser?.photoURL} alt="" />
+        <div className="w-full flex gap-2 post-caption-con">
+          <img
+            className="h-10 w-10 border-[1px] rounded-full object-cover"
+            src={currentUser?.photoURL}
+            alt=""
+          />
           <Form.Item
             className="w-full"
             required
@@ -74,7 +78,15 @@ const AddPost = () => {
             ]}
             name="post_caption"
           >
-            <Input.TextArea placeholder="Share what are you thinking..." />
+            <Input.TextArea
+              rows={3}
+              placeholder="Share what are you thinking..."
+              maxLength={300}
+              count={{
+                show: true,
+                max: 300,
+              }}
+            />
           </Form.Item>
         </div>
         <Form.Item label="Post media" name="post_media">

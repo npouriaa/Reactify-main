@@ -167,11 +167,11 @@ body {
   background-color: #fb3c7f !important;
 }
 
-#add-post-form_post_caption {
+.ant-input-textarea-affix-wrapper {
   border: none !important;
 }
-#add-post-form_post_caption:focus {
-  box-shadow: none;
+.post-caption-con * {
+  box-shadow: none !important;
 }
 #add-post-form_post_caption::placeholder {
   color: #7b7b7b;
