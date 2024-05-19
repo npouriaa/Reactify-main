@@ -1,7 +1,8 @@
 import { Form, Input } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Upload, Image } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { RequestsContext } from "../../context/RequestsContext";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -15,6 +16,7 @@ const AddPost = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
+  const { currentUser } = useContext(RequestsContext);
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -59,22 +61,23 @@ const AddPost = () => {
         onFinish={onFinish}
         className="flex flex-col gap-4 justify-center add-post-form"
       >
-        <Form.Item
-          required
-          rules={[
-            {
-              required: true,
-              message: "This field can't be empty!",
-            },
-          ]}
-          name="post_caption"
-        >
-          <Input.TextArea placeholder="Share what are you thinking..." />
-        </Form.Item>
-        <Form.Item
-          label="Post media"
-          name="post_media"
-        >
+        <div className="w-full flex">
+          <img className="h-10 w-10 border-[1px] rounded-full object-cover" src={currentUser?.photoURL} alt="" />
+          <Form.Item
+            className="w-full"
+            required
+            rules={[
+              {
+                required: true,
+                message: "This field can't be empty!",
+              },
+            ]}
+            name="post_caption"
+          >
+            <Input.TextArea placeholder="Share what are you thinking..." />
+          </Form.Item>
+        </div>
+        <Form.Item label="Post media" name="post_media">
           <Upload
             onChange={handleChange}
             onPreview={handlePreview}
@@ -111,7 +114,9 @@ const AddPost = () => {
             </div>
           )}
         </Form.Item>
-        <button className="w-40 bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500 py-2 rounded-lg">Share post</button>
+        <button className="w-40 bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500 py-2 rounded-lg">
+          Share post
+        </button>
       </Form>
     </div>
   );
