@@ -26,14 +26,8 @@ const Post = () => {
         </div>
       </div>
       <div className="w-full flex flex-col gap-4 py-2">
-        <p className="w-full text-[#717993]">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-          nesciunt minima commodi earum? Quia quis fugiat, laudantium velit
-          incidunt aliquam aspernatur eveniet cupiditate fuga modi, quas, et
-          neque officiis iste. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Veritatis nesciunt minima commodi earum? Quia quis
-          fugiat, laudantium velit incidunt aliquam aspernatur eveniet
-          cupiditate fuga modi, quas, et neque officiis iste.
+        <p className="w-full break-words text-[#717993]">
+          saaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaa
         </p>
         <div className="w-full max-sm:justify-center 2xl:justify-start flex gap-4 flex-wrap">
           <Image.PreviewGroup>

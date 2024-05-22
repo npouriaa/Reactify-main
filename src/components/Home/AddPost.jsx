@@ -81,10 +81,10 @@ const AddPost = () => {
             <Input.TextArea
               rows={3}
               placeholder="Share what are you thinking..."
-              maxLength={300}
+              maxLength={250}
               count={{
                 show: true,
-                max: 300,
+                max: 250,
               }}
             />
           </Form.Item>
