@@ -47,20 +47,20 @@ const Post = () => {
       <div className="w-full flex gap-2 items-center py-2 border-t-[1px]">
         {like ? (
           <button onClick={() => setLike(!like)} className="cursor-pointer">
-            <RiHeartFill className=" text-[#ff0000] h-[1.8rem] w-[1.8rem]" />
+            <RiHeartFill className=" text-[#ff0000] h-[1.5rem] w-[1.5rem]" />
           </button>
         ) : (
           <button onClick={() => setLike(!like)} className="cursor-pointer">
-            <RiHeartLine className=" text-[#717993] h-[1.8rem] w-[1.8rem]" />
+            <RiHeartLine className=" text-[#717993] h-[1.5rem] w-[1.5rem]" />
           </button>
         )}
         <button>
           <FaRegComment
-            className="text-[#717993] scale-x-[-1] h-[1.5rem] w-[1.5rem]"
+            className="text-[#717993] scale-x-[-1] h-[1.4rem] w-[1.4rem]"
           />
         </button>
         <button>
-          <IoShareSocial className="text-[#717993] h-[1.5rem] w-[1.5rem]"/>
+          <IoShareSocial className="text-[#717993] h-[1.4rem] w-[1.4rem]"/>
         </button>
       </div>
     </div>
