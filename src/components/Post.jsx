@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import user from "../assets/images/user-home/user.jpg";
 import post from "../assets/images/user-home/post.jpg";
 import { Image } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiHeartLine } from "react-icons/ri";
@@ -10,6 +10,7 @@ import { RiHeartFill } from "react-icons/ri";
 
 const Post = () => {
   const [like, setLike] = useState(false);
+  const postImages = [{ src: post }, { src: post }, { src: post }];
 
   return (
     <div className="w-full min-h-[25rem] px-6 py-2 bg-white rounded-md flex gap-4 flex-col">
@@ -24,7 +25,7 @@ const Post = () => {
           <p className="text-[#717993] text-sm font-thin">3hrs ago</p>
         </div>
       </div>
-      <div className="w-full flex flex-col gap-2 py-2">
+      <div className="w-full flex flex-col gap-4 py-2">
         <p className="w-full text-[#717993]">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
           nesciunt minima commodi earum? Quia quis fugiat, laudantium velit
@@ -34,9 +35,11 @@ const Post = () => {
           fugiat, laudantium velit incidunt aliquam aspernatur eveniet
           cupiditate fuga modi, quas, et neque officiis iste.
         </p>
-        <div className="w-full max-sm:justify-center 2xl:justify-start flex max-sm:gap-4 lg:gap-8 flex-wrap">
+        <div className="w-full max-sm:justify-center 2xl:justify-start flex gap-4 flex-wrap">
           <Image.PreviewGroup>
-            <Image alt="post-image" src={post} />
+            {postImages.map((image) => (
+              <Image alt="post-image" src={image.src} />
+            ))}
           </Image.PreviewGroup>
         </div>
       </div>
@@ -44,7 +47,7 @@ const Post = () => {
         <p>1301 likes</p>
         <p>20 comments</p>
       </div>
-      <div className="w-full flex gap-2 items-center py-2 border-t-[1px]">
+      <div className="w-full flex gap-1 items-center py-2 border-t-[1px]">
         {like ? (
           <button onClick={() => setLike(!like)} className="cursor-pointer">
             <RiHeartFill className=" text-[#ff0000] h-[1.5rem] w-[1.5rem]" />
@@ -55,12 +58,10 @@ const Post = () => {
           </button>
         )}
         <button>
-          <FaRegComment
-            className="text-[#717993] scale-x-[-1] h-[1.4rem] w-[1.4rem]"
-          />
+          <FaRegComment className="text-[#717993] scale-x-[-1] h-[1.35rem] w-[1.35rem]" />
         </button>
         <button>
-          <IoShareSocial className="text-[#717993] h-[1.4rem] w-[1.4rem]"/>
+          <IoShareSocial className="text-[#717993] h-[1.4rem] w-[1.4rem]" />
         </button>
       </div>
     </div>
