@@ -31,8 +31,8 @@ const Post = () => {
         </p>
         <div className="w-full max-sm:justify-center 2xl:justify-start flex gap-4 flex-wrap">
           <Image.PreviewGroup>
-            {postImages.map((image) => (
-              <Image alt="post-image" src={image.src} />
+            {postImages.map((image, index) => (
+              <Image key={index} alt="post-image" src={image.src} />
             ))}
           </Image.PreviewGroup>
         </div>
