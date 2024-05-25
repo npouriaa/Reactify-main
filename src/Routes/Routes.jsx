@@ -7,6 +7,7 @@ import VerifyEmail from "../Pages/UserPages/VerifyEmail";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Home from "../Pages/UserPages/Home";
 import UserMainLayout from "../Pages/UserPages/UserMainLayout";
+import UserProfile from "../Pages/UserPages/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,10 @@ const router = createBrowserRouter([
         path: "",
         element: <Home />,
       },
-      
+      {
+        path: "profile",
+        element: <UserProfile />,
+      },
     ],
   },
 ]);

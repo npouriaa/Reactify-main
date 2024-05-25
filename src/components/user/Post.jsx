@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import user from "../assets/images/user-home/user.jpg";
-import post from "../assets/images/user-home/post.jpg";
+import user from "../../assets/images/user-home/user.jpg";
+import post from "../../assets/images/user-home/post.jpg";
 import { Image } from "antd";
 import { useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
@@ -27,7 +27,10 @@ const Post = () => {
       </div>
       <div className="w-full flex flex-col gap-4 py-2">
         <p className="w-full break-words text-[#717993]">
-          saaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaa
+          this is just test this is just test this is just test this is just
+          test this is just test this is just test this is just test this is
+          just test this is just test this is just test this is just test this
+          is just test this is just test this is just tes
         </p>
         <div className="w-full max-sm:justify-center 2xl:justify-start flex gap-4 flex-wrap">
           <Image.PreviewGroup>
