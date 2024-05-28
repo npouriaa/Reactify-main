@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import user from "../../assets/images/user-home/user.jpg";
-import post from "../../assets/images/user-home/post.jpg";
+import user from "../../assets/images/user/user.jpg";
+import post from "../../assets/images/user/post.jpg";
 import { Image } from "antd";
 import { useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
