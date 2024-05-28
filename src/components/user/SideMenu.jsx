@@ -25,7 +25,7 @@ const SideMenu = () => {
     {
       text: "Feed",
       icon: <BiNews size={25} />,
-      to: "/home",
+      to: "",
     },
     {
       text: "My posts",
@@ -43,9 +43,9 @@ const SideMenu = () => {
       to: "/friends",
     },
     {
-      text: "Profile settings",
+      text: "Profile",
       icon: <RiUserSettingsLine size={25} />,
-      to: "/profile-settings",
+      to: "profile",
     },
   ];
 
