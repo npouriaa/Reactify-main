@@ -245,3 +245,19 @@ body {
 .user-banner-shadow {
   background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
 }
+
+/* .profile-photo {
+  position: relative;
+  padding: 5px;
+}
+
+.profile-photo::after {
+  content: "";
+  background-image: url(../../assets/images/user/border.png);
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+} */

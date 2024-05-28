@@ -44,7 +44,7 @@ const Header = () => {
             </button>
           </div>
           <div className="flex items-center text-white gap-3">
-            <div className="h-12 w-12 overflow-hidden rounded-full border">
+            <div className="h-12 w-12 overflow-hidden rounded-full">
               <img
                 className="object-cover h-full"
                 src={currentUser?.photoURL}
