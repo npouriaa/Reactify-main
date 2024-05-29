@@ -10,7 +10,7 @@ const UserMainLayout = () => {
       <SideMenu />
       <Layout className="w-full ">
         <Header />
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full max-sm:mt-16 lg:mt-24 flex justify-center items-center">
           <Outlet />
         </div>
         <Footer />
