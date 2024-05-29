@@ -14,27 +14,27 @@ const Post = () => {
 
   return (
     <div className="w-full min-h-[25rem] px-6 py-2 bg-white rounded-md flex gap-4 flex-col">
-      <div className="flex items-center p-2 gap-4">
-        <div className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')]">
+      <div className="flex items-center gap-4 p-2">
+        <Link className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0">
           <img
             src={user}
-            className="rounded-full object-cover"
+            className="object-cover rounded-full"
             alt="user-profile"
           />
-        </div>
-        <div className=" flex max-sm:text-center lg:text-start flex-col">
+        </Link>
+        <div className="flex flex-col max-sm:text-center lg:text-start">
           <Link className="">Jesica Rose</Link>
           <p className="text-[#717993] text-sm font-thin">3hrs ago</p>
         </div>
       </div>
-      <div className="w-full flex flex-col gap-4 py-2">
+      <div className="flex flex-col w-full gap-4 py-2">
         <p className="w-full break-words text-[#717993]">
           this is just test this is just test this is just test this is just
           test this is just test this is just test this is just test this is
           just test this is just test this is just test this is just test this
           is just test this is just test this is just tes
         </p>
-        <div className="w-full max-sm:justify-center 2xl:justify-start flex gap-4 flex-wrap">
+        <div className="flex flex-wrap w-full gap-4 max-sm:justify-center 2xl:justify-start">
           <Image.PreviewGroup>
             {postImages.map((image, index) => (
               <Image key={index} alt="post-image" src={image.src} />
