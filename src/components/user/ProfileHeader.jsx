@@ -3,6 +3,7 @@ import { RequestsContext } from "../../context/RequestsContext";
 
 const ProfileHeader = () => {
   const { currentUser } = useContext(RequestsContext);
+  const joinDate = currentUser?.metadata.creationTime.split(" ")
 
   return (
     <div className="w-full rounded-lg max-sm:h-[23rem] sm:h-[20rem] md:h-[19rem] lg:h-[17rem] bg-[url('../../assets/images/user/banner.jpg')]">
@@ -18,6 +19,7 @@ const ProfileHeader = () => {
             <div className="flex flex-col max-sm:text-center lg:text-start">
               <h3 className="text-xl capitalize">{currentUser?.displayName}</h3>
               <h3 className="text-lg capitalize">Iran / Sabzevar</h3>
+              <h5 className="text-sm text-[#d7d7d7] capitalize">joined {joinDate[2]} {joinDate[3]}</h5>
             </div>
           </div>
           <div className="flex justify-center flex-wrap gap-4 text-[.9rem] text-[#d7d7d7] max-sm:items-center lg:items-end h-[3.4rem]">
