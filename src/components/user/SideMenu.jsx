@@ -58,19 +58,19 @@ const SideMenu = () => {
             ? "animate-slideIn"
             : "animate-slideOut"
           : "left-[-11rem]"
-      } fixed z-[1000] flex flex-col items-center transition-all duration-500 h-screen`}
+      } fixed z-[1000] flex flex-col items-center transition-all duration-500`}
     >
       <div className="w-full max-sm:h-[4.6rem] lg:h-20 bg-white flex items-center gap-11 justify-between px-4 ">
         <Link to="/">
           <img className="h-11" src={logo} alt="logo" />
         </Link>
         <button
-          className="w-11 h-11 flex justify-center items-center overflow-hidden"
+          className="flex items-center justify-center overflow-hidden w-11 h-11"
           onClick={() => sideMenuHandler()}
         >
           <svg
             ref={hMenuRef}
-            className="ham absolute ham6 w-16"
+            className="absolute w-16 ham ham6"
             viewBox="0 0 100 100"
           >
             <path
@@ -95,7 +95,7 @@ const SideMenu = () => {
               ? "max-sm:animate-showText lg:animate-none"
               : "max-sm:animate-hideText lg:animate-none"
             : "max-sm:hidden lg:flex"
-        } shadow-lg bg-white h-full flex w-full gap-6 flex-col py-8 text-[#909090]`}
+        } shadow-lg bg-white h-screen flex w-full gap-6 flex-col py-8 text-[#909090]`}
       >
         {items.map((item, index) => (
           <Tooltip
