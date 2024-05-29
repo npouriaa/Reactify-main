@@ -17,7 +17,7 @@ const Footer = () => {
             </Link>
             <p className="font-thin text-gray-400">follow me on :</p>
             <div className="flex gap-2 items-center">
-              <Link to="https://www.linkedin.com/in/pouria-navipour-7b52b0272/">
+              <Link to="https://www.linkedin.com/in/npouriaa/">
                 <svg
                   className="fill-gray-400 transition-all hover:fill-[#162167]"
                   xmlns="http://www.w3.org/2000/svg"
