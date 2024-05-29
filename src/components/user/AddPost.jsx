@@ -65,7 +65,7 @@ const AddPost = () => {
           <img
             className="h-10 w-10 border-[1px] rounded-full object-cover"
             src={currentUser?.photoURL}
-            alt=""
+            alt="user-profile"
           />
           <Form.Item
             className="w-full"

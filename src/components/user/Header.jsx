@@ -44,7 +44,7 @@ const Header = () => {
             </button>
           </div>
           <div className="flex items-center text-white gap-3 ">
-            <div className="h-14 w-14 overflow-hidden relative p-1 after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')]">
+            <div className="h-14 w-14 overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')]">
               <img
                 className="object-cover h-full rounded-full"
                 src={currentUser?.photoURL}
