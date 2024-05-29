@@ -9,7 +9,7 @@ const ProfileHeader = () => {
       <div className="user-banner-shadow rounded-lg flex max-sm:items-center lg:items-end w-full h-full">
         <div className="w-full max-sm:flex-col lg:flex-row text-white max-sm:h-3/4  px-8 justify-between items-center flex gap-4">
           <div className="flex max-sm:flex-col lg:flex-row items-center p-2 gap-4">
-            <div className="relative h-28 w-28 p-[10px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border.png')]">
+            <div className="relative h-28 w-28 p-[10px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-header.png')]">
               <img
                 src={currentUser?.photoURL}
                 className="rounded-full object-cover"

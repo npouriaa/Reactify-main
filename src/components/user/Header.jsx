@@ -43,15 +43,14 @@ const Header = () => {
               <IoSearchOutline color="#7932F5" size={25} />
             </button>
           </div>
-          <div className="flex items-center text-white gap-3">
-            <div className="h-12 w-12 overflow-hidden rounded-full">
+          <div className="flex items-center text-white gap-3 ">
+            <div className="h-14 w-14 overflow-hidden relative p-1 after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')]">
               <img
-                className="object-cover h-full"
+                className="object-cover h-full rounded-full"
                 src={currentUser?.photoURL}
                 alt="user"
               />
             </div>
-            <p className="capitalize">{currentUser?.displayName}</p>
             <button>
               <IoIosNotificationsOutline size={25} />
             </button>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import user from "../../assets/images/user/user.jpg";
 import post from "../../assets/images/user/post.jpg";
 import { Image } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiHeartLine } from "react-icons/ri";
@@ -14,13 +14,15 @@ const Post = () => {
 
   return (
     <div className="w-full min-h-[25rem] px-6 py-2 bg-white rounded-md flex gap-4 flex-col">
-      <div className="w-full h-16 items-center flex gap-3">
-        <img
-          src={user}
-          alt="user"
-          className="object-cover rounded-full h-14 w-14"
-        />
-        <div className="w-full p-2 h-full items-start flex flex-col">
+      <div className="flex items-center p-2 gap-4">
+        <div className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')]">
+          <img
+            src={user}
+            className="rounded-full object-cover"
+            alt="user-profile"
+          />
+        </div>
+        <div className=" flex max-sm:text-center lg:text-start flex-col">
           <Link className="">Jesica Rose</Link>
           <p className="text-[#717993] text-sm font-thin">3hrs ago</p>
         </div>
