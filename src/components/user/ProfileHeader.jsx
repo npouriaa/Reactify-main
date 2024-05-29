@@ -37,7 +37,7 @@ const ProfileHeader = () => {
             </p>
           </div>
         </div>
-        <button className="absolute top-7 right-7 p-2 rounded-full bg-white">
+        <button className="absolute top-7 right-7 p-2 rounded-full bg-white hover:bg-[#d7d7d7] transition-all duration-300">
           <GoPencil className="w-6 h-6" />
         </button>
       </div>
