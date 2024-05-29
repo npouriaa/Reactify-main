@@ -5,7 +5,7 @@ const ProfileHeader = () => {
   const { currentUser } = useContext(RequestsContext);
 
   return (
-    <div className="w-full rounded-lg max-sm:h-[23rem] sm:h-[20rem] md2:h-[20rem] lg:h-72 bg-[url('../../assets/images/user/banner.jpg')]">
+    <div className="w-full rounded-lg max-sm:h-[23rem] sm:h-[20rem] md:h-[19rem] lg:h-[17rem] bg-[url('../../assets/images/user/banner.jpg')]">
       <div className="user-banner-shadow rounded-lg flex max-sm:items-center lg:items-end w-full h-full">
         <div className="w-full max-sm:flex-col lg:flex-row text-white max-sm:h-3/4  px-8 justify-between items-center flex gap-4">
           <div className="flex max-sm:flex-col lg:flex-row items-center p-2 gap-4">
