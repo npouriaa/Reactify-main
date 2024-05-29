@@ -43,21 +43,21 @@ const Header = () => {
               <IoSearchOutline color="#7932F5" size={25} />
             </button>
           </div>
-          <div className="flex items-center text-white gap-3 ">
-            <div className="h-14 w-14 overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')]">
+          <div className="flex items-center gap-3 text-white ">
+            <Link to="profile" className="h-14 w-14 overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')]">
               <img
                 className="object-cover h-full rounded-full"
                 src={currentUser?.photoURL}
                 alt="user"
               />
-            </div>
+            </Link>
             <button>
               <IoIosNotificationsOutline size={25} />
             </button>
             <Tooltip color="#ef4444" title="Log out">
               <button
                 onClick={logOutUser}
-                className="h-full hover:text-red-500 duration-300"
+                className="h-full duration-300 hover:text-red-500"
               >
                 <IoPower size={25} />
               </button>
