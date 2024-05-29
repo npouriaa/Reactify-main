@@ -44,7 +44,7 @@ const Header = () => {
             </button>
           </div>
           <div className="flex items-center gap-3 text-white ">
-            <Link to="profile" className="h-14 w-14 overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')]">
+            <Link to="profile" className="h-14 w-14 overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')] after:rotate-0 after:transition-all after:ease-in-out hover:after:rotate-[30deg]">
               <img
                 className="object-cover h-full rounded-full"
                 src={currentUser?.photoURL}
