@@ -37,7 +37,7 @@ const ProfileHeader = () => {
 
   return (
     <>
-      <div className="w-full rounded-lg max-sm:h-[23rem] sm:h-[20rem] md:h-[19rem] lg:h-[17rem] bg-[url('../../assets/images/user/default-bg.jpg')] bg-cover bg-no-repeat bg-center">
+      <div className="w-full rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-[url('../../assets/images/user/default-bg.jpg')] bg-cover bg-no-repeat bg-center">
         <div className="flex w-full h-full rounded-lg user-banner-shadow max-sm:items-center lg:items-end relative">
           <div className="flex items-center justify-between w-full gap-4 px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
             <div className="flex items-center gap-4 p-2 max-sm:flex-col lg:flex-row">
