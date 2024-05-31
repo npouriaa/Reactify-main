@@ -119,7 +119,7 @@ const ProfileHeader = () => {
           <div className="w-full h-40 bg-black">
             <img
               ref={imagePreviewRef}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-center"
               src={previewImageSrc ? previewImageSrc : default_bg}
               alt="background-photo"
             />
