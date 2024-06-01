@@ -92,9 +92,9 @@ const SideMenu = () => {
         className={`${
           initialSideMenuOpen
             ? openSideMenu
-              ? "max-sm:animate-showText lg:animate-none"
-              : "max-sm:animate-hideText lg:animate-none"
-            : "max-sm:hidden lg:flex"
+              ? "max-sm:animate-showText xl:animate-none"
+              : "max-sm:animate-hideText xl:animate-none"
+            : "max-sm:hidden xl:flex"
         } shadow-lg bg-white h-screen flex w-full gap-6 flex-col py-8 text-[#909090]`}
       >
         {items.map((item, index) => (
