@@ -23,7 +23,7 @@ const Post = () => {
           />
         </Link>
         <div className="flex flex-col max-sm:text-center lg:text-start">
-          <Link className="">Jesica Rose</Link>
+          <Link>Jesica Rose</Link>
           <p className="text-[#717993] text-sm font-thin">3hrs ago</p>
         </div>
       </div>

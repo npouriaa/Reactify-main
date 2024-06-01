@@ -105,7 +105,7 @@ const VerifyEmail = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#7932F5] via-[#F5658C] to-[#F5658C]">
+    <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#615DFA] via-[#F5658C] to-[#F5658C]">
       {contextHolder}
       {modalContextHolder}
       {loading ? (
@@ -141,7 +141,7 @@ const VerifyEmail = () => {
             <button
               disabled={timer ? true : false}
               onClick={() => resendVerificationLink()}
-              className="max-sm:text-sm md:text-base p-2 bg-[#7932F5] text-white hover:bg-[#FB3C7F] disabled:bg-red-500 transition-all duration-500 rounded-lg"
+              className="max-sm:text-sm md:text-base p-2 bg-[#615DFA] text-white hover:bg-[#F5658C] disabled:bg-red-500 transition-all duration-500 rounded-lg"
             >
               Resend link {timer ? `in ${timer}` : ""}
             </button>

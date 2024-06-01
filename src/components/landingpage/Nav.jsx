@@ -48,13 +48,13 @@ const Nav = () => {
         </ul>
         <div className="flex max-sm:gap-2 sm:gap-5 text-[#162167]">
           <Link to="login">
-            <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-white hover:bg-[#7932F5] hover:text-white transition-all duration-500">
+            <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-white hover:bg-[#615DFA] hover:text-white transition-all duration-500">
               Login
             </button>
           </Link>
           <Link to="signup">
             <Link to="/sign-up">
-              <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500">
+              <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500">
                 Sign up
               </button>
             </Link>
@@ -76,25 +76,25 @@ const Nav = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line1"
+                className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#615DFA] line1"
                 d="M 30,35 H 70 "
               />
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line2"
+                className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#615DFA] line2"
                 d="M 50,50 H 30 L 34,32"
               />
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line3"
+                className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#615DFA] line3"
                 d="M 50,50 H 70 L 66,68"
               />
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#7932F5] line4"
+                className="line origin-[50%] fill-none stroke-line stroke-[6px] stroke-[#615DFA] line4"
                 d="M 30,65 H 70 "
               />
             </svg>
@@ -106,13 +106,13 @@ const Nav = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#7932F5]"
+                className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#615DFA]"
                 d="M 34,32 L 66,68"
               />
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#7932F5]"
+                className="line stroke-[8.5px] origin-[50%] fill-none stroke-line stroke-[#615DFA]"
                 d="M 66,32 L 34,68"
               />
             </svg>
@@ -120,7 +120,7 @@ const Nav = () => {
         </div>
         <div
           ref={hMenuRef}
-          className="z-10 text-white overflow-hidden flex-col gap-10 fixed max-sm:flex justify-center items-center duration-500 lg:hidden w-screen top-0 left-0 transition-all no-height bg-[#7932F5]"
+          className="z-10 text-white overflow-hidden flex-col gap-10 fixed max-sm:flex justify-center items-center duration-500 lg:hidden w-screen top-0 left-0 transition-all no-height bg-[#615DFA]"
         >
           <div className="">
             <h1 className="text-3xl text-center">We're here to help you</h1>

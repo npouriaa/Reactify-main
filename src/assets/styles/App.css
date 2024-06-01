@@ -1,6 +1,6 @@
 @font-face {
   font-family: "poppins";
-  src: url(../fonts/Poppins-Medium.ttf);
+  src: url(../fonts/Poppins-Light.ttf);
 }
 
 * {
@@ -11,6 +11,7 @@
   outline: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  font-weight: 600;
 }
 
 body {
@@ -160,11 +161,11 @@ body {
 }
 
 .ant-modal-content .ant-btn {
-  background-color: #7932f5 !important;
+  background-color: #615DFA !important;
 }
 
 .ant-modal-content .ant-btn:hover {
-  background-color: #fb3c7f !important;
+  background-color: #F5658C !important;
 }
 
 .ant-input-textarea-affix-wrapper {
@@ -177,7 +178,7 @@ body {
   color: #7b7b7b;
 }
 .add-post-form .ant-upload-select {
-  border-color: #7932f5 !important;
+  border-color: #615DFA !important;
 }
 .add-post-form .ant-upload-list-item-container,
 .add-post-form .ant-upload-select {

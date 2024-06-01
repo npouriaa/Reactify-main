@@ -67,7 +67,7 @@ const SignUp = () => {
     <>
       {loading && <LoaderModal />}
       {contextHolder}
-      <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#7932F5] via-[#F5658C] to-[#F5658C]">
+      <div className="w-screen h-screen flex justify-center items-center bg-gradient-to-tr from-[#615DFA] via-[#F5658C] to-[#F5658C]">
         <div className="flex gap-2 items-center flex-col rounded-2xl max-sm:w-[350px] sm:w-[440px] max-sm2:w-[380px] md:w-[500px] max-sm:py-6 2xl:py-4 shadow-xl bg-white px-8">
           <div className="w-full flex items-center justify-center relative">
             <Link to="/">
@@ -76,7 +76,7 @@ const SignUp = () => {
             <Tooltip title="home page">
               <Link
                 to="/"
-                className="absolute left-0 w-9 h-9 bg-[#7932F5] hover:bg-[#FB3C7F] transition-all flex justify-center items-center rounded-full"
+                className="absolute left-0 w-9 h-9 bg-[#615DFA] duration-500 hover:bg-[#F5658C] transition-all flex justify-center items-center rounded-full"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +193,7 @@ const SignUp = () => {
             >
               <Upload maxCount={1} name="avatar" beforeUpload={() => false}>
                 <Button
-                  className="antd-btn border-none bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500"
+                  className="antd-btn border-none bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500"
                   icon={<UploadOutlined />}
                 >
                   Click to upload
@@ -201,7 +201,7 @@ const SignUp = () => {
               </Upload>
             </Form.Item>
             <div className="w-full flex items-center justify-center">
-              <button className="w-full bg-[#7932F5] text-white hover:bg-[#FB3C7F] transition-all duration-500 py-2 rounded-lg">
+              <button className="w-full bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500 py-2 rounded-lg">
                 Sign up
               </button>
             </div>
@@ -209,7 +209,7 @@ const SignUp = () => {
           <p className="text-sm">
             Already have an account ?{" "}
             <Link
-              className="text-[#7932F5] hover:text-[#FB3C7F] transition-all duration-500"
+              className="text-[#615DFA] hover:text-[#F5658C] transition-all duration-500"
               to="/login"
             >
               Login

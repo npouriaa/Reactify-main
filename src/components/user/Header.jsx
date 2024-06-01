@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <>
       {loading && <LoaderModal />}
-      <header className="fixed w-screen z-[900] max-sm:justify-end lg:justify-between flex items-center py-4 pl-24 max-sm:pr-4 md:pr-8 max-sm:h-[4.6rem] lg:h-20 bg-[#7932F5]">
+      <header className="fixed w-screen z-[900] max-sm:justify-end lg:justify-between flex items-center py-4 pl-24 max-sm:pr-4 md:pr-8 max-sm:h-[4.6rem] lg:h-20 bg-[#615DFA]">
         <Link className="max-sm:hidden lg:block" to="/">
           <img className="h-12" src={logo} alt="Reactify-logo" />
         </Link>
@@ -40,7 +40,7 @@ const Header = () => {
               type="text"
             />
             <button>
-              <IoSearchOutline color="#7932F5" size={25} />
+              <IoSearchOutline color="#615DFA" size={25} />
             </button>
           </div>
           <div className="flex items-center gap-3 text-white ">

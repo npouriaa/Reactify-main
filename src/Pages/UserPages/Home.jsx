@@ -20,7 +20,7 @@ const Home = () => {
           type="text"
         />
         <button>
-          <IoSearchOutline color="#7932F5" size={25} />
+          <IoSearchOutline color="#615DFA" size={25} />
         </button>
       </div>
       <FeedBanner />

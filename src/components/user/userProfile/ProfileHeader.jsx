@@ -88,13 +88,13 @@ const ProfileHeader = () => {
           <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
             <button
               onClick={handleCancel}
-              className="px-4 py-1 text-white rounded-md bg-[#7932F5] hover:bg-[#FB3C7F] transition-all"
+              className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
             >
               Cancel
             </button>
 
             <label
-              className="px-4 flex justify-center items-center cursor-pointer py-1 text-white rounded-md bg-[#7932F5] hover:bg-[#FB3C7F] transition-all"
+              className="px-4 flex justify-center items-center cursor-pointer py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
               htmlFor="upload"
             >
               Change photo
@@ -108,7 +108,7 @@ const ProfileHeader = () => {
             />
             <button
               onClick={handleOk}
-              className="px-4 py-1 text-white rounded-md bg-[#7932F5] hover:bg-[#FB3C7F] transition-all"
+              className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
             >
               Apply
             </button>
