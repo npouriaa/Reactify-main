@@ -26,7 +26,6 @@ const Home = () => {
           </button>
         </div>
         <FeedBanner />
-        <AddPost />
         <div className="w-full flex-col gap-3 flex justify-center items-center">
           <Post />
           <Post />

@@ -54,7 +54,7 @@ const AddPost = () => {
   };
 
   return (
-    <div className="w-full rounded-md bg-white p-4">
+    <div className="max-sm:w-full lg:w-2/3 rounded-md bg-white p-4">
       <Form
         layout="vertical"
         name="add-post-form"
