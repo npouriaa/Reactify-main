@@ -1,6 +1,6 @@
 import React from "react";
-import ProfileHeader from "../../components/user/ProfileHeader";
-import AddPost from "../../components/user/AddPost";
+import ProfileHeader from "../../components/user/userProfile/ProfileHeader";
+import AddPost from "../../components/user/userProfile/AddPost";
 
 const UserProfile = () => {
   return (

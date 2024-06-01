@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useState } from "react";
-import { RequestsContext } from "../../context/RequestsContext";
+import { RequestsContext } from "../../../context/RequestsContext";
 import { GoPencil } from "react-icons/go";
 import { Modal } from "antd";
-import default_bg from "../../assets/images/user/default-bg.jpg";
+import default_bg from "../../../assets/images/user/default-bg.jpg";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const ProfileHeader = () => {

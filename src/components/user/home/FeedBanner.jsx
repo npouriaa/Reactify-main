@@ -1,5 +1,5 @@
-import bg from "../../assets/images/user/feed.png";
-import people from "../../assets/images/user/people.png";
+import bg from "../../../assets/images/user/feed.png";
+import people from "../../../assets/images/user/people.png";
 import { IoMdMegaphone } from "react-icons/io";
 
 const FeedBanner = () => {

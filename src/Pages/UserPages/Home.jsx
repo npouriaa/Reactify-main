@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import useNotification from "../../Hooks/useNotification";
 import { IoSearchOutline } from "react-icons/io5";
-import FeedBanner from "../../components/user/FeedBanner";
-import AddPost from "../../components/user/AddPost";
+import FeedBanner from "../../components/user/home/FeedBanner";
+import AddPost from "../../components/user/userProfile/AddPost";
 import Post from "../../components/user/Post";
 
 const Home = () => {
