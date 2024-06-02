@@ -168,7 +168,7 @@ body {
   background-color: #F5658C !important;
 }
 
-.ant-input-textarea-affix-wrapper {
+#add-post-form > div.w-full.flex.gap-2.post-caption-con > div > div > div > div > div > span{
   border: none !important;
 }
 .post-caption-con * {
