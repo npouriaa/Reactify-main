@@ -46,6 +46,34 @@ const SignUp = () => {
               displayName,
               email,
               photoURL: downloadURL,
+              about: {
+                aboutText: "",
+                phoneNumber: "",
+                Location: "",
+                web: "",
+                socials: [
+                  {
+                    show: false,
+                    socialAppName: "",
+                    socialAccountLink: "",
+                  },
+                  {
+                    show: false,
+                    socialAppName: "",
+                    socialAccountLink: "",
+                  },
+                  {
+                    show: false,
+                    socialAppName: "",
+                    socialAccountLink: "",
+                  },
+                  {
+                    show: false,
+                    socialAppName: "",
+                    socialAccountLink: "",
+                  },
+                ],
+              },
             });
           });
         }
