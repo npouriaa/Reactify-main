@@ -139,6 +139,14 @@ const AboutMe = () => {
               {joinDate[1]} {joinDate[2]} {joinDate[3]}
             </span>
           </p>
+          <div className="flex items-center gap-1 flex-wrap">
+            <p className="font-normal">Interests :</p>
+            <div className="flex gap-[2px] flex-wrap">
+              <Tag color="magenta">Sport</Tag>
+              <Tag color="cyan">Movies</Tag>
+              <Tag color="geekblue">Gaming</Tag>
+            </div>
+          </div>
           <p className="font-normal">
             Email : <Link className="text-black">{currentUser?.email}</Link>
           </p>
@@ -227,7 +235,11 @@ const AboutMe = () => {
               >
                 <Input placeholder="+989124208975" />
               </Form.Item>
-              <Form.Item className="max-sm:w-full sm3:w-[48%]" label="Location :" name="Location">
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Location :"
+                name="Location"
+              >
                 <Input placeholder="Iran" />
               </Form.Item>
               <Form.Item
@@ -241,7 +253,11 @@ const AboutMe = () => {
                   options={options}
                 />
               </Form.Item>
-              <Form.Item className="max-sm:w-full sm3:w-[48%]" label="Web :" name="Web">
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Web :"
+                name="Web"
+              >
                 <AutoComplete
                   options={websiteOptions}
                   onChange={onWebsiteChange}
@@ -264,10 +280,18 @@ const AboutMe = () => {
               >
                 <Input placeholder="x.com/username" />
               </Form.Item>
-              <Form.Item className="max-sm:w-full sm3:w-[48%]" label="Telegram :" name="Telegram">
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Telegram :"
+                name="Telegram"
+              >
                 <Input placeholder="t.me/username" />
               </Form.Item>
-              <Form.Item className="max-sm:w-full sm3:w-[48%]" label="Linkedin :" name="Linkedin">
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Linkedin :"
+                name="Linkedin"
+              >
                 <Input placeholder="linkedin.com/in/username" />
               </Form.Item>
             </div>
