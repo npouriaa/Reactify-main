@@ -47,29 +47,29 @@ const SignUp = () => {
               email,
               photoURL: downloadURL,
               about: {
-                aboutText: "",
-                phoneNumber: "",
-                Location: "",
-                web: "",
+                bio : "-",
+                phoneNumber: "-",
+                Location: "-",
+                web: "-",
                 socials: [
                   {
                     show: false,
-                    socialAppName: "",
+                    socialAppName: "instagram",
                     socialAccountLink: "",
                   },
                   {
                     show: false,
-                    socialAppName: "",
+                    socialAppName: "telegram",
                     socialAccountLink: "",
                   },
                   {
                     show: false,
-                    socialAppName: "",
+                    socialAppName: "linkedin",
                     socialAccountLink: "",
                   },
                   {
                     show: false,
-                    socialAppName: "",
+                    socialAppName: "x",
                     socialAccountLink: "",
                   },
                 ],
