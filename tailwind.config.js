@@ -8,6 +8,7 @@ export default {
       "max-sm3": "410px",
       "sm": "481px",
       "sm2": "500px",
+      "sm3": "600px",
       "md": "641px",
       "md2": "768px",
       "lg": "961px",

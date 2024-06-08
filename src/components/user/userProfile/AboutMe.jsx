@@ -6,7 +6,70 @@ import { FaTelegram } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { Modal, Form, Input, AutoComplete } from "antd";
+import { Modal, Form, Input, Select, AutoComplete, Tag } from "antd";
+
+const options = [
+  {
+    label: "Sport",
+    value: "magenta",
+  },
+  {
+    label: "Food",
+    value: "volcano",
+  },
+  {
+    label: "Music",
+    value: "orange",
+  },
+  {
+    label: "Movies",
+    value: "cyan",
+  },
+  {
+    label: "Fashion",
+    value: "lime",
+  },
+  {
+    label: "Travel",
+    value: "red",
+  },
+  {
+    label: "Art",
+    value: "green",
+  },
+  {
+    label: "Technology",
+    value: "purple",
+  },
+  {
+    label: "Books",
+    value: "blue",
+  },
+  {
+    label: "Gaming",
+    value: "geekblue",
+  },
+];
+
+const tagRender = ({ label, value, closable, onClose }) => {
+  const onPreventMouseDown = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+  return (
+    <Tag
+      color={value}
+      onMouseDown={onPreventMouseDown}
+      closable={closable}
+      onClose={onClose}
+      style={{
+        marginInlineEnd: 4,
+      }}
+    >
+      {label}
+    </Tag>
+  );
+};
 
 const AboutMe = () => {
   const { currentUser } = useContext(RequestsContext);
@@ -139,7 +202,7 @@ const AboutMe = () => {
             layout="vertical"
             name="register_form"
           >
-            <Form.Item label="About me :" name="aboutText">
+            <Form.Item label="Bio :" name="bio">
               <Input.TextArea
                 placeholder="Write about yourself"
                 rows={3}
@@ -152,7 +215,7 @@ const AboutMe = () => {
             </Form.Item>
             <div className="w-full justify-between flex items-center flex-wrap">
               <Form.Item
-                className="w-[48%]"
+                className="max-sm:w-full sm3:w-[48%]"
                 label="Phone number:"
                 name="phoneNumber"
                 rules={[
@@ -164,17 +227,48 @@ const AboutMe = () => {
               >
                 <Input placeholder="+989124208975" />
               </Form.Item>
-              <Form.Item className="w-[48%]" label="Location :" name="Location">
+              <Form.Item className="max-sm:w-full sm3:w-[48%]" label="Location :" name="Location">
                 <Input placeholder="Iran" />
               </Form.Item>
-              <Form.Item className="w-[48%]" label="Web :" name="Web">
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Interests :"
+                name="Interests"
+              >
+                <Select
+                  mode="multiple"
+                  tagRender={tagRender}
+                  options={options}
+                />
+              </Form.Item>
+              <Form.Item className="max-sm:w-full sm3:w-[48%]" label="Web :" name="Web">
                 <AutoComplete
                   options={websiteOptions}
                   onChange={onWebsiteChange}
-                  placeholder="website"
+                  placeholder="Yourwebsite.com"
                 >
                   <Input />
                 </AutoComplete>
+              </Form.Item>
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Instagram :"
+                name="Instagram"
+              >
+                <Input placeholder="instagram.com/username" />
+              </Form.Item>
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="X (twtter) :"
+                name="X (twtter)"
+              >
+                <Input placeholder="x.com/username" />
+              </Form.Item>
+              <Form.Item className="max-sm:w-full sm3:w-[48%]" label="Telegram :" name="Telegram">
+                <Input placeholder="t.me/username" />
+              </Form.Item>
+              <Form.Item className="max-sm:w-full sm3:w-[48%]" label="Linkedin :" name="Linkedin">
+                <Input placeholder="linkedin.com/in/username" />
               </Form.Item>
             </div>
           </Form>
