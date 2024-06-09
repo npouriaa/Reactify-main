@@ -1,10 +1,16 @@
 import "../assets/styles/loader.css";
 
-const LoaderModal = () => {
+const LoaderModal = ({ fullSize, customeStyle }) => {
   return (
-    <div className="left-0 w-screen absolute h-screen z-10">
-      <div className="w-full h-full flex justify-center items-center absolute">
-        <div className="w-full bg-black opacity-40 h-full relative"></div>
+    <div
+      className={`${
+        fullSize ? "h-full w-full absolute" : "h-screen fixed w-screen"
+      }  z-[1000]  left-0 top-0 bottom-0`}
+    >
+      <div className="w-full h-full  flex justify-center items-center absolute">
+        <div
+          className={`w-full bg-[#00000071] h-full relative ${customeStyle}`}
+        ></div>
         <div className="loader absolute z-10"></div>
       </div>
     </div>

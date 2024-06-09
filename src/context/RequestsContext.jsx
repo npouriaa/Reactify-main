@@ -7,7 +7,7 @@ const RequestsContext = createContext();
 const RequestsContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [sendVerificationLink, setSendVerificationLink] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const asyncHandler = async (user) => {
