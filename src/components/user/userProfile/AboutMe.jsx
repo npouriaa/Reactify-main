@@ -83,7 +83,6 @@ const AboutMe = () => {
 
   const getUserData = async () => {
     setLoading(true);
-    console.log("load");
     try {
       const docRef = doc(db, "users", currentUser.uid);
       const docSnap = await getDoc(docRef);
@@ -93,7 +92,6 @@ const AboutMe = () => {
     } catch (err) {
       console.log(err);
     }
-    console.log("done");
     setLoading(false);
   };
 
