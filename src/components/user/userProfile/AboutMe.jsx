@@ -13,44 +13,44 @@ import LoaderModal from "../../LoaderModal";
 
 const options = [
   {
-    label: "Sport",
-    value: "magenta",
+    value: "Sport",
+    label: "magenta",
   },
   {
-    label: "Food",
-    value: "volcano",
+    value: "Food",
+    label: "volcano",
   },
   {
-    label: "Music",
-    value: "orange",
+    value: "Music",
+    label: "orange",
   },
   {
-    label: "Movies",
-    value: "cyan",
+    value: "Movies",
+    label: "cyan",
   },
   {
-    label: "Fashion",
-    value: "lime",
+    value: "Fashion",
+    label: "lime",
   },
   {
-    label: "Travel",
-    value: "red",
+    value: "Travel",
+    label: "red",
   },
   {
-    label: "Art",
-    value: "green",
+    value: "Art",
+    label: "green",
   },
   {
-    label: "Technology",
-    value: "purple",
+    value: "Technology",
+    label: "purple",
   },
   {
-    label: "Books",
-    value: "blue",
+    value: "Books",
+    label: "blue",
   },
   {
-    label: "Gaming",
-    value: "geekblue",
+    value: "Gaming",
+    label: "geekblue",
   },
 ];
 
@@ -61,15 +61,16 @@ const tagRender = ({ label, value, closable, onClose }) => {
   };
   return (
     <Tag
-      color={value}
+      color={label}
       onMouseDown={onPreventMouseDown}
       closable={closable}
       onClose={onClose}
       style={{
         marginInlineEnd: 4,
+        marginBottom : 4
       }}
     >
-      {label}
+      {value}
     </Tag>
   );
 };
@@ -216,6 +217,13 @@ const AboutMe = () => {
                     className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
                   >
                     Cancel
+                  </button>
+                  <button
+                  onClick={() => frmRef.current.submit()}
+                  type="submit"
+                    className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+                  >
+                    Donedsdsds
                   </button>
                   <button
                     onClick={handleOk}
