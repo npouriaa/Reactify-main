@@ -8,10 +8,11 @@ const RequestsContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [sendVerificationLink, setSendVerificationLink] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [PRLoading, setPRLoading] = useState(true);
 
   useEffect(() => {
     const asyncHandler = async (user) => {
-      setLoading(true);
+      setPRLoading(true);
       try {
         const data = await user;
         console.log(user);
@@ -24,7 +25,7 @@ const RequestsContextProvider = ({ children }) => {
       } catch (err) {
         console.log(err);
       }
-      setLoading(false);
+      setPRLoading(false);
     };
 
     const unSub = onAuthStateChanged(auth, asyncHandler);
@@ -43,6 +44,7 @@ const RequestsContextProvider = ({ children }) => {
         setSendVerificationLink,
         loading,
         setLoading,
+        PRLoading,
       }}
     >
       {children}
