@@ -8,7 +8,8 @@ const UserProfile = () => {
     <>
       <ProfileHeader />
       <div className="w-full flex flex-col ">
-        <div className="w-full flex gap-4 max-sm:flex-col lg:flex-row">
+        <div className="w-full flex items-start gap-4 max-sm:flex-col lg:flex-row">
+          
           <AddPost />
           <AboutMe />
         </div>

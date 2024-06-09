@@ -139,7 +139,7 @@ const AboutMe = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4 relative rounded-md bg-white max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
+      <div className="flex flex-col min-h-[22.4rem] gap-4 relative rounded-md bg-white max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
         {loading ? (
           <LoaderModal fullSize={true} customeStyle="rounded-md" />
         ) : (
@@ -156,10 +156,7 @@ const AboutMe = () => {
               </button>
             </div>
             <div className="w-full gap-4 flex flex-col ">
-              <p className="font-normal">
-                Hi! My name is Rebeca Powel but some people may know me asserty
-                GamePagla! I'm using Reatcify too.
-              </p>
+              <p className="font-normal break-words">sasas.s;a;lss;dlsdlskds</p>
               <div className="flex flex-col gap-3 text-[.9rem] text-[#585858]">
                 <p className="font-normal">
                   Joined :{" "}
