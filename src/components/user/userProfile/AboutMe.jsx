@@ -10,44 +10,44 @@ import { Modal, Form, Input, Select, AutoComplete, Tag } from "antd";
 
 const options = [
   {
-    value: "Sport",
-    label: "magenta",
+    value: "Sport-magenta",
+    label: "Sport",
   },
   {
-    value: "Food",
-    label: "volcano",
+    value: "Food-volcano",
+    label: "Food",
   },
   {
-    value: "Music",
-    label: "orange",
+    value: "Music-orange",
+    label: "Music",
   },
   {
-    value: "Movies",
-    label: "cyan",
+    value: "Movies-cyan",
+    label: "Movies",
   },
   {
-    value: "Fashion",
-    label: "lime",
+    value: "Fashion-lime",
+    label: "Fashion",
   },
   {
-    value: "Travel",
-    label: "red",
+    value: "Travel-red",
+    label: "Travel",
   },
   {
-    value: "Art",
-    label: "green",
+    value: "Art-green",
+    label: "Art",
   },
   {
-    value: "Technology",
-    label: "purple",
+    value: "Technology-purple",
+    label: "Technology",
   },
   {
-    value: "Books",
-    label: "blue",
+    value: "Books-blue",
+    label: "Books",
   },
   {
-    value: "Gaming",
-    label: "geekblue",
+    value: "Gaming-geekblue",
+    label: "Gaming",
   },
 ];
 
@@ -58,7 +58,7 @@ const tagRender = ({ label, value, closable, onClose }) => {
   };
   return (
     <Tag
-      color={label}
+      color={value.split("-")[1]}
       onMouseDown={onPreventMouseDown}
       closable={closable}
       onClose={onClose}
@@ -67,7 +67,7 @@ const tagRender = ({ label, value, closable, onClose }) => {
         marginBottom: 4,
       }}
     >
-      {value}
+      {value.split("-")[0]}
     </Tag>
   );
 };
@@ -78,6 +78,7 @@ const AboutMe = () => {
   const [open, setOpen] = useState(false);
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const frmRef = useRef();
+  let arr = ["Sport-magenta", "Travel-red"];
 
   const onWebsiteChange = (value) => {
     if (!value) {
@@ -102,8 +103,7 @@ const AboutMe = () => {
   };
 
   const handleOk = () => {
-    setOpen(false);
-    frmRef.current?.resetFields();
+    frmRef.current.submit();
   };
 
   const handleCancel = () => {
@@ -172,26 +172,28 @@ const AboutMe = () => {
             </p>
             {currentUserDBObj?.about.phoneNumber && (
               <p className="font-normal">
-                Phone : <Link className="text-black">+989395362203</Link>
+                Phone : <Link to={`tel:${currentUserDBObj.about.phoneNumber}`} className="text-black">{currentUserDBObj.about.phoneNumber}</Link>
               </p>
             )}
             {currentUserDBObj?.about.location && (
               <p className="font-normal">
-                Country : <span className="text-black">Iran</span>
+                Country : <span className="text-black">{currentUserDBObj.about.location}</span>
               </p>
             )}
             {currentUserDBObj?.about.web && (
               <p className="font-normal">
-                Web : <span className="text-black">me.com</span>
+                Web : <span className="text-black">{currentUserDBObj.about.web}</span>
               </p>
             )}
             {currentUserDBObj?.about.interests && (
               <div className="flex items-center gap-1 flex-wrap">
                 <p className="font-normal">Interests :</p>
                 <div className="flex gap-[2px] flex-wrap">
-                  <Tag color="magenta">Sport</Tag>
-                  <Tag color="cyan">Movies</Tag>
-                  <Tag color="geekblue">Gaming</Tag>
+                  {currentUserDBObj?.about.interests.map((interest) => (
+                    <Tag color={interest.split("-")[1]}>
+                      {interest.split("-")[0]}
+                    </Tag>
+                  ))}
                 </div>
               </div>
             )}
@@ -231,13 +233,6 @@ const AboutMe = () => {
                 Cancel
               </button>
               <button
-                onClick={() => frmRef.current.submit()}
-                type="submit"
-                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-              >
-                Donedsdsds
-              </button>
-              <button
                 onClick={handleOk}
                 className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
               >
@@ -256,6 +251,7 @@ const AboutMe = () => {
             >
               <Form.Item label="Bio :" name="bio">
                 <Input.TextArea
+                  defaultValue={currentUserDBObj?.about.bio}
                   placeholder="Write about yourself"
                   rows={3}
                   maxLength={500}
@@ -277,14 +273,20 @@ const AboutMe = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="+989124208975" />
+                  <Input
+                    defaultValue={currentUserDBObj?.about.phoneNumber}
+                    placeholder="+989124208975"
+                  />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Location :"
                   name="Location"
                 >
-                  <Input placeholder="Iran" />
+                  <Input
+                    defaultValue={currentUserDBObj?.about.location}
+                    placeholder="Iran"
+                  />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
@@ -295,12 +297,19 @@ const AboutMe = () => {
                     mode="multiple"
                     tagRender={tagRender}
                     options={options}
+                    defaultValue={currentUserDBObj?.about?.interests?.map(
+                      (interest) => ({
+                        value: interest,
+                        label: interest.split("-")[0],
+                      })
+                    )}
                   />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Web :"
                   name="Web"
+                  defaultValue={currentUserDBObj?.about.web}
                 >
                   <AutoComplete
                     options={websiteOptions}
@@ -315,28 +324,48 @@ const AboutMe = () => {
                   label="Instagram :"
                   name="Instagram"
                 >
-                  <Input placeholder="instagram.com/username" />
+                  <Input
+                    defaultValue={
+                      currentUserDBObj?.about.socials[0].socialAccountLink
+                    }
+                    placeholder="instagram.com/username"
+                  />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="X (twtter) :"
                   name="X (twtter)"
                 >
-                  <Input placeholder="x.com/username" />
+                  <Input
+                    defaultValue={
+                      currentUserDBObj?.about.socials[1].socialAccountLink
+                    }
+                    placeholder="x.com/username"
+                  />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Telegram :"
                   name="Telegram"
                 >
-                  <Input placeholder="t.me/username" />
+                  <Input
+                    defaultValue={
+                      currentUserDBObj?.about.socials[2].socialAccountLink
+                    }
+                    placeholder="t.me/username"
+                  />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Linkedin :"
                   name="Linkedin"
                 >
-                  <Input placeholder="linkedin.com/in/username" />
+                  <Input
+                    defaultValue={
+                      currentUserDBObj?.about.socials[3].socialAccountLink
+                    }
+                    placeholder="linkedin.com/in/username"
+                  />
                 </Form.Item>
               </div>
             </Form>
