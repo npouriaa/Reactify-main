@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from "@firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const RequestsContext = createContext();
 
@@ -10,6 +11,21 @@ const RequestsContextProvider = ({ children }) => {
   const [sendVerificationLink, setSendVerificationLink] = useState(false);
   const [loading, setLoading] = useState(false);
   const [PRLoading, setPRLoading] = useState(true);
+
+  const getUserData = async () => {
+    setLoading(true);
+    try {
+      const docRef = doc(db, "users", currentUser.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setCurrentUserDBObj(docSnap.data());
+        console.log(docSnap.data());
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
     const asyncHandler = async (user) => {
@@ -48,6 +64,7 @@ const RequestsContextProvider = ({ children }) => {
         PRLoading,
         currentUserDBObj,
         setCurrentUserDBObj,
+        getUserData,
       }}
     >
       {children}

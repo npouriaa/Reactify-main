@@ -3,34 +3,16 @@ import { Layout } from "antd";
 import Header from "../../components/user/Header";
 import SideMenu from "../../components/user/SideMenu";
 import Footer from "../../components/Footer";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase";
 import { useContext, useEffect } from "react";
 import { RequestsContext } from "../../context/RequestsContext";
 import LoaderModal from "../../components/LoaderModal";
 
 const UserMainLayout = () => {
   const {
-    currentUser,
+    getUserData,
     loading,
-    setLoading,
-    setCurrentUserDBObj,
   } = useContext(RequestsContext);
 
-  const getUserData = async () => {
-    setLoading(true);
-    try {
-      const docRef = doc(db, "users", currentUser.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setCurrentUserDBObj(docSnap.data());
-        console.log(docSnap.data());
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    setLoading(false);
-  };
 
   useEffect(() => {
     getUserData();
