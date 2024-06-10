@@ -47,7 +47,7 @@ const SignUp = () => {
               email,
               photoURL: downloadURL,
               about: {
-                bio: "",
+                bio: "Hey there! I'm using Reactify.",
                 phoneNumber: "",
                 Location: "",
                 web: "",
