@@ -115,9 +115,36 @@ const AboutMe = () => {
     console.log(values);
   };
 
+  const getSocialIcon = (socialAppName) => {
+    switch (socialAppName) {
+      case "instagram":
+        return (
+          <FaInstagram className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
+        );
+      case "telegram":
+        return (
+          <FaTelegram className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
+        );
+      case "linkedin":
+        return (
+          <FaLinkedin className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
+        );
+      case "x":
+        return (
+          <FaXTwitter className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
+        );
+      default:
+        return null;
+    }
+  };
+
+  const hasSocialAccountLink = currentUserDBObj?.about.socials.some(
+    (account) => account.socialAccountLink !== ""
+  );
+
   return (
     <>
-      <div className="flex flex-col min-h-[22.4rem] gap-4 relative rounded-md bg-white max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
+      <div className="flex flex-col gap-4 relative rounded-md bg-white max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
         <div className="w-full h-9 flex item-center justify-between">
           <h3 className="text-[1.05rem] relative after:absolute after:bottom-0 after:left-0 after:rounded-md after:h-1 after:w-3 after:bg-[#615DFA] before:absolute before:bottom-0 before:left-4 before:h-1 before:rounded-md before:w-6 before:bg-[#615DFA]">
             About Me
@@ -140,43 +167,52 @@ const AboutMe = () => {
                 {joinDate[1]} {joinDate[2]} {joinDate[3]}
               </span>
             </p>
-            <div className="flex items-center gap-1 flex-wrap">
-              <p className="font-normal">Interests :</p>
-              <div className="flex gap-[2px] flex-wrap">
-                <Tag color="magenta">Sport</Tag>
-                <Tag color="cyan">Movies</Tag>
-                <Tag color="geekblue">Gaming</Tag>
-              </div>
-            </div>
             <p className="font-normal">
               Email : <Link className="text-black">{currentUser?.email}</Link>
             </p>
-            <p className="font-normal">
-              Phone : <Link className="text-black">+989395362203</Link>
-            </p>
-            <p className="font-normal">
-              Country : <span className="text-black">Iran</span>
-            </p>
-            <p className="font-normal">
-              Web : <span className="text-black">me.com</span>
-            </p>
-            <p className="font-normal flex items-center gap-1">
-              Socials :{" "}
-              <span className="text-black flex gap-1">
-                <Link>
-                  <FaInstagram className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
-                </Link>
-                <Link>
-                  <FaTelegram className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
-                </Link>
-                <Link>
-                  <FaLinkedin className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
-                </Link>
-                <Link>
-                  <FaXTwitter className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
-                </Link>
-              </span>
-            </p>
+            {currentUserDBObj?.about.phoneNumber && (
+              <p className="font-normal">
+                Phone : <Link className="text-black">+989395362203</Link>
+              </p>
+            )}
+            {currentUserDBObj?.about.location && (
+              <p className="font-normal">
+                Country : <span className="text-black">Iran</span>
+              </p>
+            )}
+            {currentUserDBObj?.about.web && (
+              <p className="font-normal">
+                Web : <span className="text-black">me.com</span>
+              </p>
+            )}
+            {currentUserDBObj?.about.interests && (
+              <div className="flex items-center gap-1 flex-wrap">
+                <p className="font-normal">Interests :</p>
+                <div className="flex gap-[2px] flex-wrap">
+                  <Tag color="magenta">Sport</Tag>
+                  <Tag color="cyan">Movies</Tag>
+                  <Tag color="geekblue">Gaming</Tag>
+                </div>
+              </div>
+            )}
+            {hasSocialAccountLink && (
+              <div className="flex items-center gap-1">
+                <p className="font-normal">Socials : </p>
+                <span className="text-black flex gap-1">
+                  {socialAccounts.map(
+                    (account) =>
+                      account.socialAccountLink && (
+                        <Link
+                          key={account.socialAppName}
+                          href={account.socialAccountLink}
+                        >
+                          {getSocialIcon(account.socialAppName)}
+                        </Link>
+                      )
+                  )}
+                </span>
+              </div>
+            )}
           </div>
         </div>
         <Modal
