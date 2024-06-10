@@ -51,7 +51,7 @@ const options = [
   },
 ];
 
-const tagRender = ({ label, value, closable, onClose }) => {
+const tagRender = ({ value, closable, onClose }) => {
   const onPreventMouseDown = (event) => {
     event.preventDefault();
     event.stopPropagation();
