@@ -78,7 +78,6 @@ const AboutMe = () => {
   const [open, setOpen] = useState(false);
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const frmRef = useRef();
-  let arr = ["Sport-magenta", "Travel-red"];
 
   const onWebsiteChange = (value) => {
     if (!value) {
