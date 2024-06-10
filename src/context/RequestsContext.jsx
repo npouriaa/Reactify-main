@@ -6,6 +6,7 @@ const RequestsContext = createContext();
 
 const RequestsContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [currentUserDBObj, setCurrentUserDBObj] = useState(null);
   const [sendVerificationLink, setSendVerificationLink] = useState(false);
   const [loading, setLoading] = useState(false);
   const [PRLoading, setPRLoading] = useState(true);
@@ -45,6 +46,8 @@ const RequestsContextProvider = ({ children }) => {
         loading,
         setLoading,
         PRLoading,
+        currentUserDBObj,
+        setCurrentUserDBObj,
       }}
     >
       {children}
