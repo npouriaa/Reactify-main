@@ -51,7 +51,7 @@ const SignUp = () => {
                 phoneNumber: "",
                 Location: "",
                 web: "",
-                interests: [],
+                interests: null,
                 socials: [
                   {
                     socialAppName: "instagram",
@@ -66,7 +66,6 @@ const SignUp = () => {
                     socialAccountLink: "",
                   },
                   {
-                    show: false,
                     socialAppName: "x",
                     socialAccountLink: "",
                   },

@@ -73,7 +73,7 @@ const tagRender = ({ label, value, closable, onClose }) => {
 };
 
 const AboutMe = () => {
-  const { currentUser } = useContext(RequestsContext);
+  const { currentUser, currentUserDBObj } = useContext(RequestsContext);
   const joinDate = currentUser?.metadata.creationTime.split(" ");
   const [open, setOpen] = useState(false);
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
@@ -130,7 +130,9 @@ const AboutMe = () => {
           </button>
         </div>
         <div className="w-full gap-4 flex flex-col ">
-          <p className="font-normal break-words">sasas.s;a;lss;dlsdlskds</p>
+          <p className="font-normal break-words">
+            {currentUserDBObj?.about.bio}
+          </p>
           <div className="flex flex-col gap-3 text-[.9rem] text-[#585858]">
             <p className="font-normal">
               Joined :{" "}
