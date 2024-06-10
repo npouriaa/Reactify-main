@@ -13,7 +13,6 @@ const UserMainLayout = () => {
     loading,
   } = useContext(RequestsContext);
 
-
   useEffect(() => {
     getUserData();
   }, []);
