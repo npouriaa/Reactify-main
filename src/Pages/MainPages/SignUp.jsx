@@ -49,25 +49,21 @@ const SignUp = () => {
               about: {
                 bio: "Hey there! I'm using Reactify.",
                 phoneNumber: "",
-                Location: "",
+                location: "",
                 web: "",
-                interests: null,
+                interests: [],
                 socials: [
                   {
-                    socialAppName: "instagram",
-                    socialAccountLink: "",
+                    instagram: "",
                   },
                   {
-                    socialAppName: "telegram",
-                    socialAccountLink: "",
+                    telegram: "",
                   },
                   {
-                    socialAppName: "linkedin",
-                    socialAccountLink: "",
+                    linkedin: "",
                   },
                   {
-                    socialAppName: "x",
-                    socialAccountLink: "",
+                    x: "",
                   },
                 ],
               },

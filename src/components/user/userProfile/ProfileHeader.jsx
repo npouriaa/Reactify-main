@@ -44,7 +44,7 @@ const ProfileHeader = () => {
               <div className="relative cursor-pointer h-28 w-28 p-[10px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-header.png')] after:rotate-0 after:transition-all after:ease-in-out hover:after:rotate-[30deg]">
                 <img
                   src={currentUser?.photoURL}
-                  className="object-cover h-full border-4 rounded-full"
+                  className="object-cover w-full h-full border-4 rounded-full"
                 />
               </div>
               <div className="flex flex-col max-sm:text-center lg:text-start">

@@ -7,6 +7,8 @@ import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { Modal, Form, Input, Select, AutoComplete, Tag } from "antd";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 const options = [
   {
@@ -73,11 +75,12 @@ const tagRender = ({ value, closable, onClose }) => {
 };
 
 const AboutMe = () => {
-  const { currentUser, currentUserDBObj } = useContext(RequestsContext);
-  const joinDate = currentUser?.metadata.creationTime.split(" ");
+  const { currentUser, currentUserDBObj, setLoading } =
+    useContext(RequestsContext);
   const [open, setOpen] = useState(false);
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const frmRef = useRef();
+  const joinDate = currentUser?.metadata.creationTime.split(" ");
 
   const onWebsiteChange = (value) => {
     if (!value) {
@@ -96,9 +99,51 @@ const AboutMe = () => {
     value: website,
   }));
 
+  const updateUserData = async (values) => {
+    const {
+      bio,
+      phoneNumber,
+      location,
+      interests,
+      web,
+      instagram,
+      telegram,
+      x,
+      linkedin,
+    } = values;
+
+    setLoading(true);
+    try {
+      const docRef = doc(db, "users", currentUser.uid);
+      await updateDoc(docRef, {
+        about: {
+          bio: bio || currentUserDBObj?.about.bio,
+          phoneNumber: phoneNumber || currentUserDBObj?.about.phoneNumber,
+          location: location || currentUserDBObj?.about.location,
+          interests: interests || currentUserDBObj?.about.interests,
+          web: web || currentUserDBObj?.about.web,
+          socials: [
+            {
+              instagram: instagram || currentUserDBObj.about.socials[0].instagram,
+            },
+            {
+              telegram: telegram || currentUserDBObj.about.socials[1].telegram,
+            },
+            {
+              linkedin: linkedin || currentUserDBObj.about.socials[2].linkedin,
+            },
+            { x: x || currentUserDBObj.about.socials[3].x },
+          ],
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
   const showModal = () => {
     setOpen(true);
-    frmRef.current?.resetFields();
   };
 
   const handleOk = () => {
@@ -111,7 +156,33 @@ const AboutMe = () => {
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    const {
+      bio,
+      phoneNumber,
+      location,
+      interests,
+      web,
+      instagram,
+      telegram,
+      x,
+      linkedin,
+    } = values;
+
+    const sanitizedValues = {
+      bio: bio || null,
+      phoneNumber: phoneNumber || null,
+      location: location || null,
+      interests: interests || [],
+      web: web || null,
+      instagram: instagram || null,
+      telegram: telegram || null,
+      x: x || null,
+      linkedin: linkedin || null,
+    };
+
+    console.log(currentUserDBObj.about.socials[1].telegram);
+
+    updateUserData(sanitizedValues);
   };
 
   const getSocialIcon = (socialAppName) => {
@@ -137,8 +208,8 @@ const AboutMe = () => {
     }
   };
 
-  const hasSocialAccountLink = currentUserDBObj?.about.socials.some(
-    (account) => account.socialAccountLink !== ""
+  const hasNonEmptyValue = currentUserDBObj?.about?.socials?.some(
+    (account) => Object.values(account)[0] !== ""
   );
 
   return (
@@ -171,22 +242,32 @@ const AboutMe = () => {
             </p>
             {currentUserDBObj?.about.phoneNumber && (
               <p className="font-normal">
-                Phone : <Link to={`tel:${currentUserDBObj.about.phoneNumber}`} className="text-black">{currentUserDBObj.about.phoneNumber}</Link>
+                Phone :{" "}
+                <Link
+                  to={`tel:${currentUserDBObj.about.phoneNumber}`}
+                  className="text-black"
+                >
+                  {currentUserDBObj.about.phoneNumber}
+                </Link>
               </p>
             )}
             {currentUserDBObj?.about.location && (
               <p className="font-normal">
-                Country : <span className="text-black">{currentUserDBObj.about.location}</span>
+                Country :{" "}
+                <span className="text-black">
+                  {currentUserDBObj.about.location}
+                </span>
               </p>
             )}
             {currentUserDBObj?.about.web && (
               <p className="font-normal">
-                Web : <span className="text-black">{currentUserDBObj.about.web}</span>
+                Web :{" "}
+                <span className="text-black">{currentUserDBObj.about.web}</span>
               </p>
             )}
-            {currentUserDBObj?.about.interests && (
-              <div className="flex items-center gap-1 flex-wrap">
-                <p className="font-normal">Interests :</p>
+            {currentUserDBObj?.about.interests.length !== 0 && (
+              <div className="flex items-center gap-1">
+                <p className="font-normal flex w-[4.8rem]">Interests :</p>
                 <div className="flex gap-[2px] flex-wrap">
                   {currentUserDBObj?.about.interests.map((interest) => (
                     <Tag color={interest.split("-")[1]}>
@@ -196,21 +277,21 @@ const AboutMe = () => {
                 </div>
               </div>
             )}
-            {hasSocialAccountLink && (
+            {hasNonEmptyValue && (
               <div className="flex items-center gap-1">
                 <p className="font-normal">Socials : </p>
                 <span className="text-black flex gap-1">
-                  {socialAccounts.map(
-                    (account) =>
-                      account.socialAccountLink && (
-                        <Link
-                          key={account.socialAppName}
-                          href={account.socialAccountLink}
-                        >
-                          {getSocialIcon(account.socialAppName)}
+                  {currentUserDBObj?.about.socials.map((account) => {
+                    const platform = Object.keys(account)[0];
+                    const link = Object.values(account)[0];
+                    return (
+                      link && (
+                        <Link key={platform} href={link}>
+                          {getSocialIcon(platform)}
                         </Link>
                       )
-                  )}
+                    );
+                  })}
                 </span>
               </div>
             )}
@@ -221,7 +302,7 @@ const AboutMe = () => {
           cla
           open={open}
           title="Edit your info"
-          onOk={handleOk}
+          onOk={() => handleOk()}
           onCancel={handleCancel}
           footer={() => (
             <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
@@ -232,7 +313,7 @@ const AboutMe = () => {
                 Cancel
               </button>
               <button
-                onClick={handleOk}
+                onClick={() => handleOk()}
                 className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
               >
                 Done
@@ -250,6 +331,7 @@ const AboutMe = () => {
             >
               <Form.Item label="Bio :" name="bio">
                 <Input.TextArea
+                  value={currentUserDBObj?.about.bio}
                   defaultValue={currentUserDBObj?.about.bio}
                   placeholder="Write about yourself"
                   rows={3}
@@ -274,13 +356,13 @@ const AboutMe = () => {
                 >
                   <Input
                     defaultValue={currentUserDBObj?.about.phoneNumber}
-                    placeholder="+989124208975"
+                    placeholder="989124208975"
                   />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Location :"
-                  name="Location"
+                  name="location"
                 >
                   <Input
                     defaultValue={currentUserDBObj?.about.location}
@@ -290,7 +372,7 @@ const AboutMe = () => {
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Interests :"
-                  name="Interests"
+                  name="interests"
                 >
                   <Select
                     mode="multiple"
@@ -307,13 +389,13 @@ const AboutMe = () => {
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Web :"
-                  name="Web"
-                  defaultValue={currentUserDBObj?.about.web}
+                  name="web"
                 >
                   <AutoComplete
                     options={websiteOptions}
                     onChange={onWebsiteChange}
                     placeholder="Yourwebsite.com"
+                    defaultValue={currentUserDBObj?.about.web}
                   >
                     <Input />
                   </AutoComplete>
@@ -321,47 +403,51 @@ const AboutMe = () => {
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Instagram :"
-                  name="Instagram"
+                  name="instagram"
                 >
                   <Input
                     defaultValue={
-                      currentUserDBObj?.about.socials[0].socialAccountLink
+                      currentUserDBObj?.about?.socials &&
+                      currentUserDBObj.about.socials[0].instagram
                     }
                     placeholder="instagram.com/username"
                   />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
-                  label="X (twtter) :"
-                  name="X (twtter)"
-                >
-                  <Input
-                    defaultValue={
-                      currentUserDBObj?.about.socials[1].socialAccountLink
-                    }
-                    placeholder="x.com/username"
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
                   label="Telegram :"
-                  name="Telegram"
+                  name="telegram"
                 >
                   <Input
                     defaultValue={
-                      currentUserDBObj?.about.socials[2].socialAccountLink
+                      currentUserDBObj?.about?.socials &&
+                      currentUserDBObj.about.socials[1].telegram
                     }
                     placeholder="t.me/username"
                   />
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
-                  label="Linkedin :"
-                  name="Linkedin"
+                  label="X (twitter) :"
+                  name="x"
                 >
                   <Input
                     defaultValue={
-                      currentUserDBObj?.about.socials[3].socialAccountLink
+                      currentUserDBObj?.about?.socials &&
+                      currentUserDBObj.about.socials[2].linkedin
+                    }
+                    placeholder="x.com/username"
+                  />
+                </Form.Item>
+                <Form.Item
+                  className="max-sm:w-full sm3:w-[48%]"
+                  label="Linkedin :"
+                  name="linkedin"
+                >
+                  <Input
+                    defaultValue={
+                      currentUserDBObj?.about?.socials &&
+                      currentUserDBObj.about.socials[3].x
                     }
                     placeholder="linkedin.com/in/username"
                   />
