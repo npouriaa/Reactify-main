@@ -317,7 +317,16 @@ const AboutMe = () => {
               layout="vertical"
               name="register_form"
             >
-              <Form.Item label="Bio :" name="bio">
+              <Form.Item
+                label="Bio :"
+                name="bio"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your bio!",
+                  },
+                ]}
+              >
                 <Input.TextArea
                   ref={bioRef}
                   value={currentUserDBObj?.about.bio}
@@ -396,6 +405,22 @@ const AboutMe = () => {
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Instagram :"
                   name="instagram"
+                  rules={[
+                    {
+                      validator: (_, value) => {
+                        if (
+                          value &&
+                          (value.startsWith("https://") ||
+                            value.startsWith("http://"))
+                        ) {
+                          return Promise.reject(
+                            `Please don't include "https://" or "http://" at the beginning`
+                          );
+                        }
+                        return Promise.resolve();
+                      },
+                    },
+                  ]}
                 >
                   <Input
                     ref={instagramRef}
@@ -410,6 +435,22 @@ const AboutMe = () => {
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Telegram :"
                   name="telegram"
+                  rules={[
+                    {
+                      validator: (_, value) => {
+                        if (
+                          value &&
+                          (value.startsWith("https://") ||
+                            value.startsWith("http://"))
+                        ) {
+                          return Promise.reject(
+                            `Please don't include "https://" or "http://" at the beginning`
+                          );
+                        }
+                        return Promise.resolve();
+                      },
+                    },
+                  ]}
                 >
                   <Input
                     ref={telegramRef}
@@ -424,6 +465,22 @@ const AboutMe = () => {
                   className="max-sm:w-full sm3:w-[48%]"
                   label="Linkedin :"
                   name="linkedin"
+                  rules={[
+                    {
+                      validator: (_, value) => {
+                        if (
+                          value &&
+                          (value.startsWith("https://") ||
+                            value.startsWith("http://"))
+                        ) {
+                          return Promise.reject(
+                            `Please don't include "https://" or "http://" at the beginning`
+                          );
+                        }
+                        return Promise.resolve();
+                      },
+                    },
+                  ]}
                 >
                   <Input
                     ref={linkedinRef}
@@ -439,6 +496,22 @@ const AboutMe = () => {
                   className="max-sm:w-full sm3:w-[48%]"
                   label="X (twitter) :"
                   name="x"
+                  rules={[
+                    {
+                      validator: (_, value) => {
+                        if (
+                          value &&
+                          (value.startsWith("https://") ||
+                            value.startsWith("http://"))
+                        ) {
+                          return Promise.reject(
+                            `Please don't include "https://" or "http://" at the beginning`
+                          );
+                        }
+                        return Promise.resolve();
+                      },
+                    },
+                  ]}
                 >
                   <Input
                     ref={xRef}
