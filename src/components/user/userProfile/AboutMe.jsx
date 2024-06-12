@@ -184,344 +184,337 @@ const AboutMe = () => {
   );
 
   return (
-    <>
-      <div className="flex flex-col gap-4 relative rounded-md bg-white max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
-        <div className="w-full h-9 flex item-center justify-between">
-          <h3 className="text-[1.05rem] relative after:absolute after:bottom-0 after:left-0 after:rounded-md after:h-1 after:w-3 after:bg-[#615DFA] before:absolute before:bottom-0 before:left-4 before:h-1 before:rounded-md before:w-6 before:bg-[#615DFA]">
-            About Me
-          </h3>
-          <button
-            onClick={showModal}
-            className="p-2 shadow-3xl rounded-full bg-white hover:bg-[#d7d7d7] transition-all duration-300"
-          >
-            <GoPencil className="w-5 h-5" />
-          </button>
-        </div>
-        <div className="w-full gap-4 flex flex-col ">
-          <p className="font-normal break-words">
-            {currentUserDBObj?.about.bio}
+    <div className="flex flex-col gap-4 relative rounded-md bg-white max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
+      <div className="w-full h-9 flex item-center justify-between">
+        <h3 className="text-[1.05rem] relative after:absolute after:bottom-0 after:left-0 after:rounded-md after:h-1 after:w-3 after:bg-[#615DFA] before:absolute before:bottom-0 before:left-4 before:h-1 before:rounded-md before:w-6 before:bg-[#615DFA]">
+          About Me
+        </h3>
+        <button
+          onClick={showModal}
+          className="p-2 shadow-3xl rounded-full bg-white hover:bg-[#d7d7d7] transition-all duration-300"
+        >
+          <GoPencil className="w-5 h-5" />
+        </button>
+      </div>
+      <div className="w-full gap-4 flex flex-col ">
+        <p className="font-normal break-words">{currentUserDBObj?.about.bio}</p>
+        <div className="flex flex-col gap-3 text-[.9rem] text-[#585858]">
+          <p className="font-normal">
+            Joined :{" "}
+            <span className="text-black ">
+              {joinDate[1]} {joinDate[2]} {joinDate[3]}
+            </span>
           </p>
-          <div className="flex flex-col gap-3 text-[.9rem] text-[#585858]">
+          <p className="font-normal">
+            Email :{" "}
+            <Link
+              to={`mailto:${currentUser?.email}`}
+              target="_blank"
+              className="text-black"
+            >
+              {currentUser?.email}
+            </Link>
+          </p>
+          {currentUserDBObj?.about.phoneNumber && (
             <p className="font-normal">
-              Joined :{" "}
-              <span className="text-black ">
-                {joinDate[1]} {joinDate[2]} {joinDate[3]}
-              </span>
-            </p>
-            <p className="font-normal">
-              Email :{" "}
+              Phone :{" "}
               <Link
-                to={`mailto:${currentUser?.email}`}
-                target="_blank"
+                to={`tel:${currentUserDBObj.about.phoneNumber}`}
                 className="text-black"
               >
-                {currentUser?.email}
+                {currentUserDBObj.about.phoneNumber}
               </Link>
             </p>
-            {currentUserDBObj?.about.phoneNumber && (
-              <p className="font-normal">
-                Phone :{" "}
-                <Link
-                  to={`tel:${currentUserDBObj.about.phoneNumber}`}
-                  className="text-black"
-                >
-                  {currentUserDBObj.about.phoneNumber}
-                </Link>
-              </p>
-            )}
-            {currentUserDBObj?.about.location && (
-              <p className="font-normal">
-                Country :{" "}
-                <span className="text-black">
-                  {currentUserDBObj.about.location}
-                </span>
-              </p>
-            )}
-            {currentUserDBObj?.about.web && (
-              <p className="font-normal">
-                Web :{" "}
-                <Link
-                  target="_blank"
-                  to={`https://${currentUserDBObj.about.web}`}
-                  className="text-black"
-                >
-                  {currentUserDBObj.about.web}
-                </Link>
-              </p>
-            )}
-            {currentUserDBObj?.about.interests.length !== 0 && (
-              <div className="flex items-center gap-1">
-                <p className="font-normal flex w-[4.8rem]">Interests :</p>
-                <div className="flex gap-[2px] flex-wrap">
-                  {currentUserDBObj?.about.interests.map((interest) => (
-                    <Tag color={interest.split("-")[1]}>
-                      {interest.split("-")[0]}
-                    </Tag>
-                  ))}
-                </div>
-              </div>
-            )}
-            {hasNonEmptyValue && (
-              <div className="flex items-center gap-1">
-                <p className="font-normal">Socials : </p>
-                <span className="text-black flex gap-1">
-                  {currentUserDBObj?.about.socials.map((account) => {
-                    const platform = Object.keys(account)[0];
-                    const link = Object.values(account)[0];
-                    return (
-                      link && (
-                        <Link
-                          target="_blank"
-                          key={platform}
-                          to={`https://${link}`}
-                        >
-                          {getSocialIcon(platform)}
-                        </Link>
-                      )
-                    );
-                  })}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-        <Modal
-          width={700}
-          cla
-          open={open}
-          title="Edit your info"
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={() => (
-            <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
-              <button
-                onClick={handleCancel}
-                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+          )}
+          {currentUserDBObj?.about.location && (
+            <p className="font-normal">
+              Country :{" "}
+              <span className="text-black">
+                {currentUserDBObj.about.location}
+              </span>
+            </p>
+          )}
+          {currentUserDBObj?.about.web && (
+            <p className="font-normal">
+              Web :{" "}
+              <Link
+                target="_blank"
+                to={`https://${currentUserDBObj.about.web}`}
+                className="text-black"
               >
-                Cancel
-              </button>
-              <button
-                onClick={handleOk}
-                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-              >
-                Done
-              </button>
+                {currentUserDBObj.about.web}
+              </Link>
+            </p>
+          )}
+          {currentUserDBObj?.about.interests.length !== 0 && (
+            <div className="flex items-center gap-1">
+              <p className="font-normal flex w-[4.8rem]">Interests :</p>
+              <div className="flex gap-[2px] flex-wrap">
+                {currentUserDBObj?.about.interests.map((interest) => (
+                  <Tag color={interest.split("-")[1]}>
+                    {interest.split("-")[0]}
+                  </Tag>
+                ))}
+              </div>
             </div>
           )}
-        >
-          <div className="flex flex-col gap-3">
-            <Form
-              onFinish={onFinish}
-              ref={frmRef}
-              className=" flex flex-col"
-              layout="vertical"
-              name="register_form"
+          {hasNonEmptyValue && (
+            <div className="flex items-center gap-1">
+              <p className="font-normal">Socials : </p>
+              <span className="text-black flex gap-1">
+                {currentUserDBObj?.about.socials.map((account) => {
+                  const platform = Object.keys(account)[0];
+                  const link = Object.values(account)[0];
+                  return (
+                    link && (
+                      <Link
+                        target="_blank"
+                        key={platform}
+                        to={`https://${link}`}
+                      >
+                        {getSocialIcon(platform)}
+                      </Link>
+                    )
+                  );
+                })}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+      <Modal
+        width={700}
+        cla
+        open={open}
+        title="Edit your info"
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={() => (
+          <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
+            <button
+              onClick={handleCancel}
+              className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
             >
+              Cancel
+            </button>
+            <button
+              onClick={handleOk}
+              className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+            >
+              Done
+            </button>
+          </div>
+        )}
+      >
+        <div className="flex flex-col gap-3">
+          <Form
+            onFinish={onFinish}
+            ref={frmRef}
+            className=" flex flex-col"
+            layout="vertical"
+            name="register_form"
+          >
+            <Form.Item label="Bio :" name="bio">
+              <Input.TextArea
+                ref={bioRef}
+                value={currentUserDBObj?.about.bio}
+                defaultValue={currentUserDBObj?.about.bio}
+                placeholder="Write about yourself"
+                rows={3}
+                maxLength={500}
+                count={{
+                  show: true,
+                  max: 500,
+                }}
+              />
+            </Form.Item>
+            <div className="w-full justify-between flex items-center flex-wrap">
               <Form.Item
-                label="Bio :"
-                name="bio"
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Phone number:"
+                name="phoneNumber"
+                rules={[
+                  {
+                    pattern: /^\d+$/,
+                    message: "Please input only numbers!",
+                  },
+                ]}
               >
-                <Input.TextArea
-                  ref={bioRef}
-                  value={currentUserDBObj?.about.bio}
-                  defaultValue={currentUserDBObj?.about.bio}
-                  placeholder="Write about yourself"
-                  rows={3}
-                  maxLength={500}
-                  count={{
-                    show: true,
-                    max: 500,
-                  }}
+                <Input
+                  ref={phoneNumberRef}
+                  value={"s"}
+                  defaultValue={currentUserDBObj?.about.phoneNumber}
+                  placeholder="989124208975"
                 />
               </Form.Item>
-              <div className="w-full justify-between flex items-center flex-wrap">
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
-                  label="Phone number:"
-                  name="phoneNumber"
-                  rules={[
-                    {
-                      pattern: /^\d+$/,
-                      message: "Please input only numbers!",
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Location :"
+                name="location"
+              >
+                <Input
+                  ref={locationRef}
+                  defaultValue={currentUserDBObj?.about.location}
+                  placeholder="Iran"
+                />
+              </Form.Item>
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Interests :"
+                name="interests"
+              >
+                <Select
+                  mode="multiple"
+                  tagRender={tagRender}
+                  options={options}
+                  defaultValue={currentUserDBObj?.about?.interests?.map(
+                    (interest) => ({
+                      value: interest,
+                      label: interest.split("-")[0],
+                    })
+                  )}
+                />
+              </Form.Item>
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Web :"
+                name="web"
+              >
+                <AutoComplete
+                  options={websiteOptions}
+                  onChange={onWebsiteChange}
+                  placeholder="Yourwebsite.com"
+                  defaultValue={currentUserDBObj?.about.web}
+                >
+                  <Input ref={webRef} />
+                </AutoComplete>
+              </Form.Item>
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Instagram :"
+                name="instagram"
+                rules={[
+                  {
+                    validator: (_, value) => {
+                      if (
+                        value &&
+                        (value.startsWith("https://") ||
+                          value.startsWith("http://"))
+                      ) {
+                        return Promise.reject(
+                          `Please don't include "https://" or "http://" at the beginning`
+                        );
+                      }
+                      return Promise.resolve();
                     },
-                  ]}
-                >
-                  <Input
-                    ref={phoneNumberRef}
-                    value={"s"}
-                    defaultValue={currentUserDBObj?.about.phoneNumber}
-                    placeholder="989124208975"
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
-                  label="Location :"
-                  name="location"
-                >
-                  <Input
-                    ref={locationRef}
-                    defaultValue={currentUserDBObj?.about.location}
-                    placeholder="Iran"
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
-                  label="Interests :"
-                  name="interests"
-                >
-                  <Select
-                    mode="multiple"
-                    tagRender={tagRender}
-                    options={options}
-                    defaultValue={currentUserDBObj?.about?.interests?.map(
-                      (interest) => ({
-                        value: interest,
-                        label: interest.split("-")[0],
-                      })
-                    )}
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
-                  label="Web :"
-                  name="web"
-                >
-                  <AutoComplete
-                    options={websiteOptions}
-                    onChange={onWebsiteChange}
-                    placeholder="Yourwebsite.com"
-                    defaultValue={currentUserDBObj?.about.web}
-                  >
-                    <Input ref={webRef} />
-                  </AutoComplete>
-                </Form.Item>
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
-                  label="Instagram :"
-                  name="instagram"
-                  rules={[
-                    {
-                      validator: (_, value) => {
-                        if (
-                          value &&
-                          (value.startsWith("https://") ||
-                            value.startsWith("http://"))
-                        ) {
-                          return Promise.reject(
-                            `Please don't include "https://" or "http://" at the beginning`
-                          );
-                        }
-                        return Promise.resolve();
-                      },
+                  },
+                ]}
+              >
+                <Input
+                  ref={instagramRef}
+                  defaultValue={
+                    currentUserDBObj?.about?.socials &&
+                    currentUserDBObj.about.socials[0].instagram
+                  }
+                  placeholder="instagram.com/username"
+                />
+              </Form.Item>
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Telegram :"
+                name="telegram"
+                rules={[
+                  {
+                    validator: (_, value) => {
+                      if (
+                        value &&
+                        (value.startsWith("https://") ||
+                          value.startsWith("http://"))
+                      ) {
+                        return Promise.reject(
+                          `Please don't include "https://" or "http://" at the beginning`
+                        );
+                      }
+                      return Promise.resolve();
                     },
-                  ]}
-                >
-                  <Input
-                    ref={instagramRef}
-                    defaultValue={
-                      currentUserDBObj?.about?.socials &&
-                      currentUserDBObj.about.socials[0].instagram
-                    }
-                    placeholder="instagram.com/username"
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
-                  label="Telegram :"
-                  name="telegram"
-                  rules={[
-                    {
-                      validator: (_, value) => {
-                        if (
-                          value &&
-                          (value.startsWith("https://") ||
-                            value.startsWith("http://"))
-                        ) {
-                          return Promise.reject(
-                            `Please don't include "https://" or "http://" at the beginning`
-                          );
-                        }
-                        return Promise.resolve();
-                      },
+                  },
+                ]}
+              >
+                <Input
+                  ref={telegramRef}
+                  defaultValue={
+                    currentUserDBObj?.about?.socials &&
+                    currentUserDBObj.about.socials[1].telegram
+                  }
+                  placeholder="t.me/username"
+                />
+              </Form.Item>
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="Linkedin :"
+                name="linkedin"
+                rules={[
+                  {
+                    validator: (_, value) => {
+                      if (
+                        value &&
+                        (value.startsWith("https://") ||
+                          value.startsWith("http://"))
+                      ) {
+                        return Promise.reject(
+                          `Please don't include "https://" or "http://" at the beginning`
+                        );
+                      }
+                      return Promise.resolve();
                     },
-                  ]}
-                >
-                  <Input
-                    ref={telegramRef}
-                    defaultValue={
-                      currentUserDBObj?.about?.socials &&
-                      currentUserDBObj.about.socials[1].telegram
-                    }
-                    placeholder="t.me/username"
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
-                  label="Linkedin :"
-                  name="linkedin"
-                  rules={[
-                    {
-                      validator: (_, value) => {
-                        if (
-                          value &&
-                          (value.startsWith("https://") ||
-                            value.startsWith("http://"))
-                        ) {
-                          return Promise.reject(
-                            `Please don't include "https://" or "http://" at the beginning`
-                          );
-                        }
-                        return Promise.resolve();
-                      },
-                    },
-                  ]}
-                >
-                  <Input
-                    ref={linkedinRef}
-                    defaultValue={
-                      currentUserDBObj?.about?.socials &&
-                      currentUserDBObj.about.socials[2].linkedin
-                    }
-                    placeholder="linkedin.com/in/username"
-                  />
-                </Form.Item>
+                  },
+                ]}
+              >
+                <Input
+                  ref={linkedinRef}
+                  defaultValue={
+                    currentUserDBObj?.about?.socials &&
+                    currentUserDBObj.about.socials[2].linkedin
+                  }
+                  placeholder="linkedin.com/in/username"
+                />
+              </Form.Item>
 
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
-                  label="X (twitter) :"
-                  name="x"
-                  rules={[
-                    {
-                      validator: (_, value) => {
-                        if (
-                          value &&
-                          (value.startsWith("https://") ||
-                            value.startsWith("http://"))
-                        ) {
-                          return Promise.reject(
-                            `Please don't include "https://" or "http://" at the beginning`
-                          );
-                        }
-                        return Promise.resolve();
-                      },
+              <Form.Item
+                className="max-sm:w-full sm3:w-[48%]"
+                label="X (twitter) :"
+                name="x"
+                rules={[
+                  {
+                    validator: (_, value) => {
+                      if (
+                        value &&
+                        (value.startsWith("https://") ||
+                          value.startsWith("http://"))
+                      ) {
+                        return Promise.reject(
+                          `Please don't include "https://" or "http://" at the beginning`
+                        );
+                      }
+                      return Promise.resolve();
                     },
-                  ]}
-                >
-                  <Input
-                    ref={xRef}
-                    defaultValue={
-                      currentUserDBObj?.about?.socials &&
-                      currentUserDBObj.about.socials[3].x
-                    }
-                    placeholder="x.com/username"
-                  />
-                </Form.Item>
-              </div>
-            </Form>
-          </div>
-        </Modal>
-      </div>
-    </>
+                  },
+                ]}
+              >
+                <Input
+                  ref={xRef}
+                  defaultValue={
+                    currentUserDBObj?.about?.socials &&
+                    currentUserDBObj.about.socials[3].x
+                  }
+                  placeholder="x.com/username"
+                />
+              </Form.Item>
+            </div>
+          </Form>
+        </div>
+      </Modal>
+    </div>
   );
 };
 

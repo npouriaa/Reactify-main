@@ -8,7 +8,8 @@ import { RequestsContext } from "../../context/RequestsContext";
 import LoaderModal from "../../components/LoaderModal";
 
 const UserMainLayout = () => {
-  const { getUserData, loading } = useContext(RequestsContext);
+  const { getUserData, loading, currentUserDBObj } =
+    useContext(RequestsContext);
 
   useEffect(() => {
     getUserData();
@@ -19,7 +20,7 @@ const UserMainLayout = () => {
       <SideMenu />
       <Layout className="w-full ">
         <Header />
-        {loading ? (
+        {loading || !currentUserDBObj ? (
           <LoaderModal />
         ) : (
           <>
