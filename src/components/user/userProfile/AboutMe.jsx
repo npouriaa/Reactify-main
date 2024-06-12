@@ -81,6 +81,14 @@ const AboutMe = () => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const frmRef = useRef();
   const joinDate = currentUser?.metadata.creationTime.split(" ");
+  const bioRef = useRef();
+  const phoneNumberRef = useRef();
+  const locationRef = useRef();
+  const webRef = useRef();
+  const instagramRef = useRef();
+  const telegramRef = useRef();
+  const xRef = useRef();
+  const linkedinRef = useRef();
 
   const onWebsiteChange = (value) => {
     if (!value) {
@@ -99,40 +107,28 @@ const AboutMe = () => {
     value: website,
   }));
 
-  const updateUserData = async (values) => {
-    const {
-      bio,
-      phoneNumber,
-      location,
-      interests,
-      web,
-      instagram,
-      telegram,
-      x,
-      linkedin,
-    } = values;
-
+  const updateUserData = async (interests) => {
     setLoading(true);
     try {
       const docRef = doc(db, "users", currentUser.uid);
       await updateDoc(docRef, {
         about: {
-          bio: bio || currentUserDBObj?.about.bio,
-          phoneNumber: phoneNumber || currentUserDBObj?.about.phoneNumber,
-          location: location || currentUserDBObj?.about.location,
+          bio: bioRef.current.resizableTextArea.textArea.value,
+          phoneNumber: phoneNumberRef.current.input.value,
+          location: locationRef.current.input.value,
           interests: interests || currentUserDBObj?.about.interests,
-          web: web || currentUserDBObj?.about.web,
+          web: webRef.current.input.value,
           socials: [
             {
-              instagram: instagram || currentUserDBObj.about.socials[0].instagram,
+              instagram: instagramRef.current.input.value,
             },
             {
-              telegram: telegram || currentUserDBObj.about.socials[1].telegram,
+              telegram: telegramRef.current.input.value,
             },
             {
-              linkedin: linkedin || currentUserDBObj.about.socials[2].linkedin,
+              linkedin: xRef.current.input.value,
             },
-            { x: x || currentUserDBObj.about.socials[3].x },
+            { x: linkedinRef.current.input.value },
           ],
         },
       });
@@ -156,33 +152,8 @@ const AboutMe = () => {
   };
 
   const onFinish = (values) => {
-    const {
-      bio,
-      phoneNumber,
-      location,
-      interests,
-      web,
-      instagram,
-      telegram,
-      x,
-      linkedin,
-    } = values;
-
-    const sanitizedValues = {
-      bio: bio || null,
-      phoneNumber: phoneNumber || null,
-      location: location || null,
-      interests: interests || [],
-      web: web || null,
-      instagram: instagram || null,
-      telegram: telegram || null,
-      x: x || null,
-      linkedin: linkedin || null,
-    };
-
-    console.log(currentUserDBObj.about.socials[1].telegram);
-
-    updateUserData(sanitizedValues);
+    const interests = values.interests || []
+    updateUserData(interests);
   };
 
   const getSocialIcon = (socialAppName) => {
@@ -331,6 +302,7 @@ const AboutMe = () => {
             >
               <Form.Item label="Bio :" name="bio">
                 <Input.TextArea
+                  ref={bioRef}
                   value={currentUserDBObj?.about.bio}
                   defaultValue={currentUserDBObj?.about.bio}
                   placeholder="Write about yourself"
@@ -355,6 +327,8 @@ const AboutMe = () => {
                   ]}
                 >
                   <Input
+                    ref={phoneNumberRef}
+                    value={"s"}
                     defaultValue={currentUserDBObj?.about.phoneNumber}
                     placeholder="989124208975"
                   />
@@ -365,6 +339,7 @@ const AboutMe = () => {
                   name="location"
                 >
                   <Input
+                    ref={locationRef}
                     defaultValue={currentUserDBObj?.about.location}
                     placeholder="Iran"
                   />
@@ -397,7 +372,7 @@ const AboutMe = () => {
                     placeholder="Yourwebsite.com"
                     defaultValue={currentUserDBObj?.about.web}
                   >
-                    <Input />
+                    <Input ref={webRef} />
                   </AutoComplete>
                 </Form.Item>
                 <Form.Item
@@ -406,6 +381,7 @@ const AboutMe = () => {
                   name="instagram"
                 >
                   <Input
+                    ref={instagramRef}
                     defaultValue={
                       currentUserDBObj?.about?.socials &&
                       currentUserDBObj.about.socials[0].instagram
@@ -419,6 +395,7 @@ const AboutMe = () => {
                   name="telegram"
                 >
                   <Input
+                    ref={telegramRef}
                     defaultValue={
                       currentUserDBObj?.about?.socials &&
                       currentUserDBObj.about.socials[1].telegram
@@ -432,6 +409,7 @@ const AboutMe = () => {
                   name="x"
                 >
                   <Input
+                    ref={xRef}
                     defaultValue={
                       currentUserDBObj?.about?.socials &&
                       currentUserDBObj.about.socials[2].linkedin
@@ -445,6 +423,7 @@ const AboutMe = () => {
                   name="linkedin"
                 >
                   <Input
+                    ref={linkedinRef}
                     defaultValue={
                       currentUserDBObj?.about?.socials &&
                       currentUserDBObj.about.socials[3].x
