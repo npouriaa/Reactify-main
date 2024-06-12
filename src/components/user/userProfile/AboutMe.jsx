@@ -209,7 +209,7 @@ const AboutMe = () => {
               </span>
             </p>
             <p className="font-normal">
-              Email : <Link className="text-black">{currentUser?.email}</Link>
+              Email : <Link to={`mailto:${currentUser?.email}`} target="_blank" className="text-black">{currentUser?.email}</Link>
             </p>
             {currentUserDBObj?.about.phoneNumber && (
               <p className="font-normal">
@@ -233,7 +233,7 @@ const AboutMe = () => {
             {currentUserDBObj?.about.web && (
               <p className="font-normal">
                 Web :{" "}
-                <span className="text-black">{currentUserDBObj.about.web}</span>
+                <Link target="_blank" to={`https://${currentUserDBObj.about.web}`} className="text-black">{currentUserDBObj.about.web}</Link>
               </p>
             )}
             {currentUserDBObj?.about.interests.length !== 0 && (
@@ -257,7 +257,7 @@ const AboutMe = () => {
                     const link = Object.values(account)[0];
                     return (
                       link && (
-                        <Link key={platform} href={link}>
+                        <Link target="_blank" key={platform} to={`https://${link}`}>
                           {getSocialIcon(platform)}
                         </Link>
                       )
@@ -273,7 +273,7 @@ const AboutMe = () => {
           cla
           open={open}
           title="Edit your info"
-          onOk={() => handleOk()}
+          onOk={handleOk}
           onCancel={handleCancel}
           footer={() => (
             <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
@@ -284,7 +284,7 @@ const AboutMe = () => {
                 Cancel
               </button>
               <button
-                onClick={() => handleOk()}
+                onClick={handleOk}
                 className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
               >
                 Done
