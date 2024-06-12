@@ -126,9 +126,9 @@ const AboutMe = () => {
               telegram: telegramRef.current.input.value,
             },
             {
-              linkedin: xRef.current.input.value,
+              linkedin: linkedinRef.current.input.value,
             },
-            { x: linkedinRef.current.input.value },
+            { x: xRef.current.input.value },
           ],
         },
       });
@@ -152,7 +152,7 @@ const AboutMe = () => {
   };
 
   const onFinish = (values) => {
-    const interests = values.interests || []
+    const interests = values.interests || [];
     updateUserData(interests);
   };
 
@@ -209,7 +209,14 @@ const AboutMe = () => {
               </span>
             </p>
             <p className="font-normal">
-              Email : <Link to={`mailto:${currentUser?.email}`} target="_blank" className="text-black">{currentUser?.email}</Link>
+              Email :{" "}
+              <Link
+                to={`mailto:${currentUser?.email}`}
+                target="_blank"
+                className="text-black"
+              >
+                {currentUser?.email}
+              </Link>
             </p>
             {currentUserDBObj?.about.phoneNumber && (
               <p className="font-normal">
@@ -233,7 +240,13 @@ const AboutMe = () => {
             {currentUserDBObj?.about.web && (
               <p className="font-normal">
                 Web :{" "}
-                <Link target="_blank" to={`https://${currentUserDBObj.about.web}`} className="text-black">{currentUserDBObj.about.web}</Link>
+                <Link
+                  target="_blank"
+                  to={`https://${currentUserDBObj.about.web}`}
+                  className="text-black"
+                >
+                  {currentUserDBObj.about.web}
+                </Link>
               </p>
             )}
             {currentUserDBObj?.about.interests.length !== 0 && (
@@ -257,7 +270,11 @@ const AboutMe = () => {
                     const link = Object.values(account)[0];
                     return (
                       link && (
-                        <Link target="_blank" key={platform} to={`https://${link}`}>
+                        <Link
+                          target="_blank"
+                          key={platform}
+                          to={`https://${link}`}
+                        >
                           {getSocialIcon(platform)}
                         </Link>
                       )
@@ -405,20 +422,6 @@ const AboutMe = () => {
                 </Form.Item>
                 <Form.Item
                   className="max-sm:w-full sm3:w-[48%]"
-                  label="X (twitter) :"
-                  name="x"
-                >
-                  <Input
-                    ref={xRef}
-                    defaultValue={
-                      currentUserDBObj?.about?.socials &&
-                      currentUserDBObj.about.socials[2].linkedin
-                    }
-                    placeholder="x.com/username"
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="max-sm:w-full sm3:w-[48%]"
                   label="Linkedin :"
                   name="linkedin"
                 >
@@ -426,9 +429,24 @@ const AboutMe = () => {
                     ref={linkedinRef}
                     defaultValue={
                       currentUserDBObj?.about?.socials &&
-                      currentUserDBObj.about.socials[3].x
+                      currentUserDBObj.about.socials[2].linkedin
                     }
                     placeholder="linkedin.com/in/username"
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  className="max-sm:w-full sm3:w-[48%]"
+                  label="X (twitter) :"
+                  name="x"
+                >
+                  <Input
+                    ref={xRef}
+                    defaultValue={
+                      currentUserDBObj?.about?.socials &&
+                      currentUserDBObj.about.socials[3].x
+                    }
+                    placeholder="x.com/username"
                   />
                 </Form.Item>
               </div>
