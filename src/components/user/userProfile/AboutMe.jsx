@@ -320,12 +320,6 @@ const AboutMe = () => {
               <Form.Item
                 label="Bio :"
                 name="bio"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your bio!",
-                  },
-                ]}
               >
                 <Input.TextArea
                   ref={bioRef}
