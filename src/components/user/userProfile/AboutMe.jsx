@@ -6,9 +6,18 @@ import { FaTelegram } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { Modal, Form, Input, Select, AutoComplete, Tag } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Select,
+  AutoComplete,
+  Tag,
+  ConfigProvider,
+} from "antd";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { DarkModeContext } from "../../../context/DarkModeContext";
 
 const options = [
   {
@@ -77,6 +86,7 @@ const tagRender = ({ value, closable, onClose }) => {
 const AboutMe = () => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
+  const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const frmRef = useRef();
@@ -156,24 +166,18 @@ const AboutMe = () => {
     updateUserData(interests);
   };
 
+  console.log(currentUserDBObj);
+
   const getSocialIcon = (socialAppName) => {
     switch (socialAppName) {
       case "instagram":
-        return (
-          <FaInstagram className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
-        );
+        return <FaInstagram className="w-5 h-5" />;
       case "telegram":
-        return (
-          <FaTelegram className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
-        );
+        return <FaTelegram className="w-5 h-5" />;
       case "linkedin":
-        return (
-          <FaLinkedin className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
-        );
+        return <FaLinkedin className="w-5 h-5" />;
       case "x":
-        return (
-          <FaXTwitter className="w-5 h-5 duration-500 hover:text-[#69b1ff] transition-all text-[#585858]" />
-        );
+        return <FaXTwitter className="w-5 h-5" />;
       default:
         return null;
     }
@@ -184,9 +188,9 @@ const AboutMe = () => {
   );
 
   return (
-    <div className="flex flex-col gap-4 relative rounded-md bg-white max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
+    <div className="flex flex-col gap-4 relative transition-all rounded-md bg-white dark:bg-[#111] max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
       <div className="w-full h-9 flex item-center justify-between">
-        <h3 className="text-[1.05rem] relative after:absolute after:bottom-0 after:left-0 after:rounded-md after:h-1 after:w-3 after:bg-[#615DFA] before:absolute before:bottom-0 before:left-4 before:h-1 before:rounded-md before:w-6 before:bg-[#615DFA]">
+        <h3 className="dark:text-white transition-all text-[1.05rem] relative after:absolute after:bottom-0 after:left-0 after:rounded-md after:h-1 after:w-3 after:bg-[#615DFA] before:absolute before:bottom-0 before:left-4 before:h-1 before:rounded-md before:w-6 before:bg-[#615DFA]">
           About Me
         </h3>
         <button
@@ -197,50 +201,52 @@ const AboutMe = () => {
         </button>
       </div>
       <div className="w-full gap-4 flex flex-col ">
-        <p className="font-normal break-words">{currentUserDBObj?.about.bio}</p>
+        <p className="font-normal break-words dark:text-white transition-all">
+          {currentUserDBObj?.about.bio}
+        </p>
         <div className="flex flex-col gap-3 text-[.9rem] text-[#585858]">
-          <p className="font-normal">
+          <p className="font-normal dark:text-[#aeaeae] transition-all">
             Joined :{" "}
-            <span className="text-black ">
+            <span className="text-black dark:text-white transition-all">
               {joinDate[1]} {joinDate[2]} {joinDate[3]}
             </span>
           </p>
-          <p className="font-normal">
+          <div className="font-normal dark:text-[#aeaeae] transition-all">
             Email :{" "}
             <Link
               to={`mailto:${currentUser?.email}`}
               target="_blank"
-              className="text-black"
+              className="text-black dark:text-white transition-all dark:hover:text-[#69b1ff]"
             >
               {currentUser?.email}
             </Link>
-          </p>
+          </div>
           {currentUserDBObj?.about.phoneNumber && (
-            <p className="font-normal">
+            <p className="font-normal dark:text-[#aeaeae] transition-all">
               Phone :{" "}
               <Link
                 to={`tel:${currentUserDBObj.about.phoneNumber}`}
-                className="text-black"
+                className="text-black dark:text-white transition-all dark:hover:text-[#69b1ff]"
               >
                 {currentUserDBObj.about.phoneNumber}
               </Link>
             </p>
           )}
           {currentUserDBObj?.about.location && (
-            <p className="font-normal">
+            <p className="font-normal dark:text-[#aeaeae] transition-all">
               Country :{" "}
-              <span className="text-black">
+              <span className="text-black dark:text-white transition-all">
                 {currentUserDBObj.about.location}
               </span>
             </p>
           )}
           {currentUserDBObj?.about.web && (
-            <p className="font-normal">
+            <p className="font-normal dark:text-[#aeaeae] transition-all">
               Web :{" "}
               <Link
                 target="_blank"
                 to={`https://${currentUserDBObj.about.web}`}
-                className="text-black"
+                className="text-black dark:text-white transition-all dark:hover:text-[#69b1ff]"
               >
                 {currentUserDBObj.about.web}
               </Link>
@@ -248,7 +254,9 @@ const AboutMe = () => {
           )}
           {currentUserDBObj?.about.interests.length !== 0 && (
             <div className="flex items-center gap-1">
-              <p className="font-normal flex w-[4.8rem]">Interests :</p>
+              <p className="font-normal dark:text-[#aeaeae] transition-all flex w-[4.8rem]">
+                Interests :
+              </p>
               <div className="flex gap-[2px] flex-wrap">
                 {currentUserDBObj?.about.interests.map((interest) => (
                   <Tag color={interest.split("-")[1]}>
@@ -260,14 +268,17 @@ const AboutMe = () => {
           )}
           {hasNonEmptyValue && (
             <div className="flex items-center gap-1">
-              <p className="font-normal">Socials : </p>
-              <span className="text-black flex gap-1">
+              <p className="font-normal dark:text-[#aeaeae] transition-all">
+                Socials :{" "}
+              </p>
+              <span className="text-black dark:text-white transition-all flex gap-1">
                 {currentUserDBObj?.about.socials.map((account) => {
                   const platform = Object.keys(account)[0];
                   const link = Object.values(account)[0];
                   return (
                     link && (
                       <Link
+                        className="text-[#585858] dark:text-white transition-all duration-200 dark:hover:text-[#69b1ff]"
                         target="_blank"
                         key={platform}
                         to={`https://${link}`}
@@ -282,238 +293,286 @@ const AboutMe = () => {
           )}
         </div>
       </div>
-      <Modal
-        width={700}
-        cla
-        open={open}
-        title="Edit your info"
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={() => (
-          <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
-            <button
-              onClick={handleCancel}
-              className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleOk}
-              className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-            >
-              Done
-            </button>
-          </div>
-        )}
+      <ConfigProvider
+        theme={{
+          components: {
+            Modal: {
+              contentBg: isDark ? "#111" : "#fff",
+              headerBg: isDark ? "#111" : "#fff",
+              titleColor: isDark ? "#fff" : "#000",
+            },
+          },
+        }}
       >
-        <div className="flex flex-col gap-3">
-          <Form
-            onFinish={onFinish}
-            ref={frmRef}
-            className=" flex flex-col"
-            layout="vertical"
-            name="register_form"
-          >
-            <Form.Item label="Bio :" name="bio">
-              <Input.TextArea
-                ref={bioRef}
-                value={currentUserDBObj?.about.bio}
-                defaultValue={currentUserDBObj?.about.bio}
-                placeholder="Write about yourself"
-                rows={3}
-                maxLength={500}
-                count={{
-                  show: true,
-                  max: 500,
-                }}
-              />
-            </Form.Item>
-            <div className="w-full justify-between flex items-center flex-wrap">
-              <Form.Item
-                className="max-sm:w-full sm3:w-[48%]"
-                label="Phone number:"
-                name="phoneNumber"
-                rules={[
-                  {
-                    pattern: /^\d+$/,
-                    message: "Please input only numbers!",
-                  },
-                ]}
+        <Modal
+          width={700}
+          open={open}
+          title="Edit your info"
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={() => (
+            <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
+              <button
+                onClick={handleCancel}
+                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
               >
-                <Input
-                  ref={phoneNumberRef}
-                  value={"s"}
-                  defaultValue={currentUserDBObj?.about.phoneNumber}
-                  placeholder="989124208975"
-                />
-              </Form.Item>
-              <Form.Item
-                className="max-sm:w-full sm3:w-[48%]"
-                label="Location :"
-                name="location"
+                Cancel
+              </button>
+              <button
+                onClick={handleOk}
+                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
               >
-                <Input
-                  ref={locationRef}
-                  defaultValue={currentUserDBObj?.about.location}
-                  placeholder="Iran"
-                />
-              </Form.Item>
-              <Form.Item
-                className="max-sm:w-full sm3:w-[48%]"
-                label="Interests :"
-                name="interests"
-              >
-                <Select
-                  mode="multiple"
-                  tagRender={tagRender}
-                  options={options}
-                  defaultValue={currentUserDBObj?.about?.interests?.map(
-                    (interest) => ({
-                      value: interest,
-                      label: interest.split("-")[0],
-                    })
-                  )}
-                />
-              </Form.Item>
-              <Form.Item
-                className="max-sm:w-full sm3:w-[48%]"
-                label="Web :"
-                name="web"
-              >
-                <AutoComplete
-                  options={websiteOptions}
-                  onChange={onWebsiteChange}
-                  placeholder="Yourwebsite.com"
-                  defaultValue={currentUserDBObj?.about.web}
-                >
-                  <Input ref={webRef} />
-                </AutoComplete>
-              </Form.Item>
-              <Form.Item
-                className="max-sm:w-full sm3:w-[48%]"
-                label="Instagram :"
-                name="instagram"
-                rules={[
-                  {
-                    validator: (_, value) => {
-                      if (
-                        value &&
-                        (value.startsWith("https://") ||
-                          value.startsWith("http://"))
-                      ) {
-                        return Promise.reject(
-                          `Please don't include "https://" or "http://" at the beginning`
-                        );
-                      }
-                      return Promise.resolve();
-                    },
-                  },
-                ]}
-              >
-                <Input
-                  ref={instagramRef}
-                  defaultValue={
-                    currentUserDBObj?.about?.socials &&
-                    currentUserDBObj.about.socials[0].instagram
-                  }
-                  placeholder="instagram.com/username"
-                />
-              </Form.Item>
-              <Form.Item
-                className="max-sm:w-full sm3:w-[48%]"
-                label="Telegram :"
-                name="telegram"
-                rules={[
-                  {
-                    validator: (_, value) => {
-                      if (
-                        value &&
-                        (value.startsWith("https://") ||
-                          value.startsWith("http://"))
-                      ) {
-                        return Promise.reject(
-                          `Please don't include "https://" or "http://" at the beginning`
-                        );
-                      }
-                      return Promise.resolve();
-                    },
-                  },
-                ]}
-              >
-                <Input
-                  ref={telegramRef}
-                  defaultValue={
-                    currentUserDBObj?.about?.socials &&
-                    currentUserDBObj.about.socials[1].telegram
-                  }
-                  placeholder="t.me/username"
-                />
-              </Form.Item>
-              <Form.Item
-                className="max-sm:w-full sm3:w-[48%]"
-                label="Linkedin :"
-                name="linkedin"
-                rules={[
-                  {
-                    validator: (_, value) => {
-                      if (
-                        value &&
-                        (value.startsWith("https://") ||
-                          value.startsWith("http://"))
-                      ) {
-                        return Promise.reject(
-                          `Please don't include "https://" or "http://" at the beginning`
-                        );
-                      }
-                      return Promise.resolve();
-                    },
-                  },
-                ]}
-              >
-                <Input
-                  ref={linkedinRef}
-                  defaultValue={
-                    currentUserDBObj?.about?.socials &&
-                    currentUserDBObj.about.socials[2].linkedin
-                  }
-                  placeholder="linkedin.com/in/username"
-                />
-              </Form.Item>
-
-              <Form.Item
-                className="max-sm:w-full sm3:w-[48%]"
-                label="X (twitter) :"
-                name="x"
-                rules={[
-                  {
-                    validator: (_, value) => {
-                      if (
-                        value &&
-                        (value.startsWith("https://") ||
-                          value.startsWith("http://"))
-                      ) {
-                        return Promise.reject(
-                          `Please don't include "https://" or "http://" at the beginning`
-                        );
-                      }
-                      return Promise.resolve();
-                    },
-                  },
-                ]}
-              >
-                <Input
-                  ref={xRef}
-                  defaultValue={
-                    currentUserDBObj?.about?.socials &&
-                    currentUserDBObj.about.socials[3].x
-                  }
-                  placeholder="x.com/username"
-                />
-              </Form.Item>
+                Done
+              </button>
             </div>
-          </Form>
-        </div>
-      </Modal>
+          )}
+        >
+          <div className="flex flex-col gap-3">
+            <ConfigProvider
+              theme={{
+                components: {
+                  Form: {
+                    labelColor: isDark ? "#fff" : "#000",
+                  },
+                },
+              }}
+            >
+              <Form
+                onFinish={onFinish}
+                ref={frmRef}
+                className=" flex flex-col"
+                layout="vertical"
+                name="register_form"
+              >
+                <Form.Item className="text-white" label="Bio :" name="bio">
+                  <Input.TextArea
+                    ref={bioRef}
+                    className="placeholder:text-[#585858] dark:text-white"
+                    style={{ background: "transparent" }}
+                    value={currentUserDBObj?.about.bio}
+                    defaultValue={currentUserDBObj?.about.bio}
+                    placeholder="Write about yourself"
+                    rows={3}
+                    maxLength={500}
+                    count={{
+                      show: true,
+                      max: 500,
+                    }}
+                  />
+                </Form.Item>
+                <div className="w-full justify-between flex items-center flex-wrap">
+                  <Form.Item
+                    className="max-sm:w-full sm3:w-[48%]"
+                    label="Phone number:"
+                    name="phoneNumber"
+                    rules={[
+                      {
+                        pattern: /^\d+$/,
+                        message: "Please input only numbers!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      ref={phoneNumberRef}
+                      className="placeholder:text-[#585858] dark:text-white"
+                      style={{ background: "transparent" }}
+                      defaultValue={currentUserDBObj?.about.phoneNumber}
+                      placeholder="989124208975"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    className="max-sm:w-full sm3:w-[48%]"
+                    label="Location :"
+                    name="location"
+                  >
+                    <Input
+                      ref={locationRef}
+                      className="placeholder:text-[#585858] dark:text-white"
+                      style={{ background: "transparent" }}
+                      defaultValue={currentUserDBObj?.about.location}
+                      placeholder="Iran"
+                    />
+                  </Form.Item>
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Select: {
+                          selectorBg: isDark ? "#111" : "#fff",
+                        },
+                      },
+                    }}
+                  >
+                    <Form.Item
+                      className="max-sm:w-full sm3:w-[48%]"
+                      label="Interests :"
+                      name="interests"
+                    >
+                      <Select
+                        mode="multiple"
+                        tagRender={tagRender}
+                        options={options}
+                        defaultValue={currentUserDBObj?.about?.interests?.map(
+                          (interest) => ({
+                            value: interest,
+                            label: interest.split("-")[0],
+                          })
+                        )}
+                      />
+                    </Form.Item>
+                  </ConfigProvider>
+                  <Form.Item
+                    className="max-sm:w-full sm3:w-[48%]"
+                    label="Web :"
+                    name="web"
+                  >
+                    <AutoComplete
+                      options={websiteOptions}
+                      onChange={onWebsiteChange}
+                      placeholder="Yourwebsite.com"
+                      defaultValue={currentUserDBObj?.about.web}
+                    >
+                      <Input
+                        className="placeholder:text-[#585858] dark:text-white"
+                        style={{ background: "transparent" }}
+                        ref={webRef}
+                      />
+                    </AutoComplete>
+                  </Form.Item>
+                  <Form.Item
+                    className="max-sm:w-full sm3:w-[48%]"
+                    label="Instagram :"
+                    name="instagram"
+                    rules={[
+                      {
+                        validator: (_, value) => {
+                          if (
+                            value &&
+                            (value.startsWith("https://") ||
+                              value.startsWith("http://"))
+                          ) {
+                            return Promise.reject(
+                              `Please don't include "https://" or "http://" at the beginning`
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
+                  >
+                    <Input
+                      ref={instagramRef}
+                      defaultValue={
+                        currentUserDBObj?.about?.socials &&
+                        currentUserDBObj.about.socials[0].instagram
+                      }
+                      placeholder="instagram.com/username"
+                      className="placeholder:text-[#585858] dark:text-white"
+                      style={{ background: "transparent" }}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    className="max-sm:w-full sm3:w-[48%]"
+                    label="Telegram :"
+                    name="telegram"
+                    rules={[
+                      {
+                        validator: (_, value) => {
+                          if (
+                            value &&
+                            (value.startsWith("https://") ||
+                              value.startsWith("http://"))
+                          ) {
+                            return Promise.reject(
+                              `Please don't include "https://" or "http://" at the beginning`
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
+                  >
+                    <Input
+                      ref={telegramRef}
+                      className="placeholder:text-[#585858] dark:text-white"
+                      style={{ background: "transparent" }}
+                      defaultValue={
+                        currentUserDBObj?.about?.socials &&
+                        currentUserDBObj.about.socials[1].telegram
+                      }
+                      placeholder="t.me/username"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    className="max-sm:w-full sm3:w-[48%]"
+                    label="Linkedin :"
+                    name="linkedin"
+                    rules={[
+                      {
+                        validator: (_, value) => {
+                          if (
+                            value &&
+                            (value.startsWith("https://") ||
+                              value.startsWith("http://"))
+                          ) {
+                            return Promise.reject(
+                              `Please don't include "https://" or "http://" at the beginning`
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
+                  >
+                    <Input
+                      ref={linkedinRef}
+                      className="placeholder:text-[#585858] dark:text-white"
+                      style={{ background: "transparent" }}
+                      defaultValue={
+                        currentUserDBObj?.about?.socials &&
+                        currentUserDBObj.about.socials[2].linkedin
+                      }
+                      placeholder="linkedin.com/in/username"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    className="max-sm:w-full sm3:w-[48%]"
+                    label="X (twitter) :"
+                    name="x"
+                    rules={[
+                      {
+                        validator: (_, value) => {
+                          if (
+                            value &&
+                            (value.startsWith("https://") ||
+                              value.startsWith("http://"))
+                          ) {
+                            return Promise.reject(
+                              `Please don't include "https://" or "http://" at the beginning`
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
+                  >
+                    <Input
+                      ref={xRef}
+                      className="placeholder:text-[#585858] dark:text-white"
+                      style={{ background: "transparent" }}
+                      defaultValue={
+                        currentUserDBObj?.about?.socials &&
+                        currentUserDBObj.about.socials[3].x
+                      }
+                      placeholder="x.com/username"
+                    />
+                  </Form.Item>
+                </div>
+              </Form>
+            </ConfigProvider>
+          </div>
+        </Modal>
+      </ConfigProvider>
     </div>
   );
 };

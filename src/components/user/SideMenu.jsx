@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import "../../assets/styles/sideMenu.css";
-import logo from "../../assets/images/logo/Reactify-black.png";
+import logoBlack from "../../assets/images/logo/Reactify-black.png";
+import logoWhite from "../../assets/images/logo/Reactify-white.png";
 import { Link } from "react-router-dom";
 import { BiNews } from "react-icons/bi";
 import { PiChatsCircleDuotone } from "react-icons/pi";
@@ -8,10 +9,12 @@ import { RiUserSettingsLine } from "react-icons/ri";
 import { LuClipboardList } from "react-icons/lu";
 import { PiUsersBold } from "react-icons/pi";
 import { Tooltip } from "antd";
+import { DarkModeContext } from "../../context/DarkModeContext";
 
 const SideMenu = () => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [initialSideMenuOpen, setInitialSideMenuOpen] = useState(false);
+  const { isDark } = useContext(DarkModeContext);
   const hMenuRef = useRef();
   const sideMenuRef = useRef();
 
@@ -60,9 +63,13 @@ const SideMenu = () => {
           : "left-[-11rem]"
       } fixed z-[1000] flex flex-col items-center transition-all duration-500`}
     >
-      <div className="w-full max-sm:h-[4.6rem] lg:h-20 bg-white flex items-center gap-11 justify-between px-4 ">
+      <div className="w-full max-sm:h-[4.6rem] lg:h-20 bg-white transition-all dark:bg-[#111] flex items-center gap-11 justify-between px-4 ">
         <Link to="/">
-          <img className="h-11" src={logo} alt="logo" />
+          <img
+            className="h-11 min-w-[133.4px]"
+            src={isDark ? logoWhite : logoBlack}
+            alt="logo"
+          />
         </Link>
         <button
           className="flex items-center justify-center overflow-hidden w-11 h-11"
@@ -95,17 +102,20 @@ const SideMenu = () => {
               ? "max-sm:animate-showText xl:animate-none"
               : "max-sm:animate-hideText xl:animate-none"
             : "max-sm:hidden xl:flex"
-        } shadow-lg bg-white h-screen flex w-full gap-6 flex-col py-8 text-[#909090]`}
+        } shadow-lg bg-white transition-all dark:bg-[#111] h-screen flex w-full gap-6 flex-col py-8 text-[#909090] dark:text-white`}
       >
         {items.map((item, index) => (
           <Tooltip
             key={index}
             trigger={openSideMenu ? "" : "hover"}
-            color="#F5658C"
+            color={isDark ? "#615DFA" : "#F5658C"}
             placement="rightBottom"
             title={item.text}
           >
-            <Link to={item.to}>
+            <Link
+              className="hover:text-[#F5658C] dark:hover:text-[#615DFA]"
+              to={item.to}
+            >
               <li
                 className={`${
                   initialSideMenuOpen
@@ -113,7 +123,7 @@ const SideMenu = () => {
                       ? "justify-start"
                       : "animate-justifyEnd"
                     : "justify-end"
-                } flex items-center  gap-2 transition-all duration-300 hover:text-[#F5658C] pr-7 pl-[1rem]`}
+                } flex items-center  gap-2 pr-7 pl-[1rem]`}
               >
                 {item.icon}
                 <span
