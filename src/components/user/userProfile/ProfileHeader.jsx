@@ -1,12 +1,14 @@
 import React, { useContext, useRef, useState } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { GoPencil } from "react-icons/go";
-import { Modal } from "antd";
+import { ConfigProvider, Modal } from "antd";
 import default_bg from "../../../assets/images/user/default-bg.jpg";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { DarkModeContext } from "../../../context/DarkModeContext";
 
 const ProfileHeader = () => {
   const { currentUser } = useContext(RequestsContext);
+  const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [previewImageSrc, setPreviewImageSrc] = useState("");
   const joinDate = currentUser?.metadata.creationTime.split(" ");
@@ -77,61 +79,73 @@ const ProfileHeader = () => {
           </button>
         </div>
       </div>
-      <Modal
-        width={700}
-        cla
-        open={open}
-        title="Background photo"
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={() => (
-          <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
-            <button
-              onClick={handleCancel}
-              className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-            >
-              Cancel
-            </button>
-
-            <label
-              className="px-4 flex justify-center items-center cursor-pointer py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-              htmlFor="upload"
-            >
-              Change photo
-            </label>
-            <input
-              onChange={handleFileUpload}
-              ref={fileInput}
-              className="hidden"
-              type="file"
-              id="upload"
-            />
-            <button
-              onClick={handleOk}
-              className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-            >
-              Apply
-            </button>
-          </div>
-        )}
+      <ConfigProvider
+        theme={{
+          components: {
+            Modal: {
+              contentBg: isDark ? "#111" : "#fff",
+              headerBg: isDark ? "#111" : "#fff",
+              titleColor: isDark ? "#fff" : "#000",
+            },
+          },
+        }}
       >
-        <div className="flex flex-col gap-3">
-          <div className="w-full h-40 bg-black">
-            <img
-              ref={imagePreviewRef}
-              className="h-full w-full object-cover object-center"
-              src={previewImageSrc ? previewImageSrc : default_bg}
-              alt="background-photo"
-            />
+        <Modal
+          width={700}
+          cla
+          open={open}
+          title="Background photo"
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={() => (
+            <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
+              <button
+                onClick={handleCancel}
+                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+              >
+                Cancel
+              </button>
+
+              <label
+                className="px-4 flex justify-center items-center cursor-pointer py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+                htmlFor="upload"
+              >
+                Change photo
+              </label>
+              <input
+                onChange={handleFileUpload}
+                ref={fileInput}
+                className="hidden"
+                type="file"
+                id="upload"
+              />
+              <button
+                onClick={handleOk}
+                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+              >
+                Apply
+              </button>
+            </div>
+          )}
+        >
+          <div className="flex flex-col gap-3">
+            <div className="w-full h-40 bg-black">
+              <img
+                ref={imagePreviewRef}
+                className="h-full w-full object-cover object-center"
+                src={previewImageSrc ? previewImageSrc : default_bg}
+                alt="background-photo"
+              />
+            </div>
+            <div className="flex gap-1 items-center">
+              <IoIosInformationCircleOutline className="w-6 h-6 text-[#ffaa29]" />
+              <p className="text-[#6d6d6d] transition-all dark:text-white text-sm">
+                Suggested size for image is 1132 x 272
+              </p>
+            </div>
           </div>
-          <div className="flex gap-1 items-center">
-            <IoIosInformationCircleOutline className="w-6 h-6 text-[#ffaa29]" />
-            <p className="text-[#6d6d6d] text-sm">
-              Suggested size for image is 1132 x 272
-            </p>
-          </div>
-        </div>
-      </Modal>
+        </Modal>
+      </ConfigProvider>
     </>
   );
 };
