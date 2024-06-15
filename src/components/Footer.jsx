@@ -22,7 +22,7 @@ const Footer = () => {
                 alt="logo"
               />
             </Link>
-            <p className="font-thin dark:text-white transition-all">follow me on :</p>
+            <p className="font-thin dark:text-white transition-all">Follow me on :</p>
             <div className="flex gap-2 items-center text-[#585858] dark:text-white">
               <Link target="_blank" to="https://www.linkedin.com/in/npouriaa/">
                 <FaLinkedin size={21} />
