@@ -1,6 +1,6 @@
 @font-face {
   font-family: "poppins";
-  src: url(../fonts/Poppins-Medium.ttf);
+  src: url(../fonts/Poppins-Regular.ttf);
 }
 
 * {
@@ -17,8 +17,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
   overflow-x: hidden;
+}
+
+.ant-input {
+  transition: none !important;
+  font-family: "poppins" !important;
 }
 
 ::-webkit-scrollbar {
@@ -160,14 +164,21 @@ body {
 }
 
 .ant-modal-content .ant-btn {
-  background-color: #615DFA !important;
+  background-color: #615dfa !important;
 }
 
 .ant-modal-content .ant-btn:hover {
-  background-color: #F5658C !important;
+  background-color: #f5658c !important;
 }
 
-#add-post-form > div.w-full.flex.gap-2.post-caption-con > div > div > div > div > div > span{
+#add-post-form
+  > div.w-full.flex.gap-2.post-caption-con
+  > div
+  > div
+  > div
+  > div
+  > div
+  > span {
   border: none !important;
 }
 .post-caption-con * {
@@ -177,7 +188,7 @@ body {
   color: #7b7b7b;
 }
 .add-post-form .ant-upload-select {
-  border-color: #615DFA !important;
+  border-color: #615dfa !important;
 }
 .add-post-form .ant-upload-list-item-container,
 .add-post-form .ant-upload-select {
@@ -248,4 +259,14 @@ body {
 
 .ant-form-item-label {
   text-align: start !important;
+}
+
+.ant-select-selector,
+.ant-input:focus-within,
+.ant-input-affix-wrapper:focus-within {
+  box-shadow: none !important;
+}
+
+.ant-input-data-count {
+  color: inherit !important;
 }

@@ -41,7 +41,7 @@ const Header = () => {
           <div className="max-sm:hidden md:flex h-full px-3 py-[.2rem] items-center transition-all dark:bg-[#111] bg-white w-[18rem] rounded-3xl overflow-hidden">
             <input
               placeholder="Search for friends..."
-              className="w-[90%] transition-all dark:text-white dark:placeholder:text-white dark:bg-[#111] py-2 px-2 text-sm"
+              className="w-[90%] transition-all dark:text-white dark:placeholder:text-white dark:bg-[#111] py-2 px-2 text-sm header-search-input"
               type="text"
             />
             <button>

@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 
 const ScrollElement = ({ children, styles,  transition}) => {
   const { ref, inView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
   });
   const transitions = `opacity-0 ${transition ? transition : 'translate-y-10'}`
 

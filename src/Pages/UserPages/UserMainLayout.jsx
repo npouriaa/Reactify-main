@@ -16,9 +16,9 @@ const UserMainLayout = () => {
   }, []);
 
   return (
-    <Layout className="w-screen">
+    <Layout>
       <SideMenu />
-      <Layout className="w-full dark:bg-[#222] transition-all">
+      <Layout className="w-screen h-screen overflow-y-auto dark:bg-[#181818] transition-all">
         <Header />
         {loading || !currentUserDBObj ? (
           <LoaderModal />

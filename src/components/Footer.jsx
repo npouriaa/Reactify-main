@@ -94,7 +94,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="w-full flex dark:text-white items-center py-4 justify-center border-t-2 border-t-gray-200">
+        <div className="w-full flex dark:text-white items-center py-4 justify-center border-t-2 dark:border-[#585858] transition-all border-t-gray-200">
           <p>
             Made by{" "}
             <Link className="text-[#615DFA]" to="https://github.com/npouriaa">

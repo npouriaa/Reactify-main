@@ -344,229 +344,257 @@ const AboutMe = () => {
                 layout="vertical"
                 name="register_form"
               >
-                <Form.Item className="text-white" label="Bio :" name="bio">
-                  <Input.TextArea
-                    ref={bioRef}
-                    className="placeholder:text-[#585858] dark:text-white"
-                    style={{ background: "transparent" }}
-                    value={currentUserDBObj?.about.bio}
-                    defaultValue={currentUserDBObj?.about.bio}
-                    placeholder="Write about yourself"
-                    rows={3}
-                    maxLength={500}
-                    count={{
-                      show: true,
-                      max: 500,
-                    }}
-                  />
-                </Form.Item>
+                <ConfigProvider
+                  theme={{
+                    token: {
+                      colorBgContainer: isDark ? "#111" : "#fff",
+                      colorBorder: isDark && "#585858",
+                      colorText: isDark ? "#fff" : "#000",
+                      colorFillTertiary: "red",
+                    },
+                  }}
+                >
+                  <Form.Item className="text-white" label="Bio :" name="bio">
+                    <Input.TextArea
+                      ref={bioRef}
+                      value={currentUserDBObj?.about.bio}
+                      defaultValue={currentUserDBObj?.about.bio}
+                      placeholder="Write about yourself"
+                      rows={3}
+                      maxLength={500}
+                      count={{
+                        show: true,
+                        max: 500,
+                      }}
+                    />
+                  </Form.Item>
+                </ConfigProvider>
                 <div className="w-full justify-between flex items-center flex-wrap">
-                  <Form.Item
-                    className="max-sm:w-full sm3:w-[48%]"
-                    label="Phone number:"
-                    name="phoneNumber"
-                    rules={[
-                      {
-                        pattern: /^\d+$/,
-                        message: "Please input only numbers!",
-                      },
-                    ]}
-                  >
-                    <Input
-                      ref={phoneNumberRef}
-                      className="placeholder:text-[#585858] dark:text-white"
-                      style={{ background: "transparent" }}
-                      defaultValue={currentUserDBObj?.about.phoneNumber}
-                      placeholder="989124208975"
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    className="max-sm:w-full sm3:w-[48%]"
-                    label="Location :"
-                    name="location"
-                  >
-                    <Input
-                      ref={locationRef}
-                      className="placeholder:text-[#585858] dark:text-white"
-                      style={{ background: "transparent" }}
-                      defaultValue={currentUserDBObj?.about.location}
-                      placeholder="Iran"
-                    />
-                  </Form.Item>
                   <ConfigProvider
                     theme={{
-                      components: {
-                        Select: {
-                          selectorBg: isDark ? "#111" : "#fff",
-                        },
+                      token: {
+                        colorBgContainer: isDark ? "#111" : "#fff",
+                        colorBorder: isDark ? "#585858" : "#d9d9d9",
+                        colorText: isDark ? "#fff" : "#000",
                       },
                     }}
                   >
                     <Form.Item
                       className="max-sm:w-full sm3:w-[48%]"
-                      label="Interests :"
-                      name="interests"
+                      label="Phone number:"
+                      name="phoneNumber"
+                      rules={[
+                        {
+                          pattern: /^\d+$/,
+                          message: "Please input only numbers!",
+                        },
+                      ]}
                     >
-                      <Select
-                        mode="multiple"
-                        tagRender={tagRender}
-                        options={options}
-                        defaultValue={currentUserDBObj?.about?.interests?.map(
-                          (interest) => ({
-                            value: interest,
-                            label: interest.split("-")[0],
-                          })
-                        )}
+                      <Input
+                        ref={phoneNumberRef}
+                        className="placeholder:text-[#959595] dark:text-white"
+                        style={{ background: "transparent" }}
+                        defaultValue={currentUserDBObj?.about.phoneNumber}
+                        placeholder="989124208975"
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      className="max-sm:w-full sm3:w-[48%]"
+                      label="Location :"
+                      name="location"
+                    >
+                      <Input
+                        ref={locationRef}
+                        className="placeholder:text-[#959595] dark:text-white"
+                        style={{ background: "transparent" }}
+                        defaultValue={currentUserDBObj?.about.location}
+                        placeholder="Iran"
+                      />
+                    </Form.Item>
+                    <ConfigProvider
+                      theme={{
+                        components: {
+                          Select: {
+                            optionActiveBg: isDark
+                              ? "#303030"
+                              : "rgba(0, 0, 0, 0.04)",
+                            optionSelectedBg: isDark ? "#111A2C" : "#e6f4ff",
+                            optionSelectedFontWeight: "100",
+                          },
+                        },
+                      }}
+                    >
+                      <Form.Item
+                        className="max-sm:w-full sm3:w-[48%]"
+                        label="Interests :"
+                        name="interests"
+                      >
+                        <Select
+                          mode="multiple"
+                          tagRender={tagRender}
+                          options={options}
+                          dropdownStyle={{
+                            background: isDark ? "#111" : "#fff",
+                          }}
+                          defaultValue={currentUserDBObj?.about?.interests?.map(
+                            (interest) => ({
+                              value: interest,
+                              label: interest.split("-")[0],
+                            })
+                          )}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        className="max-sm:w-full sm3:w-[48%]"
+                        label="Web :"
+                        name="web"
+                      >
+                        <AutoComplete
+                          dropdownStyle={{
+                            background: isDark ? "#111" : "#fff",
+                          }}
+                          options={websiteOptions}
+                          onChange={onWebsiteChange}
+                          placeholder="Yourwebsite.com"
+                          defaultValue={currentUserDBObj?.about.web}
+                        >
+                          <Input
+                            className="placeholder:text-[#959595] dark:text-white"
+                            style={{ background: "transparent" }}
+                            ref={webRef}
+                          />
+                        </AutoComplete>
+                      </Form.Item>
+                    </ConfigProvider>
+                    <Form.Item
+                      className="max-sm:w-full sm3:w-[48%]"
+                      label="Instagram :"
+                      name="instagram"
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            if (
+                              value &&
+                              (value.startsWith("https://") ||
+                                value.startsWith("http://"))
+                            ) {
+                              return Promise.reject(
+                                `Please don't include "https://" or "http://" at the beginning`
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
+                    >
+                      <Input
+                        ref={instagramRef}
+                        defaultValue={
+                          currentUserDBObj?.about?.socials &&
+                          currentUserDBObj.about.socials[0].instagram
+                        }
+                        placeholder="instagram.com/username"
+                        className="placeholder:text-[#959595] dark:text-white"
+                        style={{ background: "transparent" }}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      className="max-sm:w-full sm3:w-[48%]"
+                      label="Telegram :"
+                      name="telegram"
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            if (
+                              value &&
+                              (value.startsWith("https://") ||
+                                value.startsWith("http://"))
+                            ) {
+                              return Promise.reject(
+                                `Please don't include "https://" or "http://" at the beginning`
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
+                    >
+                      <Input
+                        ref={telegramRef}
+                        className="placeholder:text-[#959595] dark:text-white"
+                        style={{ background: "transparent" }}
+                        defaultValue={
+                          currentUserDBObj?.about?.socials &&
+                          currentUserDBObj.about.socials[1].telegram
+                        }
+                        placeholder="t.me/username"
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      className="max-sm:w-full sm3:w-[48%]"
+                      label="Linkedin :"
+                      name="linkedin"
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            if (
+                              value &&
+                              (value.startsWith("https://") ||
+                                value.startsWith("http://"))
+                            ) {
+                              return Promise.reject(
+                                `Please don't include "https://" or "http://" at the beginning`
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
+                    >
+                      <Input
+                        ref={linkedinRef}
+                        className="placeholder:text-[#959595] dark:text-white"
+                        style={{ background: "transparent" }}
+                        defaultValue={
+                          currentUserDBObj?.about?.socials &&
+                          currentUserDBObj.about.socials[2].linkedin
+                        }
+                        placeholder="linkedin.com/in/username"
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      className="max-sm:w-full sm3:w-[48%]"
+                      label="X (twitter) :"
+                      name="x"
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            if (
+                              value &&
+                              (value.startsWith("https://") ||
+                                value.startsWith("http://"))
+                            ) {
+                              return Promise.reject(
+                                `Please don't include "https://" or "http://" at the beginning`
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
+                    >
+                      <Input
+                        ref={xRef}
+                        className="placeholder:text-[#959595] dark:text-white"
+                        style={{ background: "transparent" }}
+                        defaultValue={
+                          currentUserDBObj?.about?.socials &&
+                          currentUserDBObj.about.socials[3].x
+                        }
+                        placeholder="x.com/username"
                       />
                     </Form.Item>
                   </ConfigProvider>
-                  <Form.Item
-                    className="max-sm:w-full sm3:w-[48%]"
-                    label="Web :"
-                    name="web"
-                  >
-                    <AutoComplete
-                      options={websiteOptions}
-                      onChange={onWebsiteChange}
-                      placeholder="Yourwebsite.com"
-                      defaultValue={currentUserDBObj?.about.web}
-                    >
-                      <Input
-                        className="placeholder:text-[#585858] dark:text-white"
-                        style={{ background: "transparent" }}
-                        ref={webRef}
-                      />
-                    </AutoComplete>
-                  </Form.Item>
-                  <Form.Item
-                    className="max-sm:w-full sm3:w-[48%]"
-                    label="Instagram :"
-                    name="instagram"
-                    rules={[
-                      {
-                        validator: (_, value) => {
-                          if (
-                            value &&
-                            (value.startsWith("https://") ||
-                              value.startsWith("http://"))
-                          ) {
-                            return Promise.reject(
-                              `Please don't include "https://" or "http://" at the beginning`
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
-                    <Input
-                      ref={instagramRef}
-                      defaultValue={
-                        currentUserDBObj?.about?.socials &&
-                        currentUserDBObj.about.socials[0].instagram
-                      }
-                      placeholder="instagram.com/username"
-                      className="placeholder:text-[#585858] dark:text-white"
-                      style={{ background: "transparent" }}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    className="max-sm:w-full sm3:w-[48%]"
-                    label="Telegram :"
-                    name="telegram"
-                    rules={[
-                      {
-                        validator: (_, value) => {
-                          if (
-                            value &&
-                            (value.startsWith("https://") ||
-                              value.startsWith("http://"))
-                          ) {
-                            return Promise.reject(
-                              `Please don't include "https://" or "http://" at the beginning`
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
-                    <Input
-                      ref={telegramRef}
-                      className="placeholder:text-[#585858] dark:text-white"
-                      style={{ background: "transparent" }}
-                      defaultValue={
-                        currentUserDBObj?.about?.socials &&
-                        currentUserDBObj.about.socials[1].telegram
-                      }
-                      placeholder="t.me/username"
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    className="max-sm:w-full sm3:w-[48%]"
-                    label="Linkedin :"
-                    name="linkedin"
-                    rules={[
-                      {
-                        validator: (_, value) => {
-                          if (
-                            value &&
-                            (value.startsWith("https://") ||
-                              value.startsWith("http://"))
-                          ) {
-                            return Promise.reject(
-                              `Please don't include "https://" or "http://" at the beginning`
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
-                    <Input
-                      ref={linkedinRef}
-                      className="placeholder:text-[#585858] dark:text-white"
-                      style={{ background: "transparent" }}
-                      defaultValue={
-                        currentUserDBObj?.about?.socials &&
-                        currentUserDBObj.about.socials[2].linkedin
-                      }
-                      placeholder="linkedin.com/in/username"
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    className="max-sm:w-full sm3:w-[48%]"
-                    label="X (twitter) :"
-                    name="x"
-                    rules={[
-                      {
-                        validator: (_, value) => {
-                          if (
-                            value &&
-                            (value.startsWith("https://") ||
-                              value.startsWith("http://"))
-                          ) {
-                            return Promise.reject(
-                              `Please don't include "https://" or "http://" at the beginning`
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
-                    <Input
-                      ref={xRef}
-                      className="placeholder:text-[#585858] dark:text-white"
-                      style={{ background: "transparent" }}
-                      defaultValue={
-                        currentUserDBObj?.about?.socials &&
-                        currentUserDBObj.about.socials[3].x
-                      }
-                      placeholder="x.com/username"
-                    />
-                  </Form.Item>
                 </div>
               </Form>
             </ConfigProvider>
