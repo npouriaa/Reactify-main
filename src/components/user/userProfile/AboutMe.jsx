@@ -435,8 +435,6 @@ const AboutMe = () => {
                           mode="multiple"
                           tagRender={tagRender}
                           options={options}
-                          // suffixIcon={}
-                          // menuItemSelectedIcon={}
                           dropdownStyle={{
                             background: isDark ? "#111" : "#fff",
                           }}

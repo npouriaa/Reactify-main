@@ -270,3 +270,7 @@ body {
 .ant-input-data-count {
   color: inherit !important;
 }
+
+.ant-select-arrow {
+  color: unset !important;
+}
