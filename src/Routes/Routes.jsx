@@ -8,6 +8,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Home from "../Pages/UserPages/Home";
 import UserMainLayout from "../Pages/UserPages/UserMainLayout";
 import UserProfile from "../Pages/UserPages/UserProfile";
+import UserChats from "../Pages/UserPages/UserChats";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <UserProfile />,
+      },
+      {
+        path: "chats",
+        element: <UserChats />,
       },
     ],
   },

@@ -15,6 +15,8 @@ import {
   Tag,
   ConfigProvider,
 } from "antd";
+import { DownOutlined , PlusOutlined} from "@ant-design/icons";
+
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { DarkModeContext } from "../../../context/DarkModeContext";
@@ -433,6 +435,8 @@ const AboutMe = () => {
                           mode="multiple"
                           tagRender={tagRender}
                           options={options}
+                          // suffixIcon={}
+                          // menuItemSelectedIcon={}
                           dropdownStyle={{
                             background: isDark ? "#111" : "#fff",
                           }}
