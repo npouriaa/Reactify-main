@@ -9,6 +9,7 @@ const ProfileHeader = () => {
   const { currentUser, currentUserDBObj } = useContext(RequestsContext);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
+  const [imgFile, setImgFile] = useState(null);
   const [modalType, setModalType] = useState("");
   const [previewImageSrc, setPreviewImageSrc] = useState("");
   const joinDate = currentUser?.metadata.creationTime.split(" ");
@@ -18,10 +19,10 @@ const ProfileHeader = () => {
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
+    setImgFile(file);
 
     reader.onload = function (e) {
       setPreviewImageSrc(e.target.result);
-      console.log(e.target.result)
     };
 
     reader.readAsDataURL(file);
@@ -33,10 +34,12 @@ const ProfileHeader = () => {
   };
   const handleOk = () => {
     setOpen(false);
+    setImgFile(null);
   };
   const handleCancel = () => {
     setPreviewImageSrc("");
     setOpen(false);
+    setImgFile(null);
   };
 
   return (
@@ -134,8 +137,9 @@ const ProfileHeader = () => {
                 id="upload"
               />
               <button
+                disabled={!imgFile}
                 onClick={handleOk}
-                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+                className="px-4 py-1 disabled:bg-red-500 disabled:cursor-not-allowed text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
               >
                 Apply
               </button>
@@ -172,7 +176,8 @@ const ProfileHeader = () => {
             <div className="flex gap-1 items-center">
               <IoIosInformationCircleOutline className="w-6 h-6 text-[#ffaa29]" />
               <p className="text-[#6d6d6d] transition-all dark:text-white text-sm">
-                Suggested size for image is {modalType === "profile" ? "640 x 640" : "1132 x 272"}
+                Suggested size for image is{" "}
+                {modalType === "profile" ? "640 x 640" : "1132 x 272"}
               </p>
             </div>
           </div>
