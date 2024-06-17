@@ -15,7 +15,7 @@ import {
   Tag,
   ConfigProvider,
 } from "antd";
-import { DownOutlined , PlusOutlined} from "@ant-design/icons";
+import { DownOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
@@ -457,10 +457,10 @@ const AboutMe = () => {
                           }}
                           options={websiteOptions}
                           onChange={onWebsiteChange}
-                          placeholder="Yourwebsite.com"
                           defaultValue={currentUserDBObj?.about.web}
                         >
                           <Input
+                            placeholder="Yourwebsite.com"
                             className="placeholder:text-[#959595] dark:text-white"
                             style={{ background: "transparent" }}
                             ref={webRef}

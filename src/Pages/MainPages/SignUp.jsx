@@ -45,7 +45,11 @@ const SignUp = () => {
               uid: response.user.uid,
               displayName,
               email,
-              photoURL: downloadURL,
+              photos: {
+                photoURL: downloadURL,
+                headerBgProfile:
+                  "https://firebasestorage.googleapis.com/v0/b/reactify-2dc51.appspot.com/o/default-bg.jpg?alt=media&token=cf744eb2-7d17-4a92-b279-10900a5057b9",
+              },
               about: {
                 bio: "Hey there! I'm using Reactify.",
                 phoneNumber: "",
