@@ -27,7 +27,7 @@ const SignUp = () => {
         password
       );
 
-      const storageRef = ref(storage, displayName);
+      const storageRef = ref(storage, `profile/${displayName}-${response.user.uid}`);
 
       const uploadTask = uploadBytesResumable(storageRef, file);
 
