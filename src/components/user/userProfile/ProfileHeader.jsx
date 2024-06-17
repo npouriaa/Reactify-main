@@ -8,10 +8,13 @@ import { db, storage } from "../../../firebase";
 import { updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
+import useNotification from "../../../Hooks/useNotification";
 
 const ProfileHeader = () => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
+  const { openNotificationSuccess, openNotificationError, contextHolder } =
+    useNotification();
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [imgFile, setImgFile] = useState(null);
@@ -24,6 +27,19 @@ const ProfileHeader = () => {
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
+    if (!file.type.includes("image")) {
+      openNotificationError("Error", "Please select an image file", "top");
+      return;
+    }
+
+    if (file.size > 800 * 1024) {
+      openNotificationError(
+        "Error",
+        "Image size should be less than 800KB",
+        "top"
+      );
+      return;
+    }
     const reader = new FileReader();
     setImgFile(file);
 
@@ -102,6 +118,7 @@ const ProfileHeader = () => {
 
   return (
     <>
+      {contextHolder}
       <div
         ref={bgImageConRef}
         className={`w-full rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center`}
@@ -229,13 +246,20 @@ const ProfileHeader = () => {
                 />
               )}
             </div>
-
-            <div className="flex gap-1 items-center">
-              <IoIosInformationCircleOutline className="w-6 h-6 text-[#ffaa29]" />
-              <p className="text-[#6d6d6d] transition-all dark:text-white text-sm">
-                Suggested size for image is{" "}
-                {modalType === "profile" ? "640 x 640" : "1132 x 272"}
-              </p>
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-1 items-center">
+                <IoIosInformationCircleOutline className="w-6 h-6 text-[#ffaa29]" />
+                <p className="text-[#6d6d6d] transition-all dark:text-white text-sm">
+                  Suggested size for image is{" "}
+                  {modalType === "profile" ? "640 x 640" : "1132 x 272"}
+                </p>
+              </div>
+              <div className="flex gap-1 items-center">
+                <IoIosInformationCircleOutline className="w-6 h-6 text-[#ffaa29]" />
+                <p className="text-[#6d6d6d] transition-all dark:text-white text-sm">
+                  Image size should be less than 800KB
+                </p>
+              </div>
             </div>
           </div>
         </Modal>
