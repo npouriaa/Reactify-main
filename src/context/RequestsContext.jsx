@@ -13,7 +13,7 @@ const RequestsContextProvider = ({ children }) => {
   const [PRLoading, setPRLoading] = useState(true);
 
   const getUserData = () => {
-     onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+    onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
       setCurrentUserDBObj(doc.data());
     });
   };

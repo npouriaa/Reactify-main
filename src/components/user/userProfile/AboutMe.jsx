@@ -168,8 +168,6 @@ const AboutMe = () => {
     updateUserData(interests);
   };
 
-  console.log(currentUserDBObj);
-
   const getSocialIcon = (socialAppName) => {
     switch (socialAppName) {
       case "instagram":

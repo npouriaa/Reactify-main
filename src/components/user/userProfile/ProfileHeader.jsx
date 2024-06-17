@@ -1,12 +1,17 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { GoPencil } from "react-icons/go";
 import { ConfigProvider, Modal } from "antd";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { DarkModeContext } from "../../../context/DarkModeContext";
+import { db, storage } from "../../../firebase";
+import { updateProfile } from "firebase/auth";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
 
 const ProfileHeader = () => {
-  const { currentUser, currentUserDBObj } = useContext(RequestsContext);
+  const { currentUser, currentUserDBObj, setLoading } =
+    useContext(RequestsContext);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [imgFile, setImgFile] = useState(null);
@@ -15,6 +20,7 @@ const ProfileHeader = () => {
   const joinDate = currentUser?.metadata.creationTime.split(" ");
   const fileInput = useRef(null);
   const imagePreviewRef = useRef(null);
+  const bgImageConRef = useRef(null);
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -34,7 +40,9 @@ const ProfileHeader = () => {
   };
   const handleOk = () => {
     setOpen(false);
+    changePhoto();
     setImgFile(null);
+    setPreviewImageSrc("");
   };
   const handleCancel = () => {
     setPreviewImageSrc("");
@@ -42,10 +50,61 @@ const ProfileHeader = () => {
     setImgFile(null);
   };
 
+  const changePhoto = async () => {
+    setLoading(true);
+    try {
+      const storageRef = ref(
+        storage,
+        modalType === "profile"
+          ? `profile/${currentUser?.displayName}-${currentUser?.uid}`
+          : `headerBg/${currentUser?.displayName}-${currentUser?.uid}`
+      );
+      const uploadTask = uploadBytesResumable(storageRef, imgFile);
+      uploadTask.on(
+        (err) => {
+          console.log(err, "Error on upload");
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            const docRef = doc(db, "users", currentUser.uid);
+            await updateProfile(
+              currentUser,
+              modalType === "profile"
+                ? {
+                    photoURL: downloadURL,
+                  }
+                : {
+                    headerBgProfile: downloadURL,
+                  }
+            );
+            await updateDoc(
+              docRef,
+              modalType === "profile"
+                ? {
+                    photoURL: downloadURL,
+                  }
+                : {
+                    headerBgProfile: downloadURL,
+                  }
+            );
+            setLoading(false);
+          });
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    bgImageConRef.current.style.backgroundImage = `url(${currentUserDBObj?.headerBgProfile})`;
+  }, [currentUserDBObj]);
+
   return (
     <>
       <div
-        className={`w-full fdsfd rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-[url('${currentUserDBObj?.photos?.headerBgProfile}')] bg-cover bg-no-repeat bg-center`}
+        ref={bgImageConRef}
+        className={`w-full rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center`}
       >
         <div className="flex w-full h-full rounded-lg user-banner-shadow max-sm:items-center lg:items-end relative">
           <div className="flex items-center justify-between w-full gap-4 px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
@@ -112,7 +171,7 @@ const ProfileHeader = () => {
           width={modalType === "profile" ? 370 : 700}
           open={open}
           title={modalType === "profile" ? "Profile photo" : "Background photo"}
-          onOk={handleOk}
+          onOk={() => handleOk()}
           onCancel={handleCancel}
           footer={() => (
             <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
@@ -138,7 +197,7 @@ const ProfileHeader = () => {
               />
               <button
                 disabled={!imgFile}
-                onClick={handleOk}
+                onClick={() => handleOk()}
                 className="px-4 py-1 disabled:bg-red-500 disabled:cursor-not-allowed text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
               >
                 Apply
@@ -153,9 +212,7 @@ const ProfileHeader = () => {
                   ref={imagePreviewRef}
                   className="h-32 w-32 rounded-full object-cover object-center"
                   src={
-                    previewImageSrc
-                      ? previewImageSrc
-                      : currentUserDBObj?.photos?.photoURL
+                    previewImageSrc ? previewImageSrc : currentUser?.photoURL
                   }
                   alt="background-photo"
                 />
@@ -166,7 +223,7 @@ const ProfileHeader = () => {
                   src={
                     previewImageSrc
                       ? previewImageSrc
-                      : currentUserDBObj?.photos?.headerBgProfile
+                      : currentUserDBObj?.headerBgProfile
                   }
                   alt="background-photo"
                 />

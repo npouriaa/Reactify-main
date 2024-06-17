@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo/Reactify-black.png";
 import { Button, Form, Input, Tooltip, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../../firebase";
@@ -16,9 +16,15 @@ const SignUp = () => {
   const { openNotificationError, contextHolder } = useNotification();
   const { setSendVerificationLink, loading, setLoading } =
     useContext(RequestsContext);
+  const [headerBgFile, setHeaderBgFile] = useState(null);
   const navigate = useNavigate();
 
-  const createNewUser = async (email, password, displayName, file) => {
+  const createNewUser = async (
+    email,
+    password,
+    displayName,
+    userProfileImage,
+  ) => {
     setLoading(true);
     try {
       const response = await createUserWithEmailAndPassword(
@@ -27,59 +33,85 @@ const SignUp = () => {
         password
       );
 
-      const storageRef = ref(storage, `profile/${displayName}-${response.user.uid}`);
-
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        (err) => {
-          console.log("Error on upload");
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateProfile(response.user, {
-              displayName: displayName,
-              photoURL: downloadURL,
-            });
-            await setDoc(doc(db, "users", response.user.uid), {
-              uid: response.user.uid,
-              displayName,
-              email,
-              photos: {
-                photoURL: downloadURL,
-                headerBgProfile:
-                  "https://firebasestorage.googleapis.com/v0/b/reactify-2dc51.appspot.com/o/default-bg.jpg?alt=media&token=cf744eb2-7d17-4a92-b279-10900a5057b9",
-              },
-              about: {
-                bio: "Hey there! I'm using Reactify.",
-                phoneNumber: "",
-                location: "",
-                web: "",
-                interests: [],
-                socials: [
-                  {
-                    instagram: "",
-                  },
-                  {
-                    telegram: "",
-                  },
-                  {
-                    linkedin: "",
-                  },
-                  {
-                    x: "",
-                  },
-                ],
-              },
-            });
-          });
-        }
+      const userProfileStorageRef = ref(
+        storage,
+        `profile/${displayName}-${response.user.uid}`
       );
+      const headerBgStorageRef = ref(
+        storage,
+        `headerBg/${displayName}-${response.user.uid}`
+      );
+
+      const userProfileUploadTask = uploadBytesResumable(
+        userProfileStorageRef,
+        userProfileImage
+      );
+      const headerBgUploadTask = uploadBytesResumable(
+        headerBgStorageRef,
+        headerBgFile
+      );
+
+      const userProfileUploadPromise = new Promise((resolve, reject) => {
+        userProfileUploadTask.on("state_changed", null, reject, () => {
+          resolve();
+        });
+      });
+
+      const headerBgUploadPromise = new Promise((resolve, reject) => {
+        headerBgUploadTask.on("state_changed", null, reject, () => {
+          resolve();
+        });
+      });
+
+      await Promise.all([userProfileUploadPromise, headerBgUploadPromise]);
+
+      const userProfileDownloadURL = await getDownloadURL(
+        userProfileUploadTask.snapshot.ref
+      );
+      const headerBgDownloadURL = await getDownloadURL(
+        headerBgUploadTask.snapshot.ref
+      );
+
+      await updateProfile(response.user, {
+        displayName: displayName,
+        photoURL: userProfileDownloadURL,
+      });
+
+      await setDoc(doc(db, "users", response.user.uid), {
+        uid: response.user.uid,
+        displayName,
+        email,
+        photoURL: userProfileDownloadURL,
+        headerBgProfile: headerBgDownloadURL,
+        about: {
+          bio: "Hey there! I'm using Reactify.",
+          phoneNumber: "",
+          location: "",
+          web: "",
+          interests: [],
+          socials: [
+            {
+              instagram: "",
+            },
+            {
+              telegram: "",
+            },
+            {
+              linkedin: "",
+            },
+            {
+              x: "",
+            },
+          ],
+        },
+      });
+
       setSendVerificationLink(true);
       navigate("/verify-email");
     } catch (err) {
       openNotificationError("Error", err.message, "top");
     }
+
     setLoading(false);
   };
 
@@ -87,6 +119,17 @@ const SignUp = () => {
     const { username, email, password, upload } = values;
     createNewUser(email, password, username, upload.file);
   };
+
+  useEffect(() => {
+    const getImageFile = async () => {
+      const response = await fetch("/src/assets/images/user/default-bg.jpg");
+      const blob = await response.blob();
+      const file = new File([blob], "default-bg.jpg", { type: "image/jpeg" });
+      setHeaderBgFile(file);
+    };
+
+    getImageFile();
+  }, []);
 
   return (
     <>
