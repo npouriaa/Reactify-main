@@ -7,7 +7,7 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import { DarkModeContext } from "../../../context/DarkModeContext";
 
 const ProfileHeader = () => {
-  const { currentUser } = useContext(RequestsContext);
+  const { currentUser, currentUserDBObj } = useContext(RequestsContext);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [previewImageSrc, setPreviewImageSrc] = useState("");
@@ -44,6 +44,12 @@ const ProfileHeader = () => {
           <div className="flex items-center justify-between w-full gap-4 px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
             <div className="flex items-center gap-4 p-2 max-sm:flex-col lg:flex-row">
               <div className="relative cursor-pointer h-28 w-28 p-[10px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-header.png')] after:rotate-0 after:transition-all after:ease-in-out hover:after:rotate-[30deg]">
+                <button
+                  onClick={showModal}
+                  className="absolute top-0 right-0 p-2 z-10 rounded-full bg-white hover:bg-[#d7d7d7] transition-all duration-300"
+                >
+                  <GoPencil className="w-5 h-5 text-black" />
+                </button>
                 <img
                   src={currentUser?.photoURL}
                   className="object-cover w-full h-full border-4 rounded-full"
@@ -53,7 +59,9 @@ const ProfileHeader = () => {
                 <h3 className="text-xl capitalize">
                   {currentUser?.displayName}
                 </h3>
-                <h3 className="text-lg capitalize">Iran / Sabzevar</h3>
+                <h3 className="text-lg capitalize">
+                  {currentUserDBObj?.about?.location}
+                </h3>
                 <h5 className="text-sm text-[#d7d7d7] capitalize">
                   joined {joinDate[2]} {joinDate[3]}
                 </h5>

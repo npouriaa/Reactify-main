@@ -274,3 +274,7 @@ body {
 .ant-select-arrow {
   color: unset !important;
 }
+
+.ant-modal-close-x{
+  color: #5c5c5c !important;
+}
