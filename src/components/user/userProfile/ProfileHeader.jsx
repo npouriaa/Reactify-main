@@ -13,7 +13,7 @@ import useNotification from "../../../Hooks/useNotification";
 const ProfileHeader = () => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
-  const { openNotificationSuccess, openNotificationError, contextHolder } =
+  const { openNotificationError, contextHolder } =
     useNotification();
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
@@ -32,10 +32,10 @@ const ProfileHeader = () => {
       return;
     }
 
-    if (file.size > 800 * 1024) {
+    if (file.size > 600 * 1024) {
       openNotificationError(
         "Error",
-        "Image size should be less than 800KB",
+        "Image size should be less than 600KB",
         "top"
       );
       return;
@@ -121,7 +121,7 @@ const ProfileHeader = () => {
       {contextHolder}
       <div
         ref={bgImageConRef}
-        className={`w-full rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center`}
+        className={`w-full rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-cover bg-no-repeat bg-bottom`}
       >
         <div className="flex w-full h-full rounded-lg user-banner-shadow max-sm:items-center lg:items-end relative">
           <div className="flex items-center justify-between w-full gap-4 px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
@@ -211,6 +211,7 @@ const ProfileHeader = () => {
                 className="hidden"
                 type="file"
                 id="upload"
+                accept="image/*"
               />
               <button
                 disabled={!imgFile}
@@ -236,7 +237,7 @@ const ProfileHeader = () => {
               ) : (
                 <img
                   ref={imagePreviewRef}
-                  className="h-full w-full object-cover object-center"
+                  className="h-full w-full object-cover object-bottom"
                   src={
                     previewImageSrc
                       ? previewImageSrc
@@ -257,7 +258,7 @@ const ProfileHeader = () => {
               <div className="flex gap-1 items-center">
                 <IoIosInformationCircleOutline className="w-6 h-6 text-[#ffaa29]" />
                 <p className="text-[#6d6d6d] transition-all dark:text-white text-sm">
-                  Image size should be less than 800KB
+                  Image size should be less than 600KB
                 </p>
               </div>
             </div>
