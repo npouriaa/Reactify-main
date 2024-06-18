@@ -13,8 +13,7 @@ import useNotification from "../../../Hooks/useNotification";
 const ProfileHeader = () => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
-  const { openNotificationError, contextHolder } =
-    useNotification();
+  const { openNotificationError, contextHolder } = useNotification();
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [imgFile, setImgFile] = useState(null);
@@ -121,7 +120,7 @@ const ProfileHeader = () => {
       {contextHolder}
       <div
         ref={bgImageConRef}
-        className={`w-full rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-cover bg-no-repeat bg-bottom`}
+        className="w-full rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center"
       >
         <div className="flex w-full h-full rounded-lg user-banner-shadow max-sm:items-center lg:items-end relative">
           <div className="flex items-center justify-between w-full gap-4 px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
@@ -237,7 +236,7 @@ const ProfileHeader = () => {
               ) : (
                 <img
                   ref={imagePreviewRef}
-                  className="h-full w-full object-cover object-bottom"
+                  className="h-full w-full object-cover object-center"
                   src={
                     previewImageSrc
                       ? previewImageSrc
