@@ -42,6 +42,17 @@ const AddPost = () => {
 
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
+  const validateFile = (file) => {
+    const fileSize = file.size / 1024;
+
+    if (fileSize > 800) {
+      message.error("File size should be less than 800KB");
+      return false;
+    }
+
+    return true;
+  };
+
   const uploadButton = (
     <button
       className="upload-post-media-btn border-0 text-black dark:text-white"
@@ -204,7 +215,7 @@ const AddPost = () => {
                 onChange={handleChange}
                 onPreview={handlePreview}
                 listType="picture-card"
-                beforeUpload={() => false}
+                beforeUpload={validateFile}
                 accept=".jpg,.jpeg,.png,.webp,.mp4,.avi,.mov,.wmv,.webm"
               >
                 {fileList?.length >= 4 ? null : uploadButton}
