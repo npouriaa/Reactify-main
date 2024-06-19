@@ -286,9 +286,3 @@ body {
 .ant-upload-list-item-name {
   color: #8e8e8e !important;
 }
-
-#add-post-form_post_caption {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
