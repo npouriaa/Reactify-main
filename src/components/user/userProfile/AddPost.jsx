@@ -99,6 +99,8 @@ const AddPost = () => {
 
   const onFinish = (values) => {
     handleAddPost(values.post_caption);
+    setFileList([])
+    setPreviewImage(false)
   };
 
   return (
@@ -165,11 +167,11 @@ const AddPost = () => {
               beforeUpload={() => false}
               accept=".jpg,.jpeg,.png,.webp,.mp4,.avi,.mov,.wmv,.webm"
             >
-              {fileList.length >= 4 ? null : uploadButton}
+              {fileList?.length >= 4 ? null : uploadButton}
             </Upload>
             {previewImage && (
               <div>
-                {fileList.map((file) => (
+                {fileList?.map((file) => (
                   <div key={file.uid}>
                     <Image
                       wrapperStyle={{ display: "none" }}
