@@ -1,10 +1,17 @@
-import { ConfigProvider, Form, Input } from "antd";
-import { useContext, useState } from "react";
+import { ConfigProvider, Form, Input, message } from "antd";
+import { useContext, useRef, useState } from "react";
 import { Upload, Image } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { DarkModeContext } from "../../../context/DarkModeContext";
-import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db, storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -22,6 +29,8 @@ const AddPost = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
+  const frmRef = useRef();
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -55,6 +64,12 @@ const AddPost = () => {
 
     try {
       const urls = [];
+      messageApi.open({
+        key: "postUpload",
+        type: "loading",
+        content: "Uploading your post...",
+        duration: 30,
+      });
       await Promise.all(
         fileList.map(async (file) => {
           const fileRef = ref(
@@ -90,6 +105,31 @@ const AddPost = () => {
           likes: [],
           comments: [],
         });
+        const userRef = doc(db, "users", currentUser.uid);
+        const userSnapshot = await getDoc(userRef);
+        const userData = userSnapshot.data();
+        const updatedPosts = [
+          ...userData.posts,
+          {
+            documentId: documentId,
+            text: text,
+            images: urls,
+            timestamp: new Date(),
+            likes: [],
+            comments: [],
+          },
+        ];
+
+        await updateDoc(userRef, { posts: updatedPosts });
+        setFileList([]);
+        setPreviewImage(false);
+        frmRef.current?.resetFields();
+        messageApi.open({
+          key: "postUpload",
+          type: "success",
+          content: "Post uploaded!",
+          duration: 5,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -98,101 +138,103 @@ const AddPost = () => {
 
   const onFinish = (values) => {
     handleAddPost(values.post_caption);
-    setFileList([]);
-    setPreviewImage(false);
   };
 
   return (
-    <div className="max-sm:w-full max-sm:order-2 lg:order-1 lg:w-3/5 xl:w-2/3 rounded-md bg-white dark:bg-[#111] px-7 py-5">
-      <ConfigProvider
-        theme={{
-          components: {
-            Form: {
-              labelColor: isDark ? "#fff" : "#000",
+    <>
+      {contextHolder}
+      <div className="max-sm:w-full max-sm:order-2 lg:order-1 lg:w-3/5 xl:w-2/3 rounded-md bg-white dark:bg-[#111] px-7 py-5">
+        <ConfigProvider
+          theme={{
+            components: {
+              Form: {
+                labelColor: isDark ? "#fff" : "#000",
+              },
             },
-          },
-        }}
-      >
-        <Form
-          layout="vertical"
-          name="add-post-form"
-          onFinish={onFinish}
-          className="flex flex-col gap-4 justify-center add-post-form transition-all"
+          }}
         >
-          <div className="w-full flex gap-2 post-caption-con">
-            <img
-              className="h-10 w-10 border-[1px] rounded-full object-cover"
-              src={currentUser?.photoURL}
-              alt="user-profile"
-            />
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorBgContainer: isDark ? "#111" : "#fff",
-                  colorBorder: isDark && "#585858",
-                  colorText: isDark ? "#fff" : "#000",
-                  colorFillTertiary: "red",
-                },
-              }}
-            >
-              <Form.Item
-                className="w-full"
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: "This field can't be empty!",
+          <Form
+            ref={frmRef}
+            layout="vertical"
+            name="add-post-form"
+            onFinish={onFinish}
+            className="flex flex-col gap-4 justify-center add-post-form transition-all"
+          >
+            <div className="w-full flex gap-2 post-caption-con">
+              <img
+                className="h-10 w-10 border-[1px] rounded-full object-cover"
+                src={currentUser?.photoURL}
+                alt="user-profile"
+              />
+              <ConfigProvider
+                theme={{
+                  token: {
+                    colorBgContainer: isDark ? "#111" : "#fff",
+                    colorBorder: isDark && "#585858",
+                    colorText: isDark ? "#fff" : "#000",
+                    colorFillTertiary: "red",
                   },
-                ]}
-                name="post_caption"
+                }}
               >
-                <Input.TextArea
-                  rows={3}
-                  placeholder={`Share what are you thinking ${currentUser?.displayName}...`}
-                  maxLength={250}
-                  count={{
-                    show: true,
-                    max: 250,
-                  }}
-                />
-              </Form.Item>
-            </ConfigProvider>
-          </div>
-          <Form.Item label="Post media" name="post_media">
-            <Upload
-              onChange={handleChange}
-              onPreview={handlePreview}
-              listType="picture-card"
-              beforeUpload={() => false}
-              accept=".jpg,.jpeg,.png,.webp,.mp4,.avi,.mov,.wmv,.webm"
-            >
-              {fileList?.length >= 4 ? null : uploadButton}
-            </Upload>
-            {previewImage && (
-              <div>
-                {fileList?.map((file) => (
-                  <div key={file.uid}>
-                    <Image
-                      wrapperStyle={{ display: "none" }}
-                      preview={{
-                        visible: previewOpen,
-                        onVisibleChange: (visible) => setPreviewOpen(visible),
-                        afterOpenChange: (visible) =>
-                          !visible && setPreviewImage(""),
-                      }}
-                      src={previewImage}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </Form.Item>
-          <button className="w-40 bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500 py-2 rounded-lg">
-            Share post
-          </button>
-        </Form>
-      </ConfigProvider>
-    </div>
+                <Form.Item
+                  className="w-full"
+                  required
+                  rules={[
+                    {
+                      required: true,
+                      message: "This field can't be empty!",
+                    },
+                  ]}
+                  name="post_caption"
+                >
+                  <Input.TextArea
+                    rows={3}
+                    placeholder={`Share what are you thinking ${currentUser?.displayName}...`}
+                    maxLength={250}
+                    count={{
+                      show: true,
+                      max: 250,
+                    }}
+                  />
+                </Form.Item>
+              </ConfigProvider>
+            </div>
+            <Form.Item label="Post media" name="post_media">
+              <Upload
+                onChange={handleChange}
+                onPreview={handlePreview}
+                listType="picture-card"
+                beforeUpload={() => false}
+                accept=".jpg,.jpeg,.png,.webp,.mp4,.avi,.mov,.wmv,.webm"
+              >
+                {fileList?.length >= 4 ? null : uploadButton}
+              </Upload>
+              {previewImage && (
+                <div>
+                  {fileList?.map((file) => (
+                    <div key={file.uid}>
+                      <Image
+                        wrapperStyle={{ display: "none" }}
+                        preview={{
+                          visible: previewOpen,
+                          onVisibleChange: (visible) => setPreviewOpen(visible),
+                          afterOpenChange: (visible) =>
+                            !visible && setPreviewImage(""),
+                        }}
+                        src={previewImage}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Form.Item>
+            <button className="w-40 bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500 py-2 rounded-lg">
+              Share post
+            </button>
+          </Form>
+        </ConfigProvider>
+      </div>
+    </>
   );
 };
 
