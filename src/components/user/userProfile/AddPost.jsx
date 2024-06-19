@@ -4,6 +4,15 @@ import { Upload, Image } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { DarkModeContext } from "../../../context/DarkModeContext";
+import {
+  Timestamp,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
+import { db, storage } from "../../../firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -46,9 +55,50 @@ const AddPost = () => {
     </button>
   );
 
+  const handleAddPost = async (text) => {
+    const postRef = doc(collection(db, "posts"));
+    const documentId = postRef.id;
+
+    try {
+      const urls = [];
+      await Promise.all(
+        fileList.map(async (file) => {
+          const fileRef = ref(storage, `postFiles/${file.originFileObj.name}-${documentId}`);
+          const fileUploadTask = uploadBytesResumable(
+            fileRef,
+            file.originFileObj
+          );
+          const fileUploadPromise = new Promise((resolve, reject) => {
+            fileUploadTask.on("state_changed", null, reject, () => {
+              resolve();
+            });
+          });
+          await fileUploadPromise;
+          const fileDownloadURL = await getDownloadURL(
+            fileUploadTask.snapshot.ref
+          );
+          console.log(fileDownloadURL);
+          urls.push(fileDownloadURL);
+        })
+      );
+      if (text !== "" && urls.length > 0) {
+        await setDoc(postRef, {
+          documentId: documentId,
+          uid: currentUser?.uid,
+          profilePhoto: currentUser?.photoURL,
+          username: currentUser?.displayName,
+          text: text,
+          images: urls,
+          timestamp: serverTimestamp(),
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const onFinish = (values) => {
-    console.log(values);
-    console.log(fileList);
+    handleAddPost(values.post_caption);
   };
 
   return (
@@ -97,7 +147,7 @@ const AddPost = () => {
               >
                 <Input.TextArea
                   rows={3}
-                  placeholder="Share what are you thinking..."
+                  placeholder={`Share what are you thinking ${currentUser?.displayName}...`}
                   maxLength={250}
                   count={{
                     show: true,
@@ -121,24 +171,16 @@ const AddPost = () => {
               <div>
                 {fileList.map((file) => (
                   <div key={file.uid}>
-                    {file.type.startsWith("video/") ? (
-                      <video
-                        src={file.url}
-                        controls
-                        style={{ width: "100%", height: "auto" }}
-                      />
-                    ) : (
-                      <Image
-                        wrapperStyle={{ display: "none" }}
-                        preview={{
-                          visible: previewOpen,
-                          onVisibleChange: (visible) => setPreviewOpen(visible),
-                          afterOpenChange: (visible) =>
-                            !visible && setPreviewImage(""),
-                        }}
-                        src={previewImage}
-                      />
-                    )}
+                    <Image
+                      wrapperStyle={{ display: "none" }}
+                      preview={{
+                        visible: previewOpen,
+                        onVisibleChange: (visible) => setPreviewOpen(visible),
+                        afterOpenChange: (visible) =>
+                          !visible && setPreviewImage(""),
+                      }}
+                      src={previewImage}
+                    />
                   </div>
                 ))}
               </div>

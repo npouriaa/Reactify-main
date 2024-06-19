@@ -23,7 +23,7 @@ const SignUp = () => {
     email,
     password,
     displayName,
-    userProfileImage,
+    userProfileImage
   ) => {
     setLoading(true);
     try {
@@ -83,6 +83,7 @@ const SignUp = () => {
         email,
         photoURL: userProfileDownloadURL,
         headerBgProfile: headerBgDownloadURL,
+        posts: [],
         about: {
           bio: "Hey there! I'm using Reactify.",
           phoneNumber: "",
