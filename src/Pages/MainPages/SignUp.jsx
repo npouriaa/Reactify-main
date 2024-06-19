@@ -260,7 +260,12 @@ const SignUp = () => {
                 },
               ]}
             >
-              <Upload maxCount={1} name="avatar" beforeUpload={() => false}>
+              <Upload
+                accept=".jpg,.jpeg,.png,.webp"
+                maxCount={1}
+                name="avatar"
+                beforeUpload={() => false}
+              >
                 <Button
                   className="antd-btn border-none bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500"
                   icon={<UploadOutlined />}

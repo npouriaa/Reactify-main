@@ -4,12 +4,7 @@ import { Upload, Image } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { DarkModeContext } from "../../../context/DarkModeContext";
-import {
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
+import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db, storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -62,7 +57,10 @@ const AddPost = () => {
       const urls = [];
       await Promise.all(
         fileList.map(async (file) => {
-          const fileRef = ref(storage, `postFiles/${file.originFileObj.name}-${documentId}`);
+          const fileRef = ref(
+            storage,
+            `postFiles/${file.originFileObj.name}-${documentId}`
+          );
           const fileUploadTask = uploadBytesResumable(
             fileRef,
             file.originFileObj
@@ -89,6 +87,8 @@ const AddPost = () => {
           text: text,
           images: urls,
           timestamp: serverTimestamp(),
+          likes: [],
+          comments: [],
         });
       }
     } catch (err) {
@@ -98,8 +98,8 @@ const AddPost = () => {
 
   const onFinish = (values) => {
     handleAddPost(values.post_caption);
-    setFileList([])
-    setPreviewImage(false)
+    setFileList([]);
+    setPreviewImage(false);
   };
 
   return (
