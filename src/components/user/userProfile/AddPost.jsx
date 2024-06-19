@@ -42,17 +42,6 @@ const AddPost = () => {
 
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
-  const validateFile = (file) => {
-    const fileSize = file.size / 1024;
-
-    if (fileSize > 800) {
-      message.error("File size should be less than 800KB");
-      return false;
-    }
-
-    return true;
-  };
-
   const uploadButton = (
     <button
       className="upload-post-media-btn border-0 text-black dark:text-white"
@@ -74,12 +63,12 @@ const AddPost = () => {
     const documentId = postRef.id;
 
     try {
-      const urls = [];
+      const postFileArray = [];
       messageApi.open({
         key: "postUpload",
         type: "loading",
         content: "Uploading your post...",
-        duration: 30,
+        duration: 120,
       });
       await Promise.all(
         fileList.map(async (file) => {
@@ -101,17 +90,21 @@ const AddPost = () => {
             fileUploadTask.snapshot.ref
           );
           console.log(fileDownloadURL);
-          urls.push(fileDownloadURL);
+          const postFileObj = {
+            type: file.type.split("/")[0],
+            src: fileDownloadURL,
+          };
+          postFileArray.push(postFileObj);
         })
       );
-      if (text !== "" && urls.length > 0) {
+      if (text !== "" && postFileArray.length > 0) {
         await setDoc(postRef, {
           documentId: documentId,
           uid: currentUser?.uid,
           profilePhoto: currentUser?.photoURL,
           username: currentUser?.displayName,
           text: text,
-          images: urls,
+          postFiles: postFileArray,
           timestamp: serverTimestamp(),
           likes: [],
           comments: [],
@@ -124,7 +117,7 @@ const AddPost = () => {
           {
             documentId: documentId,
             text: text,
-            images: urls,
+            postFiles: postFileArray,
             timestamp: new Date(),
             likes: [],
             comments: [],
@@ -148,6 +141,8 @@ const AddPost = () => {
   };
 
   const onFinish = (values) => {
+    // console.log(fileList);
+    // console.log(file.type.split("/")[0]);
     handleAddPost(values.post_caption);
   };
 
@@ -215,7 +210,7 @@ const AddPost = () => {
                 onChange={handleChange}
                 onPreview={handlePreview}
                 listType="picture-card"
-                beforeUpload={validateFile}
+                beforeUpload={() => false}
                 accept=".jpg,.jpeg,.png,.webp,.mp4,.avi,.mov,.wmv,.webm"
               >
                 {fileList?.length >= 4 ? null : uploadButton}

@@ -2,14 +2,15 @@ import { useEffect } from "react";
 import useNotification from "../../Hooks/useNotification";
 import { IoSearchOutline } from "react-icons/io5";
 import FeedBanner from "../../components/user/home/FeedBanner";
-import Post from "../../components/user/Post";
+import Post from "../../components/user/Posts/Posts";
+import Posts from "../../components/user/Posts/Posts";
 
 const Home = () => {
   // const { openNotificationSuccess, contextHolder } = useNotification();
 
-  // useEffect(() => {
-  //   openNotificationSuccess("Success", "Signed in succeefully", "top");
-  // }, []);
+  useEffect(() => {
+    // openNotificationSuccess("Success", "Signed in succeefully", "top");
+  }, []);
 
   return (
     <>
@@ -24,10 +25,8 @@ const Home = () => {
         </button>
       </div>
       <FeedBanner />
-      <div className="w-full flex-col gap-3 flex justify-center items-center">
-        <Post />
-        <Post />
-        <Post />
+      <div className="max-sm:w-full lg:w-3/5 xl:w-2/3 flex-col gap-3 flex justify-center items-center">
+        <Posts />
       </div>
     </>
   );

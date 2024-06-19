@@ -12,6 +12,7 @@ export default {
       "sm3": "600px",
       "md": "641px",
       "md2": "768px",
+      "md3": "800px",
       "lg": "961px",
       "lg2": "1000px",
       "xl": "1025px",

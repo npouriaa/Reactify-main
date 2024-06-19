@@ -3,6 +3,10 @@
   src: url(../fonts/Poppins-Regular.ttf);
 }
 
+:root {
+  --postFileWidth: 0;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -235,24 +239,6 @@ body {
   border-radius: 0.5rem;
 }
 
-@media (min-width: 360px) {
-  .ant-image-img {
-    max-width: 20rem;
-  }
-}
-
-@media (min-width: 420px) {
-  .ant-image-img {
-    max-width: 22rem;
-  }
-}
-
-@media (min-width: 600px) {
-  .ant-image-img {
-    max-width: 29rem;
-  }
-}
-
 .user-banner-shadow {
   background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
 }
@@ -285,4 +271,17 @@ body {
 
 .ant-upload-list-item-name {
   color: #8e8e8e !important;
+}
+
+/* .ant-image {
+  width: var(--postFileWidth);
+} */
+
+.ant-image .ant-image-img {
+  /* width: auto; */
+  height: 200px;
+}
+
+video {
+  height: 200px !important;
 }
