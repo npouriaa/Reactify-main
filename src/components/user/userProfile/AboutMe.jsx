@@ -188,7 +188,7 @@ const AboutMe = () => {
   );
 
   return (
-    <div className="flex flex-col gap-4 relative transition-all rounded-md bg-white dark:bg-[#111] max-sm:order-1 lg:order-2 max-sm:w-full lg:w-2/5 xl:w-1/3 px-7 py-5">
+    <div className="flex flex-col gap-4 relative transition-all rounded-md bg-white dark:bg-[#111]  px-7 py-5">
       <div className="w-full h-9 flex item-center justify-between">
         <h3 className="dark:text-white transition-all text-[1.05rem] relative after:absolute after:bottom-0 after:left-0 after:rounded-md after:h-1 after:w-3 after:bg-[#615DFA] before:absolute before:bottom-0 before:left-4 before:h-1 before:rounded-md before:w-6 before:bg-[#615DFA]">
           About Me

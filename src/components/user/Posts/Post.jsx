@@ -42,7 +42,10 @@ const Post = ({
   return (
     <div className="w-full min-h-[25rem] px-6 py-2 bg-white dark:bg-[#111] transition-all rounded-md flex gap-4 flex-col">
       <div className="flex items-center gap-4 pt-4">
-        <Link className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0">
+        <Link
+          to={`${uid}`}
+          className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
+        >
           <img
             src={profilePhoto}
             className="object-cover rounded-full"
@@ -50,7 +53,7 @@ const Post = ({
           />
         </Link>
         <div className="flex flex-col dark:text-white text-start">
-          <Link to={`/${username}-${uid}`} className="transition-all">
+          <Link to={`${uid}`} className="transition-all">
             {username}
           </Link>
           <p className="text-[#717993] dark:text-white transition-all text-sm font-thin">
@@ -66,7 +69,9 @@ const Post = ({
           {media?.map((file, index) => (
             <div
               className={`${
-                media?.length === 3 && index === 2 || media?.length === 1 ? "w-full" : postFileWidth
+                (media?.length === 3 && index === 2) || media?.length === 1
+                  ? "w-full"
+                  : postFileWidth
               } flex items-center justify-center`}
             >
               {file.type.split("/")[0] === "image" ? (

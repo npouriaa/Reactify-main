@@ -10,7 +10,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 import useNotification from "../../../Hooks/useNotification";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({us}) => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
   const { openNotificationError, contextHolder } = useNotification();

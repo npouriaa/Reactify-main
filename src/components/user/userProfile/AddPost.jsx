@@ -152,7 +152,7 @@ const AddPost = () => {
   return (
     <>
       {contextHolder}
-      <div className="max-sm:w-full max-sm:order-2 lg:order-1 lg:w-3/5 xl:w-2/3 rounded-md bg-white dark:bg-[#111] px-7 py-5 transition-all">
+      <div className="w-full rounded-md bg-white dark:bg-[#111] px-7 py-5 transition-all">
         <ConfigProvider
           theme={{
             components: {
