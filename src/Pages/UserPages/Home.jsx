@@ -4,6 +4,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import FeedBanner from "../../components/user/home/FeedBanner";
 import Post from "../../components/user/Posts/Posts";
 import Posts from "../../components/user/Posts/Posts";
+import banner from "../../assets/images/user/banner.png";
 
 const Home = () => {
   // const { openNotificationSuccess, contextHolder } = useNotification();
@@ -25,8 +26,17 @@ const Home = () => {
         </button>
       </div>
       <FeedBanner />
-      <div className="max-sm:w-full min-h-full lg:w-3/5 xl:w-2/3 flex-col gap-3 flex justify-center items-center">
-        <Posts />
+      <div className="w-full flex relative gap-4">
+        <div className="max-sm:w-full min-h-full lg:w-3/5 xl:w-2/3 flex-col gap-3 flex justify-center items-center">
+          <Posts />
+        </div>
+        <div className="max-sm:w-full lg:w-2/5 sticky top-24 xl:w-1/3 h-96 bg-[#ffca28] rounded-md flex flex-col items-center justify-between py-4">
+          <div className="text-white text-2xl text-center">
+            <h2 className="uppercase">The most popular</h2>
+            <h2>Reactify</h2>
+          </div>
+          <img className="h-64" src={banner} alt="banner" />
+        </div>
       </div>
     </>
   );
