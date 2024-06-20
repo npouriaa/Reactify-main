@@ -20,7 +20,7 @@ const FeedBanner = () => {
             <p>Check what your friends have been up to!</p>
           </div>
           <img
-            className=" max-sm:hidden lg:block lg:w-1/2 3xl:w-auto absolute right-0 bottom-0 object-cover"
+            className=" max-sm:hidden md3:block md3:w-2/4 lg:w-1/2 3xl:w-auto absolute right-0 bottom-0 object-cover"
             src={people}
             alt="feed-banner-poeple"
           />
