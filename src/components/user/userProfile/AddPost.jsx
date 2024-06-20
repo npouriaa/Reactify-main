@@ -30,6 +30,7 @@ const AddPost = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
+  const [disable, setDisable] = useState(false);
   const frmRef = useRef();
 
   const handlePreview = async (file) => {
@@ -68,8 +69,9 @@ const AddPost = () => {
         key: "postUpload",
         type: "loading",
         content: "Uploading your post...",
-        duration: 120,
+        duration: 500,
       });
+      setDisable(true);
       await Promise.all(
         fileList.map(async (file) => {
           const fileRef = ref(
@@ -91,7 +93,7 @@ const AddPost = () => {
           );
           console.log(fileDownloadURL);
           const postFileObj = {
-            type: file.type.split("/")[0],
+            type: file.type,
             src: fileDownloadURL,
           };
           postFileArray.push(postFileObj);
@@ -134,6 +136,7 @@ const AddPost = () => {
           content: "Post uploaded!",
           duration: 5,
         });
+        setDisable(false);
       }
     } catch (err) {
       console.log(err);
@@ -234,7 +237,10 @@ const AddPost = () => {
                 </div>
               )}
             </Form.Item>
-            <button className="w-40 bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500 py-2 rounded-lg">
+            <button
+              disabled={disable && true}
+              className="w-40 disabled:bg-red-500 disabled:cursor-not-allowed bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500 py-2 rounded-lg"
+            >
               Share post
             </button>
           </Form>

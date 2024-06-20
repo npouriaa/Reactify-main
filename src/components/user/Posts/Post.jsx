@@ -7,6 +7,7 @@ import { FaRegComment } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiHeartLine } from "react-icons/ri";
 import { RiHeartFill } from "react-icons/ri";
+import VideoPlayer from "../../VideoPlayer";
 
 const Post = ({
   profilePhoto,
@@ -50,8 +51,10 @@ const Post = ({
             alt="user-profile"
           />
         </Link>
-        <div className="flex flex-col dark:text-white  max-sm:text-center lg:text-start">
-          <Link to={`/${username}-${uid}`} className="transition-all">{username}</Link>
+        <div className="flex flex-col dark:text-white text-start">
+          <Link to={`/${username}-${uid}`} className="transition-all">
+            {username}
+          </Link>
           <p className="text-[#717993] dark:text-white transition-all text-sm font-thin">
             {hours + ":" + minutes}
           </p>
@@ -68,7 +71,7 @@ const Post = ({
                 media?.length === 3 && index === 2 ? "w-full" : postFileWidth
               } flex items-center justify-center`}
             >
-              {file.type === "image" ? (
+              {file.type.split("/")[0] === "image" ? (
                 <Image
                   width={"100%"}
                   src={file.src}
@@ -76,9 +79,7 @@ const Post = ({
                   alt="post-image"
                 />
               ) : (
-                <video controls width="100%" className="">
-                  <source type="video/mp4" src={file.src} />
-                </video>
+                <VideoPlayer videoSrc={file.src} videoType={file.type} />
               )}
             </div>
           ))}

@@ -25,7 +25,7 @@ const Home = () => {
         </button>
       </div>
       <FeedBanner />
-      <div className="max-sm:w-full lg:w-3/5 xl:w-2/3 flex-col gap-3 flex justify-center items-center">
+      <div className="max-sm:w-full min-h-full lg:w-3/5 xl:w-2/3 flex-col gap-3 flex justify-center items-center">
         <Posts />
       </div>
     </>

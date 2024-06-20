@@ -3,10 +3,6 @@
   src: url(../fonts/Poppins-Regular.ttf);
 }
 
-:root {
-  --postFileWidth: 0;
-}
-
 * {
   padding: 0;
   margin: 0;
@@ -273,15 +269,10 @@ body {
   color: #8e8e8e !important;
 }
 
-/* .ant-image {
-  width: var(--postFileWidth);
-} */
-
 .ant-image .ant-image-img {
-  /* width: auto; */
   height: 200px;
 }
 
-video {
-  height: 200px !important;
+.vds-google-cast-button {
+  display: none;
 }
