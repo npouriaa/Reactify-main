@@ -85,7 +85,7 @@ const tagRender = ({ value, closable, onClose }) => {
   );
 };
 
-const AboutMe = () => {
+const AboutMe = ({uid}) => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
   const { isDark } = useContext(DarkModeContext);

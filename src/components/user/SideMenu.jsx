@@ -3,7 +3,7 @@ import "../../assets/styles/sideMenu.css";
 import logoBlack from "../../assets/images/logo/Reactify-black.png";
 import logoWhite from "../../assets/images/logo/Reactify-white.png";
 import { Link } from "react-router-dom";
-import { BiNews } from "react-icons/bi";
+import { TiHome } from "react-icons/ti";
 import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { LuClipboardList } from "react-icons/lu";
@@ -26,8 +26,8 @@ const SideMenu = () => {
 
   const items = [
     {
-      text: "Feed",
-      icon: <BiNews size={25} />,
+      text: "Home",
+      icon: <TiHome size={25} />,
       to: "",
     },
     {

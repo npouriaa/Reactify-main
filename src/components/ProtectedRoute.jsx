@@ -4,7 +4,7 @@ import { RequestsContext } from "../context/RequestsContext";
 import LoaderModal from "./LoaderModal";
 
 const ProtectedRoute = ({ children }) => {
-  const { currentUserUid } = useParams();
+  const { username } = useParams();
   const { currentUser, PRLoading } = useContext(RequestsContext);
 
   if (!localStorage.getItem("accessToken")) {
@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
   } else if (PRLoading) {
     return <LoaderModal />;
   } else if (currentUser) {
-    if (currentUserUid !== currentUser.uid) {
+    if (username !== currentUser.displayName) {
       return <Navigate to="/login" />;
     } else {
       return <>{children}</>;

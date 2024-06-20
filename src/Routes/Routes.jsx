@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: <VerifyEmail />,
   },
   {
-    path: ":currentUserUid",
+    path: ":username",
     element: (
       <ProtectedRoute>
         <UserMainLayout />
@@ -40,8 +40,14 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: ":userUid",
+        path: "profile",
         element: <UserProfile />,
+        children: [
+          {
+            path: ":uid",
+            element: <UserProfile />,
+          },
+        ],
       },
       {
         path: "chats",
