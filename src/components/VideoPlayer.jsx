@@ -9,8 +9,7 @@ import {
 const VideoPlayer = ({ videoSrc, videoType }) => {
   return (
     <MediaPlayer
-      className="h-[200px]"
-      title="Sprite Fight"
+      className="h-[250px]"
       src={{
         type: videoType,
         src: videoSrc,
