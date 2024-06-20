@@ -7,12 +7,6 @@ import Posts from "../../components/user/Posts/Posts";
 import banner from "../../assets/images/user/banner.png";
 
 const Home = () => {
-  // const { openNotificationSuccess, contextHolder } = useNotification();
-
-  useEffect(() => {
-    // openNotificationSuccess("Success", "Signed in succeefully", "top");
-  }, []);
-
   return (
     <>
       <div className="max-sm:flex md:hidden w-full h-12 px-3 py-[.2rem] bg-white items-center justify-between rounded-3xl overflow-hidden">
