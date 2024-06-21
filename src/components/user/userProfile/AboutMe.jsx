@@ -15,8 +15,6 @@ import {
   Tag,
   ConfigProvider,
 } from "antd";
-import { DownOutlined, PlusOutlined } from "@ant-design/icons";
-
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { DarkModeContext } from "../../../context/DarkModeContext";
@@ -85,14 +83,13 @@ const tagRender = ({ value, closable, onClose }) => {
   );
 };
 
-const AboutMe = ({uid}) => {
+const AboutMe = ({ userData }) => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const frmRef = useRef();
-  const joinDate = currentUser?.metadata.creationTime.split(" ");
   const bioRef = useRef();
   const phoneNumberRef = useRef();
   const locationRef = useRef();
@@ -183,7 +180,7 @@ const AboutMe = ({uid}) => {
     }
   };
 
-  const hasNonEmptyValue = currentUserDBObj?.about?.socials?.some(
+  const hasNonEmptyValue = userData?.about?.socials?.some(
     (account) => Object.values(account)[0] !== ""
   );
 
@@ -193,72 +190,75 @@ const AboutMe = ({uid}) => {
         <h3 className="dark:text-white transition-all text-[1.05rem] relative after:absolute after:bottom-0 after:left-0 after:rounded-md after:h-1 after:w-3 after:bg-[#615DFA] before:absolute before:bottom-0 before:left-4 before:h-1 before:rounded-md before:w-6 before:bg-[#615DFA]">
           About Me
         </h3>
-        <button
-          onClick={showModal}
-          className="p-2 shadow-3xl rounded-full bg-white hover:bg-[#d7d7d7] transition-all duration-300"
-        >
-          <GoPencil className="w-5 h-5" />
-        </button>
+        {userData?.uid === currentUserDBObj?.uid && (
+          <button
+            onClick={showModal}
+            className="p-2 shadow-3xl rounded-full bg-white hover:bg-[#d7d7d7] transition-all duration-300"
+          >
+            <GoPencil className="w-5 h-5" />
+          </button>
+        )}
       </div>
       <div className="w-full gap-4 flex flex-col ">
         <p className="font-normal break-words dark:text-white transition-all">
-          {currentUserDBObj?.about.bio}
+          {userData?.about.bio}
         </p>
         <div className="flex flex-col gap-3 text-[.9rem] text-[#585858]">
           <p className="font-normal dark:text-[#aeaeae] transition-all">
             Joined :{" "}
             <span className="text-black dark:text-white transition-all">
-              {joinDate[1]} {joinDate[2]} {joinDate[3]}
+              {userData?.creationTime.split(" ")[2]}{" "}
+              {userData?.creationTime.split(" ")[3]}
             </span>
           </p>
           <div className="font-normal dark:text-[#aeaeae] transition-all">
             Email :{" "}
             <Link
-              to={`mailto:${currentUser?.email}`}
+              to={`mailto:${userData?.email}`}
               target="_blank"
               className="text-black dark:text-white transition-all dark:hover:text-[#69b1ff]"
             >
-              {currentUser?.email}
+              {userData?.email}
             </Link>
           </div>
-          {currentUserDBObj?.about.phoneNumber && (
+          {userData?.about.phoneNumber && (
             <p className="font-normal dark:text-[#aeaeae] transition-all">
               Phone :{" "}
               <Link
-                to={`tel:${currentUserDBObj.about.phoneNumber}`}
+                to={`tel:${userData.about.phoneNumber}`}
                 className="text-black dark:text-white transition-all dark:hover:text-[#69b1ff]"
               >
-                {currentUserDBObj.about.phoneNumber}
+                {userData.about.phoneNumber}
               </Link>
             </p>
           )}
-          {currentUserDBObj?.about.location && (
+          {userData?.about.location && (
             <p className="font-normal dark:text-[#aeaeae] transition-all">
               Country :{" "}
               <span className="text-black dark:text-white transition-all">
-                {currentUserDBObj.about.location}
+                {userData.about.location}
               </span>
             </p>
           )}
-          {currentUserDBObj?.about.web && (
+          {userData?.about.web && (
             <p className="font-normal dark:text-[#aeaeae] transition-all">
               Web :{" "}
               <Link
                 target="_blank"
-                to={`https://${currentUserDBObj.about.web}`}
+                to={`https://${userData.about.web}`}
                 className="text-black dark:text-white transition-all dark:hover:text-[#69b1ff]"
               >
-                {currentUserDBObj.about.web}
+                {userData.about.web}
               </Link>
             </p>
           )}
-          {currentUserDBObj?.about.interests.length !== 0 && (
+          {userData?.about.interests.length !== 0 && (
             <div className="flex items-center gap-1">
               <p className="font-normal dark:text-[#aeaeae] transition-all flex w-[4.8rem]">
                 Interests :
               </p>
               <div className="flex gap-[2px] flex-wrap">
-                {currentUserDBObj?.about.interests.map((interest) => (
+                {userData?.about.interests.map((interest) => (
                   <Tag color={interest.split("-")[1]}>
                     {interest.split("-")[0]}
                   </Tag>
@@ -272,7 +272,7 @@ const AboutMe = ({uid}) => {
                 Socials :{" "}
               </p>
               <span className="text-black dark:text-white transition-all flex gap-1">
-                {currentUserDBObj?.about.socials.map((account) => {
+                {userData?.about.socials.map((account) => {
                   const platform = Object.keys(account)[0];
                   const link = Object.values(account)[0];
                   return (
@@ -293,314 +293,316 @@ const AboutMe = ({uid}) => {
           )}
         </div>
       </div>
-      <ConfigProvider
-        theme={{
-          components: {
-            Modal: {
-              contentBg: isDark ? "#111" : "#fff",
-              headerBg: isDark ? "#111" : "#fff",
-              titleColor: isDark ? "#fff" : "#000",
+      {userData?.uid === currentUserDBObj?.uid && (
+        <ConfigProvider
+          theme={{
+            components: {
+              Modal: {
+                contentBg: isDark ? "#111" : "#fff",
+                headerBg: isDark ? "#111" : "#fff",
+                titleColor: isDark ? "#fff" : "#000",
+              },
             },
-          },
-        }}
-      >
-        <Modal
-          width={700}
-          open={open}
-          title="Edit your info"
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={() => (
-            <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
-              <button
-                onClick={handleCancel}
-                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleOk}
-                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-              >
-                Done
-              </button>
-            </div>
-          )}
+          }}
         >
-          <div className="flex flex-col gap-3">
-            <ConfigProvider
-              theme={{
-                components: {
-                  Form: {
-                    labelColor: isDark ? "#fff" : "#000",
-                  },
-                },
-              }}
-            >
-              <Form
-                onFinish={onFinish}
-                ref={frmRef}
-                className=" flex flex-col"
-                layout="vertical"
-                name="register_form"
-              >
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      colorBgContainer: isDark ? "#111" : "#fff",
-                      colorBorder: isDark && "#585858",
-                      colorText: isDark ? "#fff" : "#000",
-                      colorFillTertiary: "red",
-                    },
-                  }}
+          <Modal
+            width={700}
+            open={open}
+            title="Edit your info"
+            onOk={handleOk}
+            onCancel={handleCancel}
+            footer={() => (
+              <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
+                <button
+                  onClick={handleCancel}
+                  className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
                 >
-                  <Form.Item className="text-white" label="Bio :" name="bio">
-                    <Input.TextArea
-                      ref={bioRef}
-                      value={currentUserDBObj?.about.bio}
-                      defaultValue={currentUserDBObj?.about.bio}
-                      placeholder="Write about yourself"
-                      rows={3}
-                      maxLength={500}
-                      count={{
-                        show: true,
-                        max: 500,
-                      }}
-                    />
-                  </Form.Item>
-                </ConfigProvider>
-                <div className="w-full justify-between flex items-center flex-wrap">
+                  Cancel
+                </button>
+                <button
+                  onClick={handleOk}
+                  className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+                >
+                  Done
+                </button>
+              </div>
+            )}
+          >
+            <div className="flex flex-col gap-3">
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Form: {
+                      labelColor: isDark ? "#fff" : "#000",
+                    },
+                  },
+                }}
+              >
+                <Form
+                  onFinish={onFinish}
+                  ref={frmRef}
+                  className=" flex flex-col"
+                  layout="vertical"
+                  name="register_form"
+                >
                   <ConfigProvider
                     theme={{
                       token: {
                         colorBgContainer: isDark ? "#111" : "#fff",
-                        colorBorder: isDark ? "#585858" : "#d9d9d9",
+                        colorBorder: isDark && "#585858",
                         colorText: isDark ? "#fff" : "#000",
+                        colorFillTertiary: "red",
                       },
                     }}
                   >
-                    <Form.Item
-                      className="max-sm:w-full sm3:w-[48%]"
-                      label="Phone number:"
-                      name="phoneNumber"
-                      rules={[
-                        {
-                          pattern: /^\d+$/,
-                          message: "Please input only numbers!",
-                        },
-                      ]}
-                    >
-                      <Input
-                        ref={phoneNumberRef}
-                        className="placeholder:text-[#959595] dark:text-white"
-                        style={{ background: "transparent" }}
-                        defaultValue={currentUserDBObj?.about.phoneNumber}
-                        placeholder="989124208975"
+                    <Form.Item className="text-white" label="Bio :" name="bio">
+                      <Input.TextArea
+                        ref={bioRef}
+                        value={currentUserDBObj?.about.bio}
+                        defaultValue={currentUserDBObj?.about.bio}
+                        placeholder="Write about yourself"
+                        rows={3}
+                        maxLength={500}
+                        count={{
+                          show: true,
+                          max: 500,
+                        }}
                       />
                     </Form.Item>
-                    <Form.Item
-                      className="max-sm:w-full sm3:w-[48%]"
-                      label="Location :"
-                      name="location"
-                    >
-                      <Input
-                        ref={locationRef}
-                        className="placeholder:text-[#959595] dark:text-white"
-                        style={{ background: "transparent" }}
-                        defaultValue={currentUserDBObj?.about.location}
-                        placeholder="Iran"
-                      />
-                    </Form.Item>
+                  </ConfigProvider>
+                  <div className="w-full justify-between flex items-center flex-wrap">
                     <ConfigProvider
                       theme={{
-                        components: {
-                          Select: {
-                            optionActiveBg: isDark
-                              ? "#303030"
-                              : "rgba(0, 0, 0, 0.04)",
-                            optionSelectedBg: isDark ? "#111A2C" : "#e6f4ff",
-                            optionSelectedFontWeight: "100",
-                          },
+                        token: {
+                          colorBgContainer: isDark ? "#111" : "#fff",
+                          colorBorder: isDark ? "#585858" : "#d9d9d9",
+                          colorText: isDark ? "#fff" : "#000",
                         },
                       }}
                     >
                       <Form.Item
                         className="max-sm:w-full sm3:w-[48%]"
-                        label="Interests :"
-                        name="interests"
+                        label="Phone number:"
+                        name="phoneNumber"
+                        rules={[
+                          {
+                            pattern: /^\d+$/,
+                            message: "Please input only numbers!",
+                          },
+                        ]}
                       >
-                        <Select
-                          mode="multiple"
-                          tagRender={tagRender}
-                          options={options}
-                          dropdownStyle={{
-                            background: isDark ? "#111" : "#fff",
-                          }}
-                          defaultValue={currentUserDBObj?.about?.interests?.map(
-                            (interest) => ({
-                              value: interest,
-                              label: interest.split("-")[0],
-                            })
-                          )}
+                        <Input
+                          ref={phoneNumberRef}
+                          className="placeholder:text-[#959595] dark:text-white"
+                          style={{ background: "transparent" }}
+                          defaultValue={currentUserDBObj?.about.phoneNumber}
+                          placeholder="989124208975"
                         />
                       </Form.Item>
                       <Form.Item
                         className="max-sm:w-full sm3:w-[48%]"
-                        label="Web :"
-                        name="web"
+                        label="Location :"
+                        name="location"
                       >
-                        <AutoComplete
-                          dropdownStyle={{
-                            background: isDark ? "#111" : "#fff",
-                          }}
-                          options={websiteOptions}
-                          onChange={onWebsiteChange}
-                          defaultValue={currentUserDBObj?.about.web}
+                        <Input
+                          ref={locationRef}
+                          className="placeholder:text-[#959595] dark:text-white"
+                          style={{ background: "transparent" }}
+                          defaultValue={currentUserDBObj?.about.location}
+                          placeholder="Iran"
+                        />
+                      </Form.Item>
+                      <ConfigProvider
+                        theme={{
+                          components: {
+                            Select: {
+                              optionActiveBg: isDark
+                                ? "#303030"
+                                : "rgba(0, 0, 0, 0.04)",
+                              optionSelectedBg: isDark ? "#111A2C" : "#e6f4ff",
+                              optionSelectedFontWeight: "100",
+                            },
+                          },
+                        }}
+                      >
+                        <Form.Item
+                          className="max-sm:w-full sm3:w-[48%]"
+                          label="Interests :"
+                          name="interests"
                         >
-                          <Input
-                            placeholder="Yourwebsite.com"
-                            className="placeholder:text-[#959595] dark:text-white"
-                            style={{ background: "transparent" }}
-                            ref={webRef}
+                          <Select
+                            mode="multiple"
+                            tagRender={tagRender}
+                            options={options}
+                            dropdownStyle={{
+                              background: isDark ? "#111" : "#fff",
+                            }}
+                            defaultValue={currentUserDBObj?.about?.interests?.map(
+                              (interest) => ({
+                                value: interest,
+                                label: interest.split("-")[0],
+                              })
+                            )}
                           />
-                        </AutoComplete>
+                        </Form.Item>
+                        <Form.Item
+                          className="max-sm:w-full sm3:w-[48%]"
+                          label="Web :"
+                          name="web"
+                        >
+                          <AutoComplete
+                            dropdownStyle={{
+                              background: isDark ? "#111" : "#fff",
+                            }}
+                            options={websiteOptions}
+                            onChange={onWebsiteChange}
+                            defaultValue={currentUserDBObj?.about.web}
+                          >
+                            <Input
+                              placeholder="Yourwebsite.com"
+                              className="placeholder:text-[#959595] dark:text-white"
+                              style={{ background: "transparent" }}
+                              ref={webRef}
+                            />
+                          </AutoComplete>
+                        </Form.Item>
+                      </ConfigProvider>
+                      <Form.Item
+                        className="max-sm:w-full sm3:w-[48%]"
+                        label="Instagram :"
+                        name="instagram"
+                        rules={[
+                          {
+                            validator: (_, value) => {
+                              if (
+                                value &&
+                                (value.startsWith("https://") ||
+                                  value.startsWith("http://"))
+                              ) {
+                                return Promise.reject(
+                                  `Please don't include "https://" or "http://" at the beginning`
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input
+                          ref={instagramRef}
+                          defaultValue={
+                            currentUserDBObj?.about?.socials &&
+                            currentUserDBObj.about.socials[0].instagram
+                          }
+                          placeholder="instagram.com/username"
+                          className="placeholder:text-[#959595] dark:text-white"
+                          style={{ background: "transparent" }}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        className="max-sm:w-full sm3:w-[48%]"
+                        label="Telegram :"
+                        name="telegram"
+                        rules={[
+                          {
+                            validator: (_, value) => {
+                              if (
+                                value &&
+                                (value.startsWith("https://") ||
+                                  value.startsWith("http://"))
+                              ) {
+                                return Promise.reject(
+                                  `Please don't include "https://" or "http://" at the beginning`
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input
+                          ref={telegramRef}
+                          className="placeholder:text-[#959595] dark:text-white"
+                          style={{ background: "transparent" }}
+                          defaultValue={
+                            currentUserDBObj?.about?.socials &&
+                            currentUserDBObj.about.socials[1].telegram
+                          }
+                          placeholder="t.me/username"
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        className="max-sm:w-full sm3:w-[48%]"
+                        label="Linkedin :"
+                        name="linkedin"
+                        rules={[
+                          {
+                            validator: (_, value) => {
+                              if (
+                                value &&
+                                (value.startsWith("https://") ||
+                                  value.startsWith("http://"))
+                              ) {
+                                return Promise.reject(
+                                  `Please don't include "https://" or "http://" at the beginning`
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input
+                          ref={linkedinRef}
+                          className="placeholder:text-[#959595] dark:text-white"
+                          style={{ background: "transparent" }}
+                          defaultValue={
+                            currentUserDBObj?.about?.socials &&
+                            currentUserDBObj.about.socials[2].linkedin
+                          }
+                          placeholder="linkedin.com/in/username"
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        className="max-sm:w-full sm3:w-[48%]"
+                        label="X (twitter) :"
+                        name="x"
+                        rules={[
+                          {
+                            validator: (_, value) => {
+                              if (
+                                value &&
+                                (value.startsWith("https://") ||
+                                  value.startsWith("http://"))
+                              ) {
+                                return Promise.reject(
+                                  `Please don't include "https://" or "http://" at the beginning`
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input
+                          ref={xRef}
+                          className="placeholder:text-[#959595] dark:text-white"
+                          style={{ background: "transparent" }}
+                          defaultValue={
+                            currentUserDBObj?.about?.socials &&
+                            currentUserDBObj.about.socials[3].x
+                          }
+                          placeholder="x.com/username"
+                        />
                       </Form.Item>
                     </ConfigProvider>
-                    <Form.Item
-                      className="max-sm:w-full sm3:w-[48%]"
-                      label="Instagram :"
-                      name="instagram"
-                      rules={[
-                        {
-                          validator: (_, value) => {
-                            if (
-                              value &&
-                              (value.startsWith("https://") ||
-                                value.startsWith("http://"))
-                            ) {
-                              return Promise.reject(
-                                `Please don't include "https://" or "http://" at the beginning`
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
-                      ]}
-                    >
-                      <Input
-                        ref={instagramRef}
-                        defaultValue={
-                          currentUserDBObj?.about?.socials &&
-                          currentUserDBObj.about.socials[0].instagram
-                        }
-                        placeholder="instagram.com/username"
-                        className="placeholder:text-[#959595] dark:text-white"
-                        style={{ background: "transparent" }}
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      className="max-sm:w-full sm3:w-[48%]"
-                      label="Telegram :"
-                      name="telegram"
-                      rules={[
-                        {
-                          validator: (_, value) => {
-                            if (
-                              value &&
-                              (value.startsWith("https://") ||
-                                value.startsWith("http://"))
-                            ) {
-                              return Promise.reject(
-                                `Please don't include "https://" or "http://" at the beginning`
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
-                      ]}
-                    >
-                      <Input
-                        ref={telegramRef}
-                        className="placeholder:text-[#959595] dark:text-white"
-                        style={{ background: "transparent" }}
-                        defaultValue={
-                          currentUserDBObj?.about?.socials &&
-                          currentUserDBObj.about.socials[1].telegram
-                        }
-                        placeholder="t.me/username"
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      className="max-sm:w-full sm3:w-[48%]"
-                      label="Linkedin :"
-                      name="linkedin"
-                      rules={[
-                        {
-                          validator: (_, value) => {
-                            if (
-                              value &&
-                              (value.startsWith("https://") ||
-                                value.startsWith("http://"))
-                            ) {
-                              return Promise.reject(
-                                `Please don't include "https://" or "http://" at the beginning`
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
-                      ]}
-                    >
-                      <Input
-                        ref={linkedinRef}
-                        className="placeholder:text-[#959595] dark:text-white"
-                        style={{ background: "transparent" }}
-                        defaultValue={
-                          currentUserDBObj?.about?.socials &&
-                          currentUserDBObj.about.socials[2].linkedin
-                        }
-                        placeholder="linkedin.com/in/username"
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      className="max-sm:w-full sm3:w-[48%]"
-                      label="X (twitter) :"
-                      name="x"
-                      rules={[
-                        {
-                          validator: (_, value) => {
-                            if (
-                              value &&
-                              (value.startsWith("https://") ||
-                                value.startsWith("http://"))
-                            ) {
-                              return Promise.reject(
-                                `Please don't include "https://" or "http://" at the beginning`
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
-                      ]}
-                    >
-                      <Input
-                        ref={xRef}
-                        className="placeholder:text-[#959595] dark:text-white"
-                        style={{ background: "transparent" }}
-                        defaultValue={
-                          currentUserDBObj?.about?.socials &&
-                          currentUserDBObj.about.socials[3].x
-                        }
-                        placeholder="x.com/username"
-                      />
-                    </Form.Item>
-                  </ConfigProvider>
-                </div>
-              </Form>
-            </ConfigProvider>
-          </div>
-        </Modal>
-      </ConfigProvider>
+                  </div>
+                </Form>
+              </ConfigProvider>
+            </div>
+          </Modal>
+        </ConfigProvider>
+      )}
     </div>
   );
 };

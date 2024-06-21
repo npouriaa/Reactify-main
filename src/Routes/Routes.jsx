@@ -40,14 +40,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "profile",
+        path: "profile/:uid",
         element: <UserProfile />,
-        children: [
-          {
-            path: ":uid",
-            element: <UserProfile />,
-          },
-        ],
       },
       {
         path: "chats",

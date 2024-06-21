@@ -10,11 +10,13 @@ import { LuClipboardList } from "react-icons/lu";
 import { PiUsersBold } from "react-icons/pi";
 import { Tooltip } from "antd";
 import { DarkModeContext } from "../../context/DarkModeContext";
+import { RequestsContext } from "../../context/RequestsContext";
 
 const SideMenu = () => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [initialSideMenuOpen, setInitialSideMenuOpen] = useState(false);
   const { isDark } = useContext(DarkModeContext);
+  const { currentUser } = useContext(RequestsContext);
   const hMenuRef = useRef();
   const sideMenuRef = useRef();
 
@@ -48,7 +50,7 @@ const SideMenu = () => {
     {
       text: "Profile",
       icon: <RiUserSettingsLine size={25} />,
-      to: "profile",
+      to: `profile/${currentUser.uid}`,
     },
   ];
 

@@ -107,7 +107,7 @@ const AddPost = () => {
           username: currentUser?.displayName,
           text: text,
           postFiles: postFileArray,
-          timestamp: serverTimestamp(),
+          timestamp: new Date(),
           likes: [],
           comments: [],
         };

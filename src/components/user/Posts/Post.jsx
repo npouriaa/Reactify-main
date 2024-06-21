@@ -68,6 +68,7 @@ const Post = ({
         <div className={`w-full flex flex-wrap gap-4 justify-start`}>
           {media?.map((file, index) => (
             <div
+            key={index}
               className={`${
                 (media?.length === 3 && index === 2) || media?.length === 1
                   ? "w-full"
