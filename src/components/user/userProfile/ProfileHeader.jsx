@@ -164,14 +164,15 @@ const ProfileHeader = ({ uid }) => {
               </p>
             </div>
           </div>
-          {uid === currentUser.uid || uid === "profile" && (
-            <button
-              onClick={() => showModal("headerBg")}
-              className="absolute top-7 right-7 p-2 rounded-full bg-white hover:bg-[#d7d7d7] transition-all duration-300"
-            >
-              <GoPencil className="w-5 h-5" />
-            </button>
-          )}
+          {uid === currentUser.uid ||
+            (uid === "profile" && (
+              <button
+                onClick={() => showModal("headerBg")}
+                className="absolute top-7 right-7 p-2 rounded-full bg-white hover:bg-[#d7d7d7] transition-all duration-300"
+              >
+                <GoPencil className="w-5 h-5" />
+              </button>
+            ))}
         </div>
       </div>
       <ConfigProvider
