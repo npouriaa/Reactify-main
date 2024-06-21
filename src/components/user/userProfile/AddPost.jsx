@@ -100,7 +100,7 @@ const AddPost = () => {
         })
       );
       if (text !== "" && postFileArray.length > 0) {
-        await setDoc(postRef, {
+        const postObj = {
           documentId: documentId,
           uid: currentUser?.uid,
           profilePhoto: currentUser?.photoURL,
@@ -110,21 +110,12 @@ const AddPost = () => {
           timestamp: serverTimestamp(),
           likes: [],
           comments: [],
-        });
+        };
+        await setDoc(postRef, postObj);
         const userRef = doc(db, "users", currentUser.uid);
         const userSnapshot = await getDoc(userRef);
         const userData = userSnapshot.data();
-        const updatedPosts = [
-          ...userData.posts,
-          {
-            documentId: documentId,
-            text: text,
-            postFiles: postFileArray,
-            timestamp: new Date(),
-            likes: [],
-            comments: [],
-          },
-        ];
+        const updatedPosts = [...userData.posts, postObj];
 
         await updateDoc(userRef, { posts: updatedPosts });
         setFileList([]);
