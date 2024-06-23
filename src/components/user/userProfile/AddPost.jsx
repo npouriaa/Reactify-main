@@ -5,10 +5,10 @@ import { PlusOutlined } from "@ant-design/icons";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { DarkModeContext } from "../../../context/DarkModeContext";
 import {
+  Timestamp,
   collection,
   doc,
   getDoc,
-  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -107,7 +107,7 @@ const AddPost = () => {
           username: currentUser?.displayName,
           text: text,
           postFiles: postFileArray,
-          timestamp: new Date(),
+          timestamp: Timestamp.now(),
           likes: [],
           comments: [],
         };
@@ -135,8 +135,6 @@ const AddPost = () => {
   };
 
   const onFinish = (values) => {
-    // console.log(fileList);
-    // console.log(file.type.split("/")[0]);
     handleAddPost(values.post_caption);
   };
 
