@@ -5,7 +5,6 @@ import { IoSearchOutline } from "react-icons/io5";
 import { Tooltip } from "antd";
 import { useContext } from "react";
 import { RequestsContext } from "../../context/RequestsContext";
-import LoaderModal from "../LoaderModal";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -14,7 +13,7 @@ import { IoMoonOutline } from "react-icons/io5";
 import { TbSunHigh } from "react-icons/tb";
 
 const Header = () => {
-  const { currentUser, loading, setLoading } = useContext(RequestsContext);
+  const { currentUser, setLoading } = useContext(RequestsContext);
   const { isDark, darkModeHandler } = useContext(DarkModeContext);
   const navigate = useNavigate();
 
@@ -32,7 +31,6 @@ const Header = () => {
 
   return (
     <>
-      {/* {loading && <LoaderModal />} */}
       <header className="fixed w-screen z-[900] max-sm:justify-end lg:justify-between flex items-center py-4 pl-24 max-sm:pr-4 md:pr-8 max-sm:h-[4.6rem] lg:h-20 bg-[#615DFA]">
         <Link className="max-sm:hidden lg:block" to="/">
           <img className="h-12" src={logo} alt="Reactify-logo" />
@@ -50,7 +48,7 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-2 text-white ">
             <Link
-              to="profile"
+              to={`profile/${currentUser?.uid}`}
               className="h-14 w-14 flex justify-center items-center overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')] after:rotate-0 after:transition-all after:ease-in-out hover:after:rotate-[30deg]"
             >
               <img
