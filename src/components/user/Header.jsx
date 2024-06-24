@@ -37,14 +37,14 @@ const Header = () => {
         </Link>
         <div className="flex items-center gap-4">
           <div className="max-sm:hidden md:flex h-full px-3 py-[.2rem] items-center transition-all dark:bg-[#111] bg-white w-[18rem] rounded-3xl overflow-hidden">
+            <button>
+              <IoSearchOutline color="#615DFA" size={25} />
+            </button>
             <input
               placeholder="Search for friends..."
               className="w-[90%] transition-all dark:text-white dark:placeholder:text-white dark:bg-[#111] py-2 px-2 text-sm header-search-input"
               type="text"
             />
-            <button>
-              <IoSearchOutline color="#615DFA" size={25} />
-            </button>
           </div>
           <div className="flex items-center gap-2 text-white ">
             <Link
