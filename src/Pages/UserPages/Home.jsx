@@ -4,7 +4,7 @@ import Posts from "../../components/user/Posts/Posts";
 import banner from "../../assets/images/user/banner.png";
 import { useEffect, useState } from "react";
 import NoPosts from "../../components/user/NoPosts";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import LoaderModal from "../../components/LoaderModal";
 
@@ -14,13 +14,14 @@ const Home = () => {
 
   const getAllPosts = async () => {
     setLoading(true);
-    const querySnapshot = await getDocs(collection(db, "posts"));
-    const posts = [];
-    querySnapshot.forEach((doc) => {
-      posts.push(doc.data());
+    onSnapshot(collection(db, "posts"), async (snapshot) => {
+      const posts = [];
+      snapshot.forEach((doc) => {
+        posts.push(doc.data());
+      });
+     setPostsArray(posts);
+     setLoading(false);
     });
-    setPostsArray(posts);
-    setLoading(false);
   };
 
   useEffect(() => {

@@ -1,11 +1,19 @@
 import { Link } from "react-router-dom";
 import { Image } from "antd";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiHeartLine } from "react-icons/ri";
 import { RiHeartFill } from "react-icons/ri";
 import VideoPlayer from "../../VideoPlayer";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../../firebase";
+import { RequestsContext } from "../../../context/RequestsContext";
+import useNotification from "../../../Hooks/useNotification";
 
 const Post = ({
   profilePhoto,
@@ -16,15 +24,60 @@ const Post = ({
   likes,
   comments,
   time,
+  documentId,
 }) => {
-  const [like, setLike] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const { currentUser, currentUserDBObj } = useContext(RequestsContext);
+  const { openNotificationError } = useNotification();
   const [postFileWidth, setPostFileWidth] = useState(0);
   const postUploadTime = new Date(time * 1000);
   const date = new Date(postUploadTime);
   const hours = date.getHours();
   const minutes = date.getMinutes();
+  const postRef = doc(db, "posts", documentId);
+
+  const handleLike = async () => {
+    try {
+      setLiked(true);
+      const postSnapshot = await getDoc(postRef);
+      const postData = postSnapshot.data();
+      const likeObj = {
+        uid: currentUser.uid,
+        profilePhoto: currentUser?.photoURL,
+        username: currentUser?.displayName,
+        liked: true,
+      };
+      const updatedPostLikes = [...postData.likes, likeObj];
+      await updateDoc(postRef, { likes: updatedPostLikes });
+    } catch (err) {
+      openNotificationError("Error", err.message, "top");
+      console.log(err);
+    }
+  };
+
+  const handleDislike = async () => {
+    try {
+      setLiked(false);
+      const postSnapshot = await getDoc(postRef);
+      const postData = postSnapshot.data();
+      const filteredLikesArray = postData.likes.filter(
+        (like) => like.uid !== uid
+      );
+      await updateDoc(postRef, { likes: filteredLikesArray });
+    } catch (err) {
+      openNotificationError("Error", err.message, "top");
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
+    likes.map((like) => {
+      if (like.uid === uid) {
+        setLiked(true);
+      } else {
+        setLiked(false);
+      }
+    });
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setPostFileWidth("w-[48%]");
@@ -34,6 +87,7 @@ const Post = ({
     };
     handleResize();
     window.addEventListener("resize", handleResize);
+
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -68,7 +122,7 @@ const Post = ({
         <div className={`w-full flex flex-wrap gap-4 justify-start`}>
           {media?.map((file, index) => (
             <div
-            key={index}
+              key={index}
               className={`${
                 (media?.length === 3 && index === 2) || media?.length === 1
                   ? "w-full"
@@ -94,12 +148,12 @@ const Post = ({
         <p>{comments.length} comments</p>
       </div>
       <div className="w-full flex gap-1 items-center py-2 border-t-[1px]">
-        {like ? (
-          <button onClick={() => setLike(!like)} className="cursor-pointer">
+        {liked ? (
+          <button onClick={() => handleDislike()} className="cursor-pointer">
             <RiHeartFill className=" text-[#ff0000] h-[1.5rem] w-[1.5rem]" />
           </button>
         ) : (
-          <button onClick={() => setLike(!like)} className="cursor-pointer">
+          <button onClick={() => handleLike()} className="cursor-pointer">
             <RiHeartLine className=" text-[#717993] dark:text-white transition-all h-[1.5rem] w-[1.5rem]" />
           </button>
         )}

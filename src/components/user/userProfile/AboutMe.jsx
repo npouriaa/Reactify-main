@@ -258,8 +258,8 @@ const AboutMe = ({ userData }) => {
                 Interests :
               </p>
               <div className="flex gap-[2px] flex-wrap">
-                {userData?.about.interests.map((interest) => (
-                  <Tag color={interest.split("-")[1]}>
+                {userData?.about.interests.map((interest, index) => (
+                  <Tag key={index} color={interest.split("-")[1]}>
                     {interest.split("-")[0]}
                   </Tag>
                 ))}

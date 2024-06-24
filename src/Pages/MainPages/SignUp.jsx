@@ -83,7 +83,6 @@ const SignUp = () => {
         email,
         photoURL: userProfileDownloadURL,
         headerBgProfile: headerBgDownloadURL,
-        posts: [],
         creationTime: response.user.metadata.creationTime,
         about: {
           bio: "Hey there! I'm using Reactify.",

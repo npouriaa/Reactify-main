@@ -4,7 +4,7 @@ import AddPost from "../../components/user/userProfile/AddPost";
 import AboutMe from "../../components/user/userProfile/AboutMe";
 import { useParams } from "react-router-dom";
 import Posts from "../../components/user/Posts/Posts";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import { RequestsContext } from "../../context/RequestsContext";
 import NoPosts from "../../components/user/NoPosts";
@@ -17,21 +17,31 @@ const UserProfile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const getSpecificUserPosts = async () => {
+  const getUserPosts = (uid) => {
+    onSnapshot(collection(db, "posts"), async (snapshot) => {
+      const posts = [];
+      snapshot.forEach((doc) => {
+        if (doc.data().uid === uid) posts.push(doc.data());
+      });
+      setPostsArray(posts);
+    });
+  };
+
+  const getSpecificUserData = async () => {
     setLoading(true);
     const userRef = doc(db, "users", uid);
     const userSnapshot = await getDoc(userRef);
     const userData = userSnapshot.data();
     setUserData(userData);
-    setPostsArray(userData?.posts);
+    getUserPosts(uid)
     setLoading(false);
   };
 
   useEffect(() => {
     if (uid === currentUserDBObj?.uid) {
-      setPostsArray(currentUserDBObj?.posts);
+      getUserPosts(currentUserDBObj?.uid)
     } else {
-      getSpecificUserPosts();
+      getSpecificUserData();
     }
   }, []);
 
@@ -42,6 +52,7 @@ const UserProfile = () => {
       ) : (
         <>
           <ProfileHeader
+            postsLength={postsArray?.length}
             userData={
               uid === currentUserDBObj?.uid ? currentUserDBObj : userData
             }
@@ -50,7 +61,7 @@ const UserProfile = () => {
             <div className="w-full relative flex items-start gap-4 max-sm:flex-col lg:flex-row">
               <div className="max-sm:w-full lg:w-3/5 xl:w-2/3 flex flex-col gap-4 max-sm:order-2 lg:order-1">
                 {uid === currentUserDBObj?.uid && <AddPost />}
-                {postsArray.length === 0 ? (
+                {postsArray?.length === 0 ? (
                   <NoPosts text="Yet" />
                 ) : (
                   <Posts postsArray={postsArray} />

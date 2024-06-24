@@ -112,12 +112,6 @@ const AddPost = () => {
           comments: [],
         };
         await setDoc(postRef, postObj);
-        const userRef = doc(db, "users", currentUser.uid);
-        const userSnapshot = await getDoc(userRef);
-        const userData = userSnapshot.data();
-        const updatedPosts = [...userData.posts, postObj];
-
-        await updateDoc(userRef, { posts: updatedPosts });
         setFileList([]);
         setPreviewImage(false);
         frmRef.current?.resetFields();

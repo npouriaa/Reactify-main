@@ -6,6 +6,7 @@ const Posts = ({ postsArray }) => {
       {postsArray?.map((post) => (
         <Post
           key={post.documentId}
+          documentId={post.documentId}
           username={post.username}
           profilePhoto={post.profilePhoto}
           uid={post.uid}

@@ -10,7 +10,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 import useNotification from "../../../Hooks/useNotification";
 
-const ProfileHeader = ({ userData }) => {
+const ProfileHeader = ({ userData , postsLength}) => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
   const { openNotificationError, contextHolder } = useNotification();
@@ -156,7 +156,7 @@ const ProfileHeader = ({ userData }) => {
             <div className="flex justify-center flex-wrap gap-4 text-[.9rem] text-[#d7d7d7] max-sm:items-center lg:items-end h-[3.4rem]">
               <p>
                 Posts :{" "}
-                <span className="text-white">{userData?.posts.length}</span>
+                <span className="text-white">{postsLength}</span>
               </p>
               <p>
                 Comments : <span className="text-white">47</span>
