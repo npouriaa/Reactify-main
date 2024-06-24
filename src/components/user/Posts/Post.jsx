@@ -19,17 +19,43 @@ const Post = ({
   caption,
   likes,
   comments,
-  time,
+  timestamp,
   documentId,
 }) => {
   const [liked, setLiked] = useState(false);
   const { currentUser } = useContext(RequestsContext);
   const { openNotificationError } = useNotification();
   const [postFileWidth, setPostFileWidth] = useState(0);
-  const postUploadTime = new Date(time * 1000);
-  const date = new Date(postUploadTime);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
+
+  const convertTimestampToString = () => {
+    const { seconds, nanoseconds } = timestamp;
+    const milliseconds = seconds * 1000 + nanoseconds / 1000000;
+
+    const dateObj = new Date(milliseconds);
+
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const dateString = `${dateObj.getDate()} ${
+      months[dateObj.getMonth()]
+    } ${dateObj.getFullYear()} ${dateObj.getHours()}:${String(
+      dateObj.getMinutes()
+    ).padStart(2, "0")}`;
+
+    return dateString;
+  };
+
   const postRef = doc(db, "posts", documentId);
 
   const handleLike = async () => {
@@ -108,7 +134,7 @@ const Post = ({
             {username}
           </Link>
           <p className="text-[#717993] dark:text-white transition-all text-sm font-thin">
-            {hours + ":" + minutes}
+            {convertTimestampToString()}
           </p>
         </div>
       </div>

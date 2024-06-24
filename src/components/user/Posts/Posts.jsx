@@ -14,7 +14,7 @@ const Posts = ({ postsArray }) => {
           likes={post.likes}
           comments={post.comments}
           media={post.postFiles}
-          time={post.timestamp}
+          timestamp={post.timestamp}
         />
       ))}
     </>
