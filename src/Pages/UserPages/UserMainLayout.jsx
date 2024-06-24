@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { Layout } from "antd";
 import Header from "../../components/user/Header";
 import SideMenu from "../../components/user/SideMenu";
@@ -10,6 +10,8 @@ import LoaderModal from "../../components/LoaderModal";
 const UserMainLayout = () => {
   const { getUserData, loading, currentUserDBObj } =
     useContext(RequestsContext);
+  const { uid } = useParams();
+  console.log(uid)
 
   useEffect(() => {
     getUserData();

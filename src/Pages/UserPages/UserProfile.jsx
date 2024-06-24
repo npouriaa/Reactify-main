@@ -43,7 +43,7 @@ const UserProfile = () => {
     } else {
       getSpecificUserData();
     }
-  }, []);
+  }, [uid]);
 
   return (
     <>
