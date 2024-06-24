@@ -94,9 +94,9 @@ const Post = ({
   useEffect(() => {
     likes.map((like) => {
       if (like.uid === currentUser?.uid) {
+        console.log(currentUser?.uid)
+        console.log(uid)
         setLiked(true);
-      } else {
-        setLiked(false);
       }
     });
 
