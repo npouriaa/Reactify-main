@@ -325,37 +325,41 @@ const Post = ({
               </>
             ) : (
               <>
-                {comments?.map((comment) => (
-                  <div
-                    key={comment.key}
-                    className="flex dark:text-white items-start gap-3"
-                  >
-                    <Link
-                      to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
-                      className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
+                {comments.length === 0 ? (
+                    <p className="text-[#858585]">No comments yet.</p>
+                  ) : (
+                  comments?.map((comment) => (
+                    <div
+                      key={comment.key}
+                      className="flex dark:text-white items-start gap-3"
                     >
-                      <img
-                        src={comment?.profilePhoto}
-                        className="object-cover h-full rounded-full"
-                        alt="user-profile"
-                      />
-                    </Link>
-                    <div className="flex w-3/4 gap-1 flex-col">
-                      <div className="flex gap-2 items-center">
-                        <Link
-                          to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
-                          className="transition-all"
-                        >
-                          {comment?.username}
-                        </Link>
-                        <p className="text-[#858585] text-xs">
-                          {convertTimestampToString(comment?.timestamp)}
-                        </p>
+                      <Link
+                        to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
+                        className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
+                      >
+                        <img
+                          src={comment?.profilePhoto}
+                          className="object-cover h-full rounded-full"
+                          alt="user-profile"
+                        />
+                      </Link>
+                      <div className="flex w-3/4 gap-1 flex-col">
+                        <div className="flex gap-2 items-center">
+                          <Link
+                            to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
+                            className="transition-all"
+                          >
+                            {comment?.username}
+                          </Link>
+                          <p className="text-[#858585] text-xs">
+                            {convertTimestampToString(comment?.timestamp)}
+                          </p>
+                        </div>
+                        <p>{comment?.comment}</p>
                       </div>
-                      <p>{comment?.comment}</p>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </>
             )}
           </div>
