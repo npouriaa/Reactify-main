@@ -6,11 +6,7 @@ import { IoShareSocial } from "react-icons/io5";
 import { RiHeartLine } from "react-icons/ri";
 import { RiHeartFill } from "react-icons/ri";
 import VideoPlayer from "../../VideoPlayer";
-import {
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { RequestsContext } from "../../../context/RequestsContext";
 import useNotification from "../../../Hooks/useNotification";
@@ -27,7 +23,7 @@ const Post = ({
   documentId,
 }) => {
   const [liked, setLiked] = useState(false);
-  const { currentUser, currentUserDBObj } = useContext(RequestsContext);
+  const { currentUser } = useContext(RequestsContext);
   const { openNotificationError } = useNotification();
   const [postFileWidth, setPostFileWidth] = useState(0);
   const postUploadTime = new Date(time * 1000);
@@ -61,7 +57,7 @@ const Post = ({
       const postSnapshot = await getDoc(postRef);
       const postData = postSnapshot.data();
       const filteredLikesArray = postData.likes.filter(
-        (like) => like.uid !== uid
+        (like) => like.uid !== currentUser?.uid
       );
       await updateDoc(postRef, { likes: filteredLikesArray });
     } catch (err) {
@@ -72,12 +68,13 @@ const Post = ({
 
   useEffect(() => {
     likes.map((like) => {
-      if (like.uid === uid) {
+      if (like.uid === currentUser?.uid) {
         setLiked(true);
       } else {
         setLiked(false);
       }
     });
+
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setPostFileWidth("w-[48%]");
