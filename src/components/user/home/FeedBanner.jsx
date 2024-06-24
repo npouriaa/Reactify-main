@@ -16,7 +16,7 @@ const FeedBanner = () => {
             <IoMdMegaphone className="text-white relative min-h-[3.5rem] min-w-[3.5rem] max-w-[3.5rem] max-h-[3.5rem]" />
           </div>
           <div className="h-full text-white max-sm:text-center sm:text-start w-full flex justify-center flex-col">
-            <h3 className="font-bold text-2xl">Members Newsfeed</h3>
+            <h3 className="font-bold text-2xl">Members Feed</h3>
             <p>Check what your friends have been up to!</p>
           </div>
           <img
