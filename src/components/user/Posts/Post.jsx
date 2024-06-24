@@ -12,6 +12,7 @@ import { RequestsContext } from "../../../context/RequestsContext";
 import useNotification from "../../../Hooks/useNotification";
 import { DarkModeContext } from "../../../context/DarkModeContext";
 import { IoSearchOutline } from "react-icons/io5";
+import { IoMdSend } from "react-icons/io";
 
 const Post = ({
   profilePhoto,
@@ -25,6 +26,7 @@ const Post = ({
   documentId,
 }) => {
   const [liked, setLiked] = useState(false);
+  const [comment, setComment] = useState("");
   const { currentUser, currentUserDBObj } = useContext(RequestsContext);
   const { openNotificationError } = useNotification();
   const [postFileWidth, setPostFileWidth] = useState(0);
@@ -32,9 +34,11 @@ const Post = ({
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState();
   const [searchQuery, setSearchQuery] = useState("");
+  const [disableSendCmnt, setDisableSendCmnt] = useState(false);
   const searchedData = likes.filter((obj) =>
     obj.username.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
+  const postRef = doc(db, "posts", documentId);
 
   const convertTimestampToString = (timestamp) => {
     const { seconds, nanoseconds } = timestamp;
@@ -50,8 +54,6 @@ const Post = ({
 
     return dateString;
   };
-
-  const postRef = doc(db, "posts", documentId);
 
   const handleLike = async () => {
     try {
@@ -85,6 +87,30 @@ const Post = ({
     } catch (err) {
       openNotificationError("Error", err.message, "top");
       console.log(err);
+    }
+  };
+
+  const handleComment = async () => {
+    if (comment !== "") {
+      try {
+        setDisableSendCmnt(true);
+        const postSnapshot = await getDoc(postRef);
+        const postData = postSnapshot.data();
+        const commentObj = {
+          uid: currentUser.uid,
+          profilePhoto: currentUser?.photoURL,
+          username: currentUser?.displayName,
+          comment,
+          timestamp: Timestamp.now(),
+        };
+        const updatedPostComments = [...postData.comments, commentObj];
+        await updateDoc(postRef, { comments: updatedPostComments });
+        setComment("");
+        setDisableSendCmnt(false);
+      } catch (err) {
+        openNotificationError("Error", err.message, "top");
+        console.log(err);
+      }
     }
   };
 
@@ -195,7 +221,7 @@ const Post = ({
               <RiHeartLine className=" text-[#717993] dark:text-white transition-all h-[1.5rem] w-[1.5rem]" />
             </button>
           )}
-          <button>
+          <button onClick={() => showModal("comment")}>
             <FaRegComment className="text-[#717993] dark:text-white transition-all scale-x-[-1] h-[1.35rem] w-[1.35rem]" />
           </button>
           <button>
@@ -218,7 +244,28 @@ const Post = ({
           width={550}
           open={open}
           title={modalType === "likes" ? "Likes" : "Comments"}
-          footer=""
+          footer={
+            modalType === "likes" ? (
+              ""
+            ) : (
+              <div className="w-full px-1 py-2 flex dark:text-white justify-between border-b ">
+                <input
+                  onChange={(e) => setComment(e.target.value)}
+                  className="bg-transparent w-[95%] dark:placeholder:text-[#9b9b9b]"
+                  placeholder={`Add a comment for ${username}...`}
+                  type="text"
+                  value={comment}
+                />
+                <button
+                  disabled={disableSendCmnt}
+                  className="disabled:text-red-500 disabled:cursor-not-allowed"
+                  onClick={() => handleComment()}
+                >
+                  <IoMdSend size={22} />
+                </button>
+              </div>
+            )
+          }
           onCancel={handleCancel}
         >
           <div className="w-full flex flex-col gap-4 pt-1">
@@ -233,7 +280,7 @@ const Post = ({
                 />
               </div>
             )}
-            {modalType === "likes" && (
+            {modalType === "likes" ? (
               <>
                 <div className="w-full dark:text-white flex border-1 border-b border-b-[#e8e8e8] dark:border-b-[#414141] py-2 justify-between">
                   <p>LIKED BY</p>
@@ -246,7 +293,10 @@ const Post = ({
                     <p className="text-[#858585]">No users found.</p>
                   ) : (
                     searchedData?.map((likedUser) => (
-                      <div className="flex w-full h-14 dark:text-white items-center gap-3">
+                      <div
+                        key={likedUser?.uid}
+                        className="flex w-full h-14 dark:text-white items-center gap-3"
+                      >
                         <Link
                           to={`/${currentUser?.displayName}/profile/${likedUser?.uid}`}
                           className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
@@ -272,6 +322,40 @@ const Post = ({
                     ))
                   )}
                 </div>
+              </>
+            ) : (
+              <>
+                {comments?.map((comment) => (
+                  <div
+                    key={comment.key}
+                    className="flex dark:text-white items-start gap-3"
+                  >
+                    <Link
+                      to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
+                      className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
+                    >
+                      <img
+                        src={comment?.profilePhoto}
+                        className="object-cover h-full rounded-full"
+                        alt="user-profile"
+                      />
+                    </Link>
+                    <div className="flex w-3/4 gap-1 flex-col">
+                      <div className="flex gap-2 items-center">
+                        <Link
+                          to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
+                          className="transition-all"
+                        >
+                          {comment?.username}
+                        </Link>
+                        <p className="text-[#858585] text-xs">
+                          {convertTimestampToString(comment?.timestamp)}
+                        </p>
+                      </div>
+                      <p>{comment?.comment}</p>
+                    </div>
+                  </div>
+                ))}
               </>
             )}
           </div>
