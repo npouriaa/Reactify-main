@@ -67,7 +67,6 @@ const Post = ({
         uid: currentUser.uid,
         profilePhoto: currentUser?.photoURL,
         username: currentUser?.displayName,
-        liked: true,
       };
       const updatedPostLikes = [...postData.likes, likeObj];
       await updateDoc(postRef, { likes: updatedPostLikes });
