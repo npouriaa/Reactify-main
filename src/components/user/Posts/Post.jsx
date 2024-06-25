@@ -478,6 +478,7 @@ const Post = ({
         <Modal
           width={450}
           open={openConfirm}
+          zIndex={10000}
           footer={
             <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
               <button
