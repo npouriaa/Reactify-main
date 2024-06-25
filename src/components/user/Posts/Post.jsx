@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { ConfigProvider, Image, Modal, message } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
-import { IoShareSocial } from "react-icons/io5";
 import { RiHeartLine } from "react-icons/ri";
 import { RiHeartFill } from "react-icons/ri";
 import VideoPlayer from "../../VideoPlayer";
@@ -309,9 +308,6 @@ const Post = ({
           )}
           <button onClick={() => showModal("Comment")}>
             <FaRegComment className="text-[#717993] dark:text-white transition-all scale-x-[-1] h-[1.35rem] w-[1.35rem]" />
-          </button>
-          <button>
-            <IoShareSocial className="text-[#717993] dark:text-white transition-all h-[1.4rem] w-[1.4rem]" />
           </button>
         </div>
       </div>
