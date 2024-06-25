@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ConfigProvider, Image, Modal } from "antd";
+import { ConfigProvider, Image, Modal, message } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
@@ -28,13 +28,15 @@ const Post = ({
   const [liked, setLiked] = useState(false);
   const [comment, setComment] = useState("");
   const { currentUser, currentUserDBObj } = useContext(RequestsContext);
-  const { openNotificationError } = useNotification();
+  const { openNotificationError, contextHolder } = useNotification();
   const [postFileWidth, setPostFileWidth] = useState(0);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [disableSendCmnt, setDisableSendCmnt] = useState(false);
+  const [messageApi, contextHolder2] = message.useMessage();
+
   const searchedData = likes.filter((obj) =>
     obj.username.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
@@ -94,6 +96,12 @@ const Post = ({
     if (comment !== "") {
       try {
         setDisableSendCmnt(true);
+        messageApi.open({
+          key: "commentUpload",
+          type: "loading",
+          content: "Adding your comment...",
+          duration: 500,
+        });
         const postSnapshot = await getDoc(postRef);
         const postData = postSnapshot.data();
         const commentObj = {
@@ -105,6 +113,12 @@ const Post = ({
         };
         const updatedPostComments = [...postData.comments, commentObj];
         await updateDoc(postRef, { comments: updatedPostComments });
+        messageApi.open({
+          key: "commentUpload",
+          type: "success",
+          content: "Comment Added!",
+          duration: 4,
+        });
         setComment("");
         setDisableSendCmnt(false);
       } catch (err) {
@@ -151,6 +165,8 @@ const Post = ({
 
   return (
     <>
+      {contextHolder}
+      {contextHolder2}
       <div className="w-full min-h-[25rem] px-6 py-2 bg-white dark:bg-[#111] transition-all rounded-md flex gap-4 flex-col">
         <div className="flex items-center gap-4 pt-4">
           <Link
@@ -326,8 +342,8 @@ const Post = ({
             ) : (
               <>
                 {comments.length === 0 ? (
-                    <p className="text-[#858585]">No comments yet.</p>
-                  ) : (
+                  <p className="text-[#858585]">No comments yet.</p>
+                ) : (
                   comments?.map((comment) => (
                     <div
                       key={comment.key}
