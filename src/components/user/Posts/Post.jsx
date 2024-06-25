@@ -1,18 +1,28 @@
 import { Link } from "react-router-dom";
-import { ConfigProvider, Image, Modal, message } from "antd";
+import { ConfigProvider, Image, Modal, Tooltip, message } from "antd";
 import { useContext, useEffect, useState } from "react";
-import { FaRegComment } from "react-icons/fa6";
+import { FaRegComment, FaSalesforce } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiHeartLine } from "react-icons/ri";
 import { RiHeartFill } from "react-icons/ri";
 import VideoPlayer from "../../VideoPlayer";
-import { Timestamp, doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  Timestamp,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../firebase";
 import { RequestsContext } from "../../../context/RequestsContext";
 import useNotification from "../../../Hooks/useNotification";
 import { DarkModeContext } from "../../../context/DarkModeContext";
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
+import { CiTrash } from "react-icons/ci";
+import { GoQuestion } from "react-icons/go";
 
 const Post = ({
   profilePhoto,
@@ -32,11 +42,12 @@ const Post = ({
   const [postFileWidth, setPostFileWidth] = useState(0);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
-  const [modalType, setModalType] = useState();
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [modalType, setModalType] = useState(false);
+  const [confirmType, setConfirmType] = useState("post");
   const [searchQuery, setSearchQuery] = useState("");
   const [disableSendCmnt, setDisableSendCmnt] = useState(false);
   const [messageApi, contextHolder2] = message.useMessage();
-
   const searchedData = likes.filter((obj) =>
     obj.username.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
@@ -128,6 +139,16 @@ const Post = ({
     }
   };
 
+  const handleDeletePost = async () => {
+    try {
+      await deleteDoc(doc(db, "posts", documentId));
+      console.log("done");
+    } catch (err) {
+      openNotificationError("Error", err.message, "top");
+      console.log(err);
+    }
+  };
+  
   const showModal = (type) => {
     setOpen(true);
     setModalType(type);
@@ -135,6 +156,15 @@ const Post = ({
 
   const handleCancel = () => {
     setOpen(false);
+  };
+
+  const showModalConfirn = (type) => {
+    setOpenConfirm(true);
+    setConfirmType(type);
+  };
+
+  const handleCancelConfirn = () => {
+    setOpenConfirm(false);
   };
 
   const handleSearch = (e) => {
@@ -168,28 +198,80 @@ const Post = ({
       {contextHolder}
       {contextHolder2}
       <div className="w-full min-h-[25rem] px-6 py-2 bg-white dark:bg-[#111] transition-all rounded-md flex gap-4 flex-col">
-        <div className="flex items-center gap-4 pt-4">
-          <Link
-            to={`/${currentUser?.displayName}/profile/${uid}`}
-            className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
-          >
-            <img
-              src={profilePhoto}
-              className="object-cover rounded-full"
-              alt="user-profile"
-            />
-          </Link>
-          <div className="flex flex-col dark:text-white items-start">
+        <div className="flex justify-between items-center">
+          <div className="flex w-[90%] items-center gap-4 pt-4">
             <Link
               to={`/${currentUser?.displayName}/profile/${uid}`}
-              className="transition-all"
+              className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
             >
-              {username}
+              <img
+                src={profilePhoto}
+                className="object-cover rounded-full"
+                alt="user-profile"
+              />
             </Link>
-            <p className="text-[#717993] dark:text-white transition-all text-sm font-thin">
-              {convertTimestampToString(timestamp)}
-            </p>
+            <div className="flex flex-col dark:text-white items-start">
+              <Link
+                to={`/${currentUser?.displayName}/profile/${uid}`}
+                className="transition-all"
+              >
+                {username}
+              </Link>
+              <p className="text-[#858585] transition-all text-sm font-thin">
+                {convertTimestampToString(timestamp)}
+              </p>
+            </div>
           </div>
+          {uid === currentUser?.uid && (
+            <>
+              <button
+                onClick={() => showModalConfirn("post")}
+                className="text-red-500"
+              >
+                <CiTrash size={25} />
+              </button>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Modal: {
+                      contentBg: isDark ? "#111" : "#fff",
+                      headerBg: isDark ? "#111" : "#fff",
+                      titleColor: isDark ? "#fff" : "#000",
+                    },
+                  },
+                }}
+              >
+                <Modal
+                  width={450}
+                  open={openConfirm}
+                  footer={
+                    <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
+                      <button
+                        onClick={handleCancelConfirn}
+                        className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={handleDeletePost}
+                        className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  }
+                  onCancel={handleCancelConfirn}
+                >
+                  <div className="flex items-center gap-2">
+                    <GoQuestion size={25} className="text-blue-500" />
+                    <p className="dark:text-white">
+                      Are you sure you want to delete this {confirmType}?
+                    </p>
+                  </div>
+                </Modal>
+              </ConfigProvider>
+            </>
+          )}
         </div>
         <div className="flex flex-col w-full gap-3">
           <p className="w-full break-words text-[#717993] dark:text-white transition-all">

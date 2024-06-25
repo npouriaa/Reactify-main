@@ -6,7 +6,7 @@ const NoPosts = ({text}) => {
       <div className="w-24 h-24 border-white border-1 border rounded-full flex justify-center items-center">
         <CiCamera size={60}/>
       </div>
-      <h3 className="text-xl font-bold">No Posts {text}</h3>
+      <h3 className="text-xl font-bold">{text}</h3>
     </div>
   );
 };

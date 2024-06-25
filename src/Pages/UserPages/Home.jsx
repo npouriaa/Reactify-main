@@ -4,7 +4,7 @@ import Posts from "../../components/user/Posts/Posts";
 import banner from "../../assets/images/user/banner.png";
 import { useEffect, useState } from "react";
 import NoPosts from "../../components/user/NoPosts";
-import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import LoaderModal from "../../components/LoaderModal";
 
@@ -19,8 +19,8 @@ const Home = () => {
       snapshot.forEach((doc) => {
         posts.push(doc.data());
       });
-     setPostsArray(posts);
-     setLoading(false);
+      setPostsArray(posts);
+      setLoading(false);
     });
   };
 
@@ -46,7 +46,7 @@ const Home = () => {
           {loading ? (
             <LoaderModal />
           ) : postsArray.length === 0 ? (
-            <NoPosts text="To Show" />
+            <NoPosts text="No Posts To Show" />
           ) : (
             <Posts postsArray={postsArray} />
           )}

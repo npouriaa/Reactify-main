@@ -8,9 +8,7 @@ import {
   Timestamp,
   collection,
   doc,
-  getDoc,
   setDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";

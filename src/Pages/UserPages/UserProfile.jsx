@@ -33,13 +33,13 @@ const UserProfile = () => {
     const userSnapshot = await getDoc(userRef);
     const userData = userSnapshot.data();
     setUserData(userData);
-    getUserPosts(uid)
+    getUserPosts(uid);
     setLoading(false);
   };
 
   useEffect(() => {
     if (uid === currentUserDBObj?.uid) {
-      getUserPosts(currentUserDBObj?.uid)
+      getUserPosts(currentUserDBObj?.uid);
     } else {
       getSpecificUserData();
     }
@@ -62,7 +62,7 @@ const UserProfile = () => {
               <div className="max-sm:w-full lg:w-3/5 xl:w-2/3 flex flex-col gap-4 max-sm:order-2 lg:order-1">
                 {uid === currentUserDBObj?.uid && <AddPost />}
                 {postsArray?.length === 0 ? (
-                  <NoPosts text="Yet" />
+                  <NoPosts text="Create your first post" />
                 ) : (
                   <Posts postsArray={postsArray} />
                 )}
