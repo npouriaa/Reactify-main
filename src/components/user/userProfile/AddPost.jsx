@@ -59,7 +59,7 @@ const AddPost = () => {
 
   const handleAddPost = async (text) => {
     const postRef = doc(collection(db, "posts"));
-    const documentId = postRef.id;
+    const postId = postRef.id;
 
     try {
       const postFileArray = [];
@@ -74,7 +74,7 @@ const AddPost = () => {
         fileList.map(async (file) => {
           const fileRef = ref(
             storage,
-            `postFiles/${file.originFileObj.name}-${documentId}`
+            `postFiles/${file.originFileObj.name}-${postId}`
           );
           const fileUploadTask = uploadBytesResumable(
             fileRef,
@@ -99,7 +99,7 @@ const AddPost = () => {
       );
       if (text !== "" && postFileArray.length > 0) {
         const postObj = {
-          documentId: documentId,
+          postId: postId,
           uid: currentUser?.uid,
           profilePhoto: currentUser?.photoURL,
           username: currentUser?.displayName,

@@ -5,8 +5,8 @@ const Posts = ({ postsArray }) => {
     <>
       {postsArray?.map((post) => (
         <Post
-          key={post.documentId}
-          documentId={post.documentId}
+          key={post.postId}
+          postId={post.postId}
           username={post.username}
           profilePhoto={post.profilePhoto}
           uid={post.uid}

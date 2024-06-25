@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
-import { ConfigProvider, Image, Modal, Tooltip, message } from "antd";
+import { ConfigProvider, Image, Modal, message } from "antd";
 import { useContext, useEffect, useState } from "react";
-import { FaRegComment, FaSalesforce } from "react-icons/fa6";
+import { FaRegComment } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiHeartLine } from "react-icons/ri";
 import { RiHeartFill } from "react-icons/ri";
 import VideoPlayer from "../../VideoPlayer";
 import {
   Timestamp,
-  collection,
   doc,
   getDoc,
   getDocs,
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../../../firebase";
 import { RequestsContext } from "../../../context/RequestsContext";
 import useNotification from "../../../Hooks/useNotification";
@@ -33,7 +33,7 @@ const Post = ({
   likes,
   comments,
   timestamp,
-  documentId,
+  postId,
 }) => {
   const [liked, setLiked] = useState(false);
   const [comment, setComment] = useState("");
@@ -44,14 +44,15 @@ const Post = ({
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [modalType, setModalType] = useState(false);
-  const [confirmType, setConfirmType] = useState("post");
+  const [confirmType, setConfirmType] = useState("Post");
   const [searchQuery, setSearchQuery] = useState("");
-  const [disableSendCmnt, setDisableSendCmnt] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
+  const [commentId, setCommentId] = useState();
   const [messageApi, contextHolder2] = message.useMessage();
   const searchedData = likes.filter((obj) =>
     obj.username.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
-  const postRef = doc(db, "posts", documentId);
+  const postRef = doc(db, "posts", postId);
 
   const convertTimestampToString = (timestamp) => {
     const { seconds, nanoseconds } = timestamp;
@@ -106,7 +107,7 @@ const Post = ({
   const handleComment = async () => {
     if (comment !== "") {
       try {
-        setDisableSendCmnt(true);
+        setDisableBtn(true);
         messageApi.open({
           key: "commentUpload",
           type: "loading",
@@ -116,6 +117,7 @@ const Post = ({
         const postSnapshot = await getDoc(postRef);
         const postData = postSnapshot.data();
         const commentObj = {
+          commentId: uuidv4(),
           uid: currentUser.uid,
           profilePhoto: currentUser?.photoURL,
           username: currentUser?.displayName,
@@ -127,28 +129,56 @@ const Post = ({
         messageApi.open({
           key: "commentUpload",
           type: "success",
-          content: "Comment Added!",
+          content: "Comment added!",
           duration: 4,
         });
-        setComment("");
-        setDisableSendCmnt(false);
       } catch (err) {
-        openNotificationError("Error", err.message, "top");
+        messageApi.open({
+          key: "commentUpload",
+          type: "error",
+          content: err.message,
+          duration: 4,
+        });
         console.log(err);
       }
+      setComment("");
+      setDisableBtn(false);
     }
   };
 
-  const handleDeletePost = async () => {
+  const handleDelete = async () => {
     try {
-      await deleteDoc(doc(db, "posts", documentId));
-      console.log("done");
+      setDisableBtn(true);
+      if (confirmType === "Post") {
+        await deleteDoc(doc(db, "posts", postId));
+      } else if (confirmType === "Comment") {
+        const postSnapshot = await getDoc(postRef);
+        const postData = postSnapshot.data();
+        const filteredCommentsArray = postData.comments.filter(
+          (comment) => comment.commentId !== commentId
+        );
+        await updateDoc(postRef, { comments: filteredCommentsArray });
+        setOpenConfirm(true);
+        messageApi.open({
+          key: "delete",
+          type: "success",
+          content: `${confirmType} deleted!`,
+          duration: 4,
+        });
+      }
     } catch (err) {
-      openNotificationError("Error", err.message, "top");
+      messageApi.open({
+        key: "delete",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
       console.log(err);
     }
+    setDisableBtn(false);
+    setOpenConfirm(false);
   };
-  
+
   const showModal = (type) => {
     setOpen(true);
     setModalType(type);
@@ -158,9 +188,10 @@ const Post = ({
     setOpen(false);
   };
 
-  const showModalConfirn = (type) => {
+  const showModalConfirm = (type, id) => {
     setOpenConfirm(true);
     setConfirmType(type);
+    setCommentId(id);
   };
 
   const handleCancelConfirn = () => {
@@ -223,54 +254,12 @@ const Post = ({
             </div>
           </div>
           {uid === currentUser?.uid && (
-            <>
-              <button
-                onClick={() => showModalConfirn("post")}
-                className="text-red-500"
-              >
-                <CiTrash size={25} />
-              </button>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Modal: {
-                      contentBg: isDark ? "#111" : "#fff",
-                      headerBg: isDark ? "#111" : "#fff",
-                      titleColor: isDark ? "#fff" : "#000",
-                    },
-                  },
-                }}
-              >
-                <Modal
-                  width={450}
-                  open={openConfirm}
-                  footer={
-                    <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
-                      <button
-                        onClick={handleCancelConfirn}
-                        className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleDeletePost}
-                        className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
-                      >
-                        Confirm
-                      </button>
-                    </div>
-                  }
-                  onCancel={handleCancelConfirn}
-                >
-                  <div className="flex items-center gap-2">
-                    <GoQuestion size={25} className="text-blue-500" />
-                    <p className="dark:text-white">
-                      Are you sure you want to delete this {confirmType}?
-                    </p>
-                  </div>
-                </Modal>
-              </ConfigProvider>
-            </>
+            <button
+              onClick={() => showModalConfirm("Post")}
+              className="text-red-500"
+            >
+              <CiTrash size={25} />
+            </button>
           )}
         </div>
         <div className="flex flex-col w-full gap-3">
@@ -319,7 +308,7 @@ const Post = ({
               <RiHeartLine className=" text-[#717993] dark:text-white transition-all h-[1.5rem] w-[1.5rem]" />
             </button>
           )}
-          <button onClick={() => showModal("comment")}>
+          <button onClick={() => showModal("Comment")}>
             <FaRegComment className="text-[#717993] dark:text-white transition-all scale-x-[-1] h-[1.35rem] w-[1.35rem]" />
           </button>
           <button>
@@ -353,9 +342,10 @@ const Post = ({
                   placeholder={`Add a comment for ${username}...`}
                   type="text"
                   value={comment}
+                  maxLength={50}
                 />
                 <button
-                  disabled={disableSendCmnt}
+                  disabled={disableBtn}
                   className="disabled:text-red-500 disabled:cursor-not-allowed"
                   onClick={() => handleComment()}
                 >
@@ -428,38 +418,91 @@ const Post = ({
                 ) : (
                   comments?.map((comment) => (
                     <div
-                      key={comment.key}
-                      className="flex dark:text-white items-start gap-3"
+                      key={comment?.commentId}
+                      className="flex items-center justify-between dark:text-white "
                     >
-                      <Link
-                        to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
-                        className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
-                      >
-                        <img
-                          src={comment?.profilePhoto}
-                          className="object-cover h-full rounded-full"
-                          alt="user-profile"
-                        />
-                      </Link>
-                      <div className="flex w-3/4 gap-1 flex-col">
-                        <div className="flex gap-2 items-center">
-                          <Link
-                            to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
-                            className="transition-all"
-                          >
-                            {comment?.username}
-                          </Link>
-                          <p className="text-[#858585] text-xs">
-                            {convertTimestampToString(comment?.timestamp)}
-                          </p>
+                      <div className="flex items-start w-[95%] gap-3">
+                        <Link
+                          to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
+                          className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
+                        >
+                          <img
+                            src={comment?.profilePhoto}
+                            className="object-cover h-full rounded-full"
+                            alt="user-profile"
+                          />
+                        </Link>
+                        <div className="flex w-3/4 gap-1 flex-col">
+                          <div className="flex gap-2 items-center">
+                            <Link
+                              to={`/${currentUser?.displayName}/profile/${comment?.uid}`}
+                              className="transition-all"
+                            >
+                              {comment?.username}
+                            </Link>
+                            <p className="text-[#858585] text-xs">
+                              {convertTimestampToString(comment?.timestamp)}
+                            </p>
+                          </div>
+                          <p>{comment?.comment}</p>
                         </div>
-                        <p>{comment?.comment}</p>
                       </div>
+                      {comment?.uid === currentUser?.uid && (
+                        <button
+                          onClick={() =>
+                            showModalConfirm("Comment", comment?.commentId)
+                          }
+                          className="text-red-500"
+                        >
+                          <CiTrash size={25} />
+                        </button>
+                      )}
                     </div>
                   ))
                 )}
               </>
             )}
+          </div>
+        </Modal>
+      </ConfigProvider>
+      <ConfigProvider
+        theme={{
+          components: {
+            Modal: {
+              contentBg: isDark ? "#111" : "#fff",
+              headerBg: isDark ? "#111" : "#fff",
+              titleColor: isDark ? "#fff" : "#000",
+            },
+          },
+        }}
+      >
+        <Modal
+          width={450}
+          open={openConfirm}
+          footer={
+            <div className="flex max-sm:flex-col max-sm3:flex-row gap-4 justify-end">
+              <button
+                onClick={handleCancelConfirn}
+                className="px-4 py-1 text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={disableBtn}
+                onClick={handleDelete}
+                className="px-4 py-1 disabled:bg-red-500 disabled:cursor-not-allowed text-white rounded-md bg-[#615DFA] hover:bg-[#F5658C] transition-all"
+              >
+                Confirm
+              </button>
+            </div>
+          }
+          onCancel={handleCancelConfirn}
+        >
+          <div className="flex items-center gap-2">
+            <GoQuestion size={25} className="text-blue-500" />
+            <p className="dark:text-white">
+              Are you sure you want to delete this {confirmType.toLowerCase()}?
+            </p>
           </div>
         </Modal>
       </ConfigProvider>
