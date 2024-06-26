@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "../../assets/styles/sideMenu.css";
 import logoBlack from "../../assets/images/logo/Reactify-black.png";
 import logoWhite from "../../assets/images/logo/Reactify-white.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { TiHome } from "react-icons/ti";
 import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiUserSettingsLine } from "react-icons/ri";
@@ -20,6 +20,7 @@ const SideMenu = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const hMenuRef = useRef();
   const sideMenuRef = useRef();
+  const location = useLocation();
 
   const sideMenuHandler = () => {
     hMenuRef.current.classList.toggle("active");
@@ -59,6 +60,17 @@ const SideMenu = () => {
       active: activeIndex === 4 ? true : false,
     },
   ];
+
+  useEffect(() => {
+    if (location.pathname === `/${currentUser?.displayName}`) {
+      setActiveIndex(0);
+    } else if (
+      location.pathname ===
+      `/${currentUser?.displayName}/profile/${currentUser?.uid}`
+    ) {
+      setActiveIndex(4);
+    }
+  }, []);
 
   return (
     <div
@@ -132,11 +144,11 @@ const SideMenu = () => {
                       ? "justify-start"
                       : "animate-justifyEnd"
                     : "justify-end"
-                } flex items-center gap-2 pr-7 transition-all pl-[1rem] ${item.active && "text-[#F5658C] dark:text-[#615DFA]"}`}
+                } flex items-center gap-2 pr-7 transition-all pl-[1rem] ${
+                  item.active && "text-[#F5658C] dark:text-[#615DFA]"
+                }`}
               >
-                <div >
-                  {item.icon}
-                </div>
+                <div>{item.icon}</div>
                 <span
                   className={`${
                     initialSideMenuOpen
