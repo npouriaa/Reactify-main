@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { TiHome } from "react-icons/ti";
 import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiUserSettingsLine } from "react-icons/ri";
+import { LuClipboardList } from "react-icons/lu";
 import { PiUsersBold } from "react-icons/pi";
 import { Tooltip } from "antd";
 import { DarkModeContext } from "../../context/DarkModeContext";
@@ -35,9 +36,9 @@ const SideMenu = () => {
     },
     {
       text: "My posts",
-      active: activeIndex === 1 ? true : false,
+      icon: <LuClipboardList size={25} />,
       to: "/my-posts",
-      active: false,
+      active: activeIndex === 1 ? true : false,
     },
     {
       text: "Chats",
