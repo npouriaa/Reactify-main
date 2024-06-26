@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "../../assets/styles/sideMenu.css";
 import logoBlack from "../../assets/images/logo/Reactify-black.png";
 import logoWhite from "../../assets/images/logo/Reactify-white.png";
@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { TiHome } from "react-icons/ti";
 import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiUserSettingsLine } from "react-icons/ri";
-import { LuClipboardList } from "react-icons/lu";
 import { PiUsersBold } from "react-icons/pi";
 import { Tooltip } from "antd";
 import { DarkModeContext } from "../../context/DarkModeContext";
@@ -17,6 +16,7 @@ const SideMenu = () => {
   const [initialSideMenuOpen, setInitialSideMenuOpen] = useState(false);
   const { isDark } = useContext(DarkModeContext);
   const { currentUser } = useContext(RequestsContext);
+  const [activeIndex, setActiveIndex] = useState(0);
   const hMenuRef = useRef();
   const sideMenuRef = useRef();
 
@@ -31,26 +31,31 @@ const SideMenu = () => {
       text: "Home",
       icon: <TiHome size={25} />,
       to: "",
+      active: activeIndex === 0 ? true : false,
     },
     {
       text: "My posts",
-      icon: <LuClipboardList size={25} />,
+      active: activeIndex === 1 ? true : false,
       to: "/my-posts",
+      active: false,
     },
     {
       text: "Chats",
       icon: <PiChatsCircleDuotone size={25} />,
       to: "/chats",
+      active: activeIndex === 2 ? true : false,
     },
     {
       text: "Friends",
       icon: <PiUsersBold size={25} />,
       to: "/friends",
+      active: activeIndex === 3 ? true : false,
     },
     {
       text: "Profile",
       icon: <RiUserSettingsLine size={25} />,
       to: `profile/${currentUser.uid}`,
+      active: activeIndex === 4 ? true : false,
     },
   ];
 
@@ -119,15 +124,18 @@ const SideMenu = () => {
               to={item.to}
             >
               <li
+                onClick={() => setActiveIndex(index)}
                 className={`${
                   initialSideMenuOpen
                     ? openSideMenu
                       ? "justify-start"
                       : "animate-justifyEnd"
                     : "justify-end"
-                } flex items-center  gap-2 pr-7 pl-[1rem]`}
+                } flex items-center gap-2 pr-7 transition-all pl-[1rem] ${item.active && "text-[#F5658C] dark:text-[#615DFA]"}`}
               >
-                {item.icon}
+                <div >
+                  {item.icon}
+                </div>
                 <span
                   className={`${
                     initialSideMenuOpen
