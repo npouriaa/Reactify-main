@@ -14,11 +14,8 @@ const ProfileHeader = ({ userData, postsLength }) => {
     useContext(RequestsContext);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
-  const [followingLength, setFollowingLength] = useState(
-    userData?.following.length
-  );
   const [followersLength, setFollowersLength] = useState(
-    userData?.following.length
+    userData?.followers.length
   );
   const [imgFile, setImgFile] = useState(null);
   const [modalType, setModalType] = useState("");
@@ -131,11 +128,11 @@ const ProfileHeader = ({ userData, postsLength }) => {
   const handleFollow = async () => {
     try {
       setFollowed(true);
-      setFollowersLength(userData?.following.length + 1);
+      setFollowersLength(followersLength + 1);
       const currentUserRef = doc(db, "users", currentUser.uid);
       const targetUserRef = doc(db, "users", userData.uid);
       const currentUserSnapshot = await getDoc(currentUserRef);
-      const targetUserSnapshot = await getDoc(currentUserRef);
+      const targetUserSnapshot = await getDoc(targetUserRef);
       const currentUserData = currentUserSnapshot.data();
       const targetUserData = targetUserSnapshot.data();
       const followersList = targetUserData.followers;
@@ -160,7 +157,6 @@ const ProfileHeader = ({ userData, postsLength }) => {
       const updatedfollowingList = followingList;
       await updateDoc(currentUserRef, { following: updatedfollowingList });
       await updateDoc(targetUserRef, { followers: updatedfollowersList });
-      console.log("done");
     } catch (err) {
       messageApi.open({
         key: "followError",
@@ -168,12 +164,50 @@ const ProfileHeader = ({ userData, postsLength }) => {
         content: err.message,
         duration: 4,
       });
-      setFollowersLength(userData?.following.length - 1);
+      setFollowersLength(followersLength - 1);
       setFollowed(false);
     }
   };
 
+  const handleUnFollow = async () => {
+    try {
+      setFollowed(false);
+      setFollowersLength(followersLength - 1);
+      const currentUserRef = doc(db, "users", currentUser.uid);
+      const targetUserRef = doc(db, "users", userData.uid);
+      const currentUserSnapshot = await getDoc(currentUserRef);
+      const targetUserSnapshot = await getDoc(targetUserRef);
+      const currentUserData = currentUserSnapshot.data();
+      const targetUserData = targetUserSnapshot.data();
+
+      const filteredFollowersArray = targetUserData.followers.filter(
+        (follower) => follower.uid !== currentUser?.uid
+      );
+      const filteredFollowingArray = currentUserData.following.filter(
+        (following) => following.uid !== targetUserData?.uid
+      );
+
+      await updateDoc(currentUserRef, { following: filteredFollowingArray });
+      await updateDoc(targetUserRef, { followers: filteredFollowersArray });
+    } catch (err) {
+      messageApi.open({
+        key: "followError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
+      setFollowersLength(followersLength + 1);
+      setFollowed(true);
+    }
+  };
+
   useEffect(() => {
+    userData?.followers.map((follower) => {
+      if (follower.uid === currentUser?.uid) {
+        setFollowed(true);
+      }
+    });
+    setFollowersLength(userData?.followers.length);
     bgImageConRef.current.style.backgroundImage = `url(${userData?.headerBgProfile})`;
   }, [userData]);
 
@@ -211,7 +245,10 @@ const ProfileHeader = ({ userData, postsLength }) => {
                   </h3>
                   {userData?.uid !== currentUserDBObj?.uid &&
                     (followed ? (
-                      <button className="max-sm:order-1 lg:order-2 py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md">
+                      <button
+                        onClick={() => handleUnFollow()}
+                        className="max-sm:order-1 lg:order-2 py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
+                      >
                         Following
                       </button>
                     ) : (
@@ -238,11 +275,11 @@ const ProfileHeader = ({ userData, postsLength }) => {
               </p>
               <p>
                 Followers :{" "}
-                <span className="text-white">{followingLength}</span>
+                <span className="text-white">{followersLength}</span>
               </p>
               <p>
                 Following :{" "}
-                <span className="text-white">{followersLength}</span>
+                <span className="text-white">{userData?.following.length}</span>
               </p>
             </div>
           </div>
