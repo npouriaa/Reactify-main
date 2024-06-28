@@ -403,9 +403,9 @@ const Post = ({
                           >
                             {likedUser?.username}
                           </Link>
-                          <p className="text-[#858585] truncate max-sm:w-[13rem] max-sm2:w-[15rem] max-sm3:w-[16rem] sm:w-[16rem] sm2:w-[20rem] sm3:w-[26rem]">
-                            {likedUser?.bio}
-                          </p>
+                          {/* <p className="text-[#858585] truncate max-sm:w-[13rem] max-sm2:w-[15rem] max-sm3:w-[16rem] sm:w-[16rem] sm2:w-[20rem] sm3:w-[26rem]">
+                            
+                          </p> */}
                         </div>
                       </div>
                     ))

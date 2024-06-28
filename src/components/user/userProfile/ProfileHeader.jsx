@@ -8,6 +8,8 @@ import { db, storage } from "../../../firebase";
 import { updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Timestamp, doc, getDoc, updateDoc } from "firebase/firestore";
+import { IoSearchOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const ProfileHeader = ({ userData, postsLength }) => {
   const { currentUser, currentUserDBObj, setLoading } =
@@ -15,6 +17,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [openListModal, setOpenListModal] = useState(false);
+  const [listModalType, setListModalType] = useState("followers");
   const [followersLength, setFollowersLength] = useState(
     userData?.followers.length
   );
@@ -26,7 +29,11 @@ const ProfileHeader = ({ userData, postsLength }) => {
   const imagePreviewRef = useRef(null);
   const bgImageConRef = useRef(null);
   const [messageApi, contextHolder] = message.useMessage();
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchType, setSearchType] = useState([]);
+  const searchedData = searchType.filter((obj) =>
+    obj.username.toLowerCase().startsWith(searchQuery.toLowerCase())
+  );
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (!file.type.includes("image")) {
@@ -62,6 +69,17 @@ const ProfileHeader = ({ userData, postsLength }) => {
     setOpen(true);
     setModalType(modalType);
   };
+  const showListModal = (modalType) => {
+    setOpenListModal(true);
+    setListModalType(modalType);
+    modalType === "followers"
+      ? setSearchType(userData?.followers)
+      : setSearchType(userData?.following);
+  };
+  const handleCancelListModal = () => {
+    setOpenListModal(false);
+    setSearchQuery("");
+  };
   const handleOk = () => {
     setOpen(false);
     changePhoto();
@@ -72,6 +90,10 @@ const ProfileHeader = ({ userData, postsLength }) => {
     setPreviewImageSrc("");
     setOpen(false);
     setImgFile(null);
+  };
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   const changePhoto = async () => {
@@ -274,14 +296,77 @@ const ProfileHeader = ({ userData, postsLength }) => {
               <p>
                 Posts : <span className="text-white">{postsLength}</span>
               </p>
-              <button>
+              <button onClick={() => showListModal("followers")}>
                 Followers :{" "}
                 <span className="text-white">{followersLength}</span>
               </button>
-              <button>
+              <button onClick={() => showListModal("following")}>
                 Following :{" "}
                 <span className="text-white">{userData?.following.length}</span>
               </button>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Modal: {
+                      contentBg: isDark ? "#111" : "#fff",
+                      headerBg: isDark ? "#111" : "#fff",
+                      titleColor: isDark ? "#fff" : "#000",
+                    },
+                  },
+                }}
+              >
+                <Modal
+                  width={550}
+                  open={openListModal}
+                  title={
+                    listModalType === "followers" ? "Followers" : "Following"
+                  }
+                  footer=""
+                  onCancel={handleCancelListModal}
+                >
+                  <div className="dark:bg-[#181818] bg-[#e8e8e8] p-[.35rem] rounded-md flex w-full items-center gap-2">
+                    <IoSearchOutline color="#615DFA" size={22} />
+                    <input
+                      onChange={(e) => handleSearch(e)}
+                      className="bg-transparent dark:text-white w-full dark:placeholder:text-[#9b9b9b]"
+                      placeholder="Search"
+                      type="text"
+                      value={searchQuery}
+                    />
+                  </div>
+                  <div className="mt-4 flex flex-col gap-4">
+                    {searchedData.length === 0 ? (
+                      <p className="text-[#858585]">No users found.</p>
+                    ) : (
+                      searchedData?.map((user) => (
+                        <div
+                          key={user?.uid}
+                          className="flex w-full h-14 dark:text-white items-center gap-3"
+                        >
+                          <Link
+                            to={`/${currentUser?.displayName}/profile/${user?.uid}`}
+                            className="relative flex justify-center items-center h-14 w-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
+                          >
+                            <img
+                              src={user?.profilePhoto}
+                              className="object-cover rounded-full h-full"
+                              alt="user-profile"
+                            />
+                          </Link>
+                          <div className="flex flex-col">
+                            <Link
+                              to={`/${currentUser?.displayName}/profile/${user?.uid}`}
+                              className="transition-all"
+                            >
+                              {user?.username}
+                            </Link>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </Modal>
+              </ConfigProvider>
             </div>
           </div>
           {userData?.uid === currentUserDBObj?.uid && (
