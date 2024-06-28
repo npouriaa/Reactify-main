@@ -392,7 +392,7 @@ const Post = ({
                         >
                           <img
                             src={likedUser?.profilePhoto}
-                            className="object-cover rounded-full"
+                            className="object-cover rounded-full h-full"
                             alt="user-profile"
                           />
                         </Link>

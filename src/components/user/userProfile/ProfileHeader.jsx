@@ -14,6 +14,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
     useContext(RequestsContext);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
+  const [openListModal, setOpenListModal] = useState(false);
   const [followersLength, setFollowersLength] = useState(
     userData?.followers.length
   );
@@ -273,14 +274,14 @@ const ProfileHeader = ({ userData, postsLength }) => {
               <p>
                 Posts : <span className="text-white">{postsLength}</span>
               </p>
-              <p>
+              <button>
                 Followers :{" "}
                 <span className="text-white">{followersLength}</span>
-              </p>
-              <p>
+              </button>
+              <button>
                 Following :{" "}
                 <span className="text-white">{userData?.following.length}</span>
-              </p>
+              </button>
             </div>
           </div>
           {userData?.uid === currentUserDBObj?.uid && (
