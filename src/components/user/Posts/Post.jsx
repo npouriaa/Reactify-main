@@ -82,7 +82,13 @@ const Post = ({
       const updatedPostLikes = [...postData.likes, likeObj];
       await updateDoc(postRef, { likes: updatedPostLikes });
     } catch (err) {
-      openNotificationError("Error", err.message, "top");
+      messageApi.open({
+        key: "likeError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
+      setLiked(false);
       console.log(err);
     }
   };

@@ -27,14 +27,13 @@ const UserProfile = () => {
     });
   };
 
-  const getSpecificUserData = async () => {
+  const getSpecificUserData = () => {
     setLoading(true);
-    const userRef = doc(db, "users", uid);
-    const userSnapshot = await getDoc(userRef);
-    const userData = userSnapshot.data();
-    setUserData(userData);
     getUserPosts(uid);
-    setLoading(false);
+    onSnapshot(doc(db, "users", uid), (doc) => {
+      setUserData(doc.data());
+      setLoading(false);
+    });
   };
 
   useEffect(() => {

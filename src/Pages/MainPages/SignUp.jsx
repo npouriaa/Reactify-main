@@ -84,6 +84,8 @@ const SignUp = () => {
         photoURL: userProfileDownloadURL,
         headerBgProfile: headerBgDownloadURL,
         creationTime: response.user.metadata.creationTime,
+        followers : [],
+        following : [],
         about: {
           bio: "Hey there! I'm using Reactify.",
           phoneNumber: "",

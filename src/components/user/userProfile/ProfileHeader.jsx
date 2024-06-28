@@ -1,41 +1,53 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { GoPencil } from "react-icons/go";
-import { ConfigProvider, Modal } from "antd";
+import { ConfigProvider, Modal, message } from "antd";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { DarkModeContext } from "../../../context/DarkModeContext";
 import { db, storage } from "../../../firebase";
 import { updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { doc, updateDoc } from "firebase/firestore";
-import useNotification from "../../../Hooks/useNotification";
+import { Timestamp, doc, getDoc, updateDoc } from "firebase/firestore";
 
-const ProfileHeader = ({ userData , postsLength}) => {
+const ProfileHeader = ({ userData, postsLength }) => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
-  const { openNotificationError, contextHolder } = useNotification();
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
+  const [followingLength, setFollowingLength] = useState(
+    userData?.following.length
+  );
+  const [followersLength, setFollowersLength] = useState(
+    userData?.following.length
+  );
   const [imgFile, setImgFile] = useState(null);
   const [modalType, setModalType] = useState("");
+  const [followed, setFollowed] = useState(false);
   const [previewImageSrc, setPreviewImageSrc] = useState("");
   const fileInput = useRef(null);
   const imagePreviewRef = useRef(null);
   const bgImageConRef = useRef(null);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (!file.type.includes("image")) {
-      openNotificationError("Error", "Please select an image file", "top");
+      messageApi.open({
+        key: "uploadError",
+        type: "error",
+        content: "Please select an image file",
+        duration: 4,
+      });
       return;
     }
 
     if (file.size > 600 * 1024) {
-      openNotificationError(
-        "Error",
-        "Image size should be less than 600KB",
-        "top"
-      );
+      messageApi.open({
+        key: "uploadError",
+        type: "error",
+        content: "Image size should be less than 600KB",
+        duration: 4,
+      });
       return;
     }
     const reader = new FileReader();
@@ -106,12 +118,62 @@ const ProfileHeader = ({ userData , postsLength}) => {
         }
       );
     } catch (err) {
+      messageApi.open({
+        key: "chnagePhotoError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
       console.log(err);
     }
   };
 
+  const handleFollow = async () => {
+    try {
+      setFollowed(true);
+      setFollowersLength(userData?.following.length + 1);
+      const currentUserRef = doc(db, "users", currentUser.uid);
+      const targetUserRef = doc(db, "users", userData.uid);
+      const currentUserSnapshot = await getDoc(currentUserRef);
+      const targetUserSnapshot = await getDoc(currentUserRef);
+      const currentUserData = currentUserSnapshot.data();
+      const targetUserData = targetUserSnapshot.data();
+      const followersList = targetUserData.followers;
+      const followingList = currentUserData.following;
+      const targetUserFollowObj = {
+        uid: userData.uid,
+        profilePhoto: userData?.photoURL,
+        username: userData?.displayName,
+        bio: userData?.about?.bio,
+        timestamp: Timestamp.now(),
+      };
+      const currentUserFollowObj = {
+        uid: currentUserDBObj.uid,
+        profilePhoto: currentUserDBObj?.photoURL,
+        username: currentUserDBObj?.displayName,
+        bio: currentUserDBObj?.about?.bio,
+        timestamp: Timestamp.now(),
+      };
+      followersList.push(currentUserFollowObj);
+      followingList.push(targetUserFollowObj);
+      const updatedfollowersList = followersList;
+      const updatedfollowingList = followingList;
+      await updateDoc(currentUserRef, { following: updatedfollowingList });
+      await updateDoc(targetUserRef, { followers: updatedfollowersList });
+      console.log("done");
+    } catch (err) {
+      messageApi.open({
+        key: "followError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
+      setFollowersLength(userData?.following.length - 1);
+      setFollowed(false);
+    }
+  };
+
   useEffect(() => {
-    console.log(userData);
     bgImageConRef.current.style.backgroundImage = `url(${userData?.headerBgProfile})`;
   }, [userData]);
 
@@ -120,11 +182,11 @@ const ProfileHeader = ({ userData , postsLength}) => {
       {contextHolder}
       <div
         ref={bgImageConRef}
-        className="w-full rounded-lg max-sm:h-[23rem] sm:h-[21rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center"
+        className="w-full rounded-lg max-sm:h-[26rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center"
       >
         <div className="flex w-full h-full rounded-lg user-banner-shadow max-sm:items-center lg:items-end relative">
-          <div className="flex items-center justify-between w-full gap-4 px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
-            <div className="flex items-center gap-4 p-2 max-sm:flex-col lg:flex-row">
+          <div className="flex items-center justify-between w-full gap-4 max-sm:px-1 sm:px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
+            <div className="flex items-center gap-4 p-2  max-sm:flex-col lg:flex-row">
               <div className="flex group rounded-full justify-center items-center">
                 <div className="relative cursor-pointer h-28 w-28 p-[10px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-header.png')]  after:rotate-0 after:transition-all after:ease-in-out group-hover:after:rotate-[30deg]">
                   <img
@@ -142,8 +204,25 @@ const ProfileHeader = ({ userData , postsLength}) => {
                   </button>
                 )}
               </div>
-              <div className="flex flex-col max-sm:text-center lg:text-start">
-                <h3 className="text-xl capitalize">{userData?.displayName}</h3>
+              <div className="flex gap-1 flex-col max-sm:text-center lg:text-start">
+                <div className="flex max-sm:flex-col lg:flex-row gap-2 max-sm:items-center lg:items-start">
+                  <h3 className="text-xl capitalize max-sm:order-2 lg:order-1">
+                    {userData?.displayName}
+                  </h3>
+                  {userData?.uid !== currentUserDBObj?.uid &&
+                    (followed ? (
+                      <button className="max-sm:order-1 lg:order-2 py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md">
+                        Following
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleFollow()}
+                        className="max-sm:order-1 lg:order-2 py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
+                      >
+                        Follow
+                      </button>
+                    ))}
+                </div>
                 <h3 className="text-lg capitalize">
                   {userData?.about?.location}
                 </h3>
@@ -153,16 +232,17 @@ const ProfileHeader = ({ userData , postsLength}) => {
                 </h5>
               </div>
             </div>
-            <div className="flex justify-center flex-wrap gap-4 text-[.9rem] text-[#d7d7d7] max-sm:items-center lg:items-end h-[3.4rem]">
+            <div className="flex justify-center flex-wrap gap-4 text-sm text-[#d7d7d7] max-sm:items-center lg:items-end h-[3.4rem]">
               <p>
-                Posts :{" "}
-                <span className="text-white">{postsLength}</span>
+                Posts : <span className="text-white">{postsLength}</span>
               </p>
               <p>
-                Comments : <span className="text-white">47</span>
+                Followers :{" "}
+                <span className="text-white">{followingLength}</span>
               </p>
               <p>
-                Views : <span className="text-white">54.9k</span>
+                Following :{" "}
+                <span className="text-white">{followersLength}</span>
               </p>
             </div>
           </div>

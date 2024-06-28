@@ -10,8 +10,6 @@ import LoaderModal from "../../components/LoaderModal";
 const UserMainLayout = () => {
   const { getUserData, loading, currentUserDBObj } =
     useContext(RequestsContext);
-  const { uid } = useParams();
-  console.log(uid)
 
   useEffect(() => {
     getUserData();
