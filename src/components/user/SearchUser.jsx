@@ -38,7 +38,7 @@ const SearchUser = ({ styles }) => {
       messageApi.open({
         key: "searchError",
         type: "error",
-        content: "Search Input can't br empty !",
+        content: "Search Input can't be empty !",
         duration: 4,
       });
     }
@@ -56,7 +56,6 @@ const SearchUser = ({ styles }) => {
             <IoSearchOutline color="#615DFA" size={25} />
           </button>
         )}
-
         <input
           placeholder="Search for friends..."
           className="w-[90%] transition-all dark:text-white dark:placeholder:text-white dark:bg-[#111] py-2 px-2 text-sm header-search-input"

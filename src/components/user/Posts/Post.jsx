@@ -21,6 +21,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
 import { CiTrash } from "react-icons/ci";
 import { GoQuestion } from "react-icons/go";
+import RequestsLoader from "../RequestsLoader";
 
 const Post = ({
   profilePhoto,
@@ -35,6 +36,7 @@ const Post = ({
 }) => {
   const [liked, setLiked] = useState(false);
   const [comment, setComment] = useState("");
+  const [commentLoading, setCommentLoading] = useState(false);
   const { currentUser, currentUserDBObj } = useContext(RequestsContext);
   const { openNotificationError, contextHolder } = useNotification();
   const [postFileWidth, setPostFileWidth] = useState(0);
@@ -111,7 +113,7 @@ const Post = ({
   const handleComment = async () => {
     if (comment !== "") {
       try {
-        setDisableBtn(true);
+        setCommentLoading(true);
         messageApi.open({
           key: "commentUpload",
           type: "loading",
@@ -144,9 +146,17 @@ const Post = ({
           duration: 4,
         });
         console.log(err);
+        setCommentLoading(false);
       }
       setComment("");
-      setDisableBtn(false);
+      setCommentLoading(false);
+    } else {
+      messageApi.open({
+        key: "commentUpload",
+        type: "error",
+        content: "Comment can't be empty !",
+        duration: 4,
+      });
     }
   };
 
@@ -345,13 +355,13 @@ const Post = ({
                   value={comment}
                   maxLength={50}
                 />
-                <button
-                  disabled={disableBtn}
-                  className="disabled:text-red-500 disabled:cursor-not-allowed"
-                  onClick={() => handleComment()}
-                >
-                  <IoMdSend size={22} />
-                </button>
+                {commentLoading ? (
+                  <RequestsLoader />
+                ) : (
+                  <button onClick={() => handleComment()}>
+                    <IoMdSend size={22} />
+                  </button>
+                )}
               </div>
             )
           }
