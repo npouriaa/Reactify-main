@@ -1,4 +1,3 @@
-import { IoSearchOutline } from "react-icons/io5";
 import FeedBanner from "../../components/user/home/FeedBanner";
 import Posts from "../../components/user/Posts/Posts";
 import banner from "../../assets/images/user/banner.png";
@@ -7,6 +6,7 @@ import NoPosts from "../../components/user/NoPosts";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import LoaderModal from "../../components/LoaderModal";
+import SearchUser from "../../components/user/SearchUser";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -30,16 +30,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="max-sm:flex md:hidden w-full h-12 px-3 py-[.2rem] bg-white items-center justify-between rounded-3xl overflow-hidden">
-        <input
-          placeholder="Search for friends..."
-          className="w-[95%] py-2 px-2 text-sm"
-          type="text"
-        />
-        <button>
-          <IoSearchOutline color="#615DFA" size={25} />
-        </button>
-      </div>
+      <SearchUser styles="max-sm:flex md:hidden"/>
       <FeedBanner />
       <div className="w-full flex relative gap-4">
         <div className="max-sm:w-full min-h-full lg:w-3/5 xl:w-2/3 flex-col gap-3 flex justify-center items-center">

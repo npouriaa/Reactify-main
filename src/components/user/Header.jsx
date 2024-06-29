@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo/Reactify-white.png";
 import { IoPower } from "react-icons/io5";
-import { IoSearchOutline } from "react-icons/io5";
 import { Tooltip } from "antd";
 import { useContext } from "react";
 import { RequestsContext } from "../../context/RequestsContext";
@@ -11,6 +10,7 @@ import { auth } from "../../firebase";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { IoMoonOutline } from "react-icons/io5";
 import { TbSunHigh } from "react-icons/tb";
+import SearchUser from "./SearchUser";
 
 const Header = () => {
   const { currentUser, setLoading } = useContext(RequestsContext);
@@ -36,16 +36,7 @@ const Header = () => {
           <img className="h-12" src={logo} alt="Reactify-logo" />
         </Link>
         <div className="flex items-center gap-4">
-          <div className="max-sm:hidden md:flex h-full px-3 py-[.2rem] items-center transition-all dark:bg-[#111] bg-white w-[18rem] rounded-3xl overflow-hidden">
-            <button>
-              <IoSearchOutline color="#615DFA" size={25} />
-            </button>
-            <input
-              placeholder="Search for friends..."
-              className="w-[90%] transition-all dark:text-white dark:placeholder:text-white dark:bg-[#111] py-2 px-2 text-sm header-search-input"
-              type="text"
-            />
-          </div>
+          <SearchUser styles="max-sm:hidden md:flex w-[18rem]"/>
           <div className="flex items-center gap-2 text-white ">
             <Link
               to={`profile/${currentUser?.uid}`}
