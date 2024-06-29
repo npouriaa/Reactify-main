@@ -7,7 +7,7 @@ import RequestsLoader from "./RequestsLoader";
 
 const SearchUser = ({ styles }) => {
   const [username, setUserName] = useState("");
-  const [users, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
 
