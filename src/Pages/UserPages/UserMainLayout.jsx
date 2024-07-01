@@ -29,7 +29,7 @@ const UserMainLayout = () => {
                 <Outlet />
               </div>
             </div>
-            <Footer />
+            <Footer darkStyles={true}/>
           </>
         )}
       </Layout>

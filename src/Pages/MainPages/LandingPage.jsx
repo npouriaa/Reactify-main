@@ -12,7 +12,7 @@ const LandingPage = () => {
       <Advantages />
       <Technologies />
       <Qoute />
-      <Footer/>
+      <Footer darkStyles={false}/>
       <ScrollToTopButton />
     </>
   );

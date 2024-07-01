@@ -48,9 +48,6 @@ const Header = () => {
                 alt="user"
               />
             </Link>
-            <button>
-              <IoIosNotificationsOutline size={25} />
-            </button>
             <div className="flex w-7 h-7 overflow-hidden relative justify-center items-center">
               <button
                 className={`absolute transition-all  ${
