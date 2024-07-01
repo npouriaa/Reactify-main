@@ -36,7 +36,7 @@ const Header = () => {
           <img className="h-12" src={logo} alt="Reactify-logo" />
         </Link>
         <div className="flex items-center gap-4">
-          <SearchUser styles="max-sm:hidden md:flex w-[18rem]"/>
+          <SearchUser styles="max-sm:hidden md:flex w-[18rem]" bioWidth="w-[12rem]"/>
           <div className="flex items-center gap-2 text-white ">
             <Link
               to={`profile/${currentUser?.uid}`}
