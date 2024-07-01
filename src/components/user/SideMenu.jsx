@@ -36,12 +36,6 @@ const SideMenu = () => {
       active: activeIndex === 0 ? true : false,
     },
     {
-      text: "My posts",
-      icon: <LuClipboardList size={25} />,
-      to: "/my-posts",
-      active: activeIndex === 1 ? true : false,
-    },
-    {
       text: "Chats",
       icon: <PiChatsCircleDuotone size={25} />,
       to: "/chats",
