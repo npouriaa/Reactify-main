@@ -346,7 +346,7 @@ const Post = ({
             modalType === "likes" ? (
               ""
             ) : (
-              <div className="w-full px-1 py-2 flex dark:text-white justify-between border-b ">
+              <form className="w-full px-1 py-2 flex dark:text-white justify-between border-b ">
                 <input
                   onChange={(e) => setComment(e.target.value)}
                   className="bg-transparent w-[95%] dark:placeholder:text-[#9b9b9b]"
@@ -358,11 +358,11 @@ const Post = ({
                 {commentLoading ? (
                   <RequestsLoader />
                 ) : (
-                  <button onClick={() => handleComment()}>
+                  <button type="submit" onClick={() => handleComment()}>
                     <IoMdSend size={22} />
                   </button>
                 )}
-              </div>
+              </form>
             )
           }
           onCancel={handleCancel}

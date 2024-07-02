@@ -13,7 +13,7 @@ const SearchUser = ({ styles, bioWidth }) => {
   const [users, setUsers] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const searchConref = useRef();
 
   const getSerachedUser = async () => {
