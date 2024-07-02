@@ -38,7 +38,7 @@ const SideMenu = () => {
     {
       text: "Chats",
       icon: <PiChatsCircleDuotone size={25} />,
-      to: "/chats",
+      to: "chats",
       active: activeIndex === 2 ? true : false,
     },
     {
