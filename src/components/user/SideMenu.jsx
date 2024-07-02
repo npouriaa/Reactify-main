@@ -39,30 +39,32 @@ const SideMenu = () => {
       text: "Chats",
       icon: <PiChatsCircleDuotone size={25} />,
       to: "chats",
-      active: activeIndex === 2 ? true : false,
+      active: activeIndex === 1 ? true : false,
     },
-    {
-      text: "Friends",
-      icon: <PiUsersBold size={25} />,
-      to: "/friends",
-      active: activeIndex === 3 ? true : false,
-    },
+    // {
+    //   text: "Friends",
+    //   icon: <PiUsersBold size={25} />,
+    //   to: "/friends",
+    //   active: activeIndex === 3 ? true : false,
+    // },
     {
       text: "Profile",
       icon: <RiUserSettingsLine size={25} />,
       to: `profile/${currentUser.uid}`,
-      active: activeIndex === 4 ? true : false,
+      active: activeIndex === 3 ? true : false,
     },
   ];
 
   useEffect(() => {
     if (location.pathname === `/${currentUser?.displayName}`) {
       setActiveIndex(0);
+    } else if (location.pathname === `/${currentUser?.displayName}/chats`) {
+      setActiveIndex(1);
     } else if (
       location.pathname ===
-      `/${currentUser?.displayName}/profile/${currentUser?.uid}`
+      `/${currentUser?.displayName}/chats/${currentUser?.uid}`
     ) {
-      setActiveIndex(4);
+      setActiveIndex(3);
     }
   }, []);
 
