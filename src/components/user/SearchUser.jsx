@@ -16,7 +16,8 @@ const SearchUser = ({ styles, bioWidth }) => {
   const [show, setShow] = useState(false);
   const searchConref = useRef();
 
-  const getSerachedUser = async () => {
+  const getSerachedUser = async (e) => {
+    e.preventDefault()
     if (username !== "") {
       setShow(true);
 
@@ -82,7 +83,7 @@ const SearchUser = ({ styles, bioWidth }) => {
           {loading ? (
             <RequestsLoader />
           ) : (
-            <button type="submit" onClick={() => getSerachedUser()}>
+            <button type="submit" onClick={(e) => getSerachedUser(e)}>
               <IoSearchOutline color="#615DFA" size={25} />
             </button>
           )}

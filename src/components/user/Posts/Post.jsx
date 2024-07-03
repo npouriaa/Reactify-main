@@ -110,7 +110,8 @@ const Post = ({
     }
   };
 
-  const handleComment = async () => {
+  const handleComment = async (e) => {
+    e.preventDefault()
     if (comment !== "") {
       try {
         setCommentLoading(true);
@@ -358,7 +359,7 @@ const Post = ({
                 {commentLoading ? (
                   <RequestsLoader />
                 ) : (
-                  <button type="submit" onClick={() => handleComment()}>
+                  <button type="submit" onClick={(e) => handleComment(e)}>
                     <IoMdSend size={22} />
                   </button>
                 )}
@@ -413,9 +414,6 @@ const Post = ({
                           >
                             {likedUser?.username}
                           </Link>
-                          {/* <p className="text-[#858585] truncate max-sm:w-[13rem] max-sm2:w-[15rem] max-sm3:w-[16rem] sm:w-[16rem] sm2:w-[20rem] sm3:w-[26rem]">
-                            
-                          </p> */}
                         </div>
                       </div>
                     ))
