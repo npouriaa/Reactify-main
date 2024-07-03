@@ -7,9 +7,10 @@ import { DarkModeContext } from "../../../context/DarkModeContext";
 import { db, storage } from "../../../firebase";
 import { updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { Timestamp, doc, getDoc, updateDoc } from "firebase/firestore";
+import { Timestamp, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { HiOutlineEnvelope } from "react-icons/hi2";
 
 const ProfileHeader = ({ userData, postsLength }) => {
   const { currentUser, currentUserDBObj, setLoading } =
@@ -224,7 +225,55 @@ const ProfileHeader = ({ userData, postsLength }) => {
     }
   };
 
+  const handleSendMessage = async () => {
+    const mixedID =
+      currentUser?.uid > userData?.uid
+        ? currentUser.uid + userData.uid
+        : userData.uid + currentUser.uid;
+    try {
+      const docRef = doc(db, "chats", mixedID);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        await setDoc(docRef, { messages: [] });
+
+        const currentUserChatsRef = doc(db, "userChats", currentUser.uid);
+        await updateDoc(currentUserChatsRef, {
+          [mixedID]: {
+            userInfo: {
+              uid: userData.uid,
+              username: userData.displayName,
+              profilePhoto: userData.photoURL,
+            },
+            date: Timestamp.now(),
+          },
+        });
+
+        const userChatsRef = doc(db, "userChats", userData.uid);
+        await updateDoc(userChatsRef, {
+          [mixedID]: {
+            userInfo: {
+              uid: currentUser.uid,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+            },
+            date: Timestamp.now(),
+          },
+        });
+      }
+      console.log("success")
+    } catch (err) {
+      messageApi.open({
+        key: "msgError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
+    console.log(userData);
     userData?.followers.map((follower) => {
       if (follower.uid === currentUser?.uid) {
         setFollowed(true);
@@ -239,7 +288,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
       {contextHolder}
       <div
         ref={bgImageConRef}
-        className="w-full rounded-lg max-sm:h-[26rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center"
+        className="w-full rounded-lg max-sm:h-[27rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center"
       >
         <div className="flex w-full h-full rounded-lg user-banner-shadow max-sm:items-center lg:items-end relative">
           <div className="flex items-center justify-between w-full gap-4 max-sm:px-1 sm:px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
@@ -262,26 +311,37 @@ const ProfileHeader = ({ userData, postsLength }) => {
                 )}
               </div>
               <div className="flex gap-1 flex-col max-sm:text-center lg:text-start">
-                <div className="flex max-sm:flex-col lg:flex-row gap-2 max-sm:items-center lg:items-start">
+                <div className="flex max-sm:flex-col lg:flex-row gap-2 max-sm:items-center ">
                   <h3 className="text-xl capitalize max-sm:order-2 lg:order-1">
                     {userData?.displayName}
                   </h3>
-                  {userData?.uid !== currentUserDBObj?.uid &&
-                    (followed ? (
+                  {userData?.uid !== currentUserDBObj?.uid && (
+                    <div className="flex lg:flex-row max-sm:flex-col items-center justify-center max-sm:order-1 lg:order-2 gap-3">
+                      {followed ? (
+                        <button
+                          onClick={() => handleUnFollow()}
+                          className=" py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
+                        >
+                          Following
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleFollow()}
+                          className=" bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
+                        >
+                          Follow
+                        </button>
+                      )}
                       <button
-                        onClick={() => handleUnFollow()}
-                        className="max-sm:order-1 lg:order-2 py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
+                        onClick={() => handleSendMessage()}
+                        className=" p-[.4rem] border-2 rounded-full"
                       >
-                        Following
+                        <HiOutlineEnvelope size={20} />
                       </button>
-                    ) : (
-                      <button
-                        onClick={() => handleFollow()}
-                        className="max-sm:order-1 lg:order-2 py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
-                      >
-                        Follow
-                      </button>
-                    ))}
+                      {/* <button className="max-sm:order-1 lg:order-3 p-2 rounded-full border ">
+                      </button> */}
+                    </div>
+                  )}
                 </div>
                 <h3 className="text-lg capitalize">
                   {userData?.about?.location}

@@ -84,8 +84,8 @@ const SignUp = () => {
         photoURL: userProfileDownloadURL,
         headerBgProfile: headerBgDownloadURL,
         creationTime: response.user.metadata.creationTime,
-        followers : [],
-        following : [],
+        followers: [],
+        following: [],
         about: {
           bio: "Hey there! I'm using Reactify.",
           phoneNumber: "",
@@ -108,7 +108,7 @@ const SignUp = () => {
           ],
         },
       });
-
+      await setDoc(doc(db, "userChats", response.user.uid), {});
       setSendVerificationLink(true);
       navigate("/verify-email");
     } catch (err) {
