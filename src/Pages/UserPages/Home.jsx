@@ -30,7 +30,10 @@ const Home = () => {
 
   return (
     <>
-      <SearchUser styles="max-sm:flex md:hidden" bioWidth=" max-sm:w-[13rem] max-sm2:w-[15rem] max-sm3:w-[16rem] sm:w-[16rem] sm2:w-[20rem] sm3:w-[26rem]"/>
+      <SearchUser
+        styles="max-sm:flex md:hidden"
+        bioWidth=" max-sm:w-[13rem] max-sm2:w-[15rem] max-sm3:w-[16rem] sm:w-[16rem] sm2:w-[20rem] sm3:w-[26rem]"
+      />
       <FeedBanner />
       <div className="w-full flex relative gap-4">
         <div className="max-sm:w-full min-h-full lg:w-3/5 xl:w-2/3 flex-col gap-3 flex justify-center items-center">

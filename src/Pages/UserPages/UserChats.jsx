@@ -3,8 +3,9 @@ import Chats from "../../components/user/userChats/Chats";
 
 const UserChats = () => {
   return (
-    <div className="w-full flex h-full justify-center items-center">
+    <div className="h-screen fixed left-0 top-0 w-screen flex justify-center items-center">
       <Chats />
+      
     </div>
   );
 };
