@@ -2,7 +2,6 @@ import { Outlet, useParams } from "react-router-dom";
 import { Layout } from "antd";
 import Header from "../../components/user/Header";
 import SideMenu from "../../components/user/SideMenu";
-import Footer from "../../components/Footer";
 import { useContext, useEffect } from "react";
 import { RequestsContext } from "../../context/RequestsContext";
 import LoaderModal from "../../components/LoaderModal";
