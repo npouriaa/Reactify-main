@@ -3,13 +3,16 @@ import { RouterProvider } from "react-router-dom";
 import router from "./Routes/Routes";
 import { RequestsContextProvider } from "./context/RequestsContext";
 import { DarkModeContextProvider } from "./context/DarkModeContext";
+import { ChatContextProvider } from "./context/ChatContext";
 
 const App = () => {
   return (
     <RequestsContextProvider>
-      <DarkModeContextProvider>
-        <RouterProvider router={router} />
-      </DarkModeContextProvider>
+      <ChatContextProvider>
+        <DarkModeContextProvider>
+          <RouterProvider router={router} />
+        </DarkModeContextProvider>
+      </ChatContextProvider>
     </RequestsContextProvider>
   );
 };

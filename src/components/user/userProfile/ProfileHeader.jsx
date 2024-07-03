@@ -9,12 +9,13 @@ import { updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Timestamp, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { IoSearchOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineEnvelope } from "react-icons/hi2";
 
 const ProfileHeader = ({ userData, postsLength }) => {
   const { currentUser, currentUserDBObj, setLoading } =
     useContext(RequestsContext);
+  const navigate = useNavigate();
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
   const [openListModal, setOpenListModal] = useState(false);
@@ -259,8 +260,10 @@ const ProfileHeader = ({ userData, postsLength }) => {
             date: Timestamp.now(),
           },
         });
+        console.log('first')
       }
-      console.log("success")
+      console.log('sssssssssfirst')
+      // navigate(`/${currentUser.displayName}/chats`)
     } catch (err) {
       messageApi.open({
         key: "msgError",
