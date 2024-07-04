@@ -5,7 +5,7 @@ import ChatsScreen from "../../components/user/userChats/ChatsScreen";
 const UserChats = () => {
   const [showChat, setShowChat] = useState(false);
   const [multiple, setMultiple] = useState(false);
-  
+
   const showChatHandler = () => {
     setShowChat(!showChat);
   };
@@ -37,7 +37,7 @@ const UserChats = () => {
         ) : showChat ? (
           <ChatsScreen />
         ) : (
-          <Chats />
+          <Chats showChatHandler={showChatHandler} />
         )}
       </div>
     </div>
