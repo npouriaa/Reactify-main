@@ -257,8 +257,8 @@ const ProfileHeader = ({ userData, postsLength }) => {
           [mixedID]: {
             userInfo: {
               uid: currentUser.uid,
-              displayName: currentUser.displayName,
-              photoURL: currentUser.photoURL,
+              username: currentUser.displayName,
+              profilePhoto: currentUser.photoURL,
             },
             date: Timestamp.now(),
           },
