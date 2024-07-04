@@ -11,6 +11,7 @@ import { Timestamp, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineEnvelope } from "react-icons/hi2";
+import LoaderModal from "../../LoaderModal";
 
 const ProfileHeader = ({ userData, postsLength }) => {
   const { currentUser, currentUserDBObj, setLoading } =
@@ -33,6 +34,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState([]);
+  const [msglLoading, setMsglLoading] = useState(false);
   const searchedData = searchType.filter((obj) =>
     obj.username.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
@@ -227,6 +229,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
   };
 
   const handleSendMessage = async () => {
+    setMsglLoading(true);
     const mixedID =
       currentUser?.uid > userData?.uid
         ? currentUser.uid + userData.uid
@@ -261,6 +264,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
           },
         });
       }
+      navigate(`/${currentUser.displayName}/chats`);
     } catch (err) {
       messageApi.open({
         key: "msgError",
@@ -269,7 +273,9 @@ const ProfileHeader = ({ userData, postsLength }) => {
         duration: 4,
       });
       console.log(err);
+      setMsglLoading(false);
     }
+    setMsglLoading(false);
   };
 
   useEffect(() => {
@@ -290,6 +296,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
         ref={bgImageConRef}
         className="w-full rounded-lg max-sm:h-[27rem] lg:h-[17rem] bg-cover bg-no-repeat bg-center"
       >
+        {msglLoading && <LoaderModal />}
         <div className="flex w-full h-full rounded-lg user-banner-shadow max-sm:items-center lg:items-end relative">
           <div className="flex items-center justify-between w-full gap-4 max-sm:px-1 sm:px-8 text-white max-sm:flex-col lg:flex-row max-sm:h-3/4">
             <div className="flex items-center gap-4 p-2  max-sm:flex-col lg:flex-row">
@@ -320,14 +327,14 @@ const ProfileHeader = ({ userData, postsLength }) => {
                       {followed ? (
                         <button
                           onClick={() => handleUnFollow()}
-                          className=" py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
+                          className="py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
                         >
                           Following
                         </button>
                       ) : (
                         <button
                           onClick={() => handleFollow()}
-                          className=" bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
+                          className="py-1 w-24 bg-[#3b82f6] transition-all hover:bg-[#3779e3] rounded-md"
                         >
                           Follow
                         </button>
