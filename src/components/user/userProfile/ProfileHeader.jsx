@@ -260,10 +260,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
             date: Timestamp.now(),
           },
         });
-        console.log('first')
       }
-      console.log('sssssssssfirst')
-      // navigate(`/${currentUser.displayName}/chats`)
     } catch (err) {
       messageApi.open({
         key: "msgError",
@@ -341,8 +338,6 @@ const ProfileHeader = ({ userData, postsLength }) => {
                       >
                         <HiOutlineEnvelope size={20} />
                       </button>
-                      {/* <button className="max-sm:order-1 lg:order-3 p-2 rounded-full border ">
-                      </button> */}
                     </div>
                   )}
                 </div>
