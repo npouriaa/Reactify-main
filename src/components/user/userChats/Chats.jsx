@@ -3,18 +3,21 @@ import { RequestsContext } from "../../../context/RequestsContext";
 import { ChatContext } from "../../../context/ChatContext";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const Chats = ({ showChatHandler }) => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(RequestsContext);
   const { dispatch } = useContext(ChatContext);
 
+  const handleSelect = (user) => {
+    showChatHandler && showChatHandler();
+    dispatch({ type: "CHANGE_USER", payload: user });
+  };
+
   useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
         setChats(doc.data());
-        console.log(doc.data());
       });
 
       return () => {
@@ -34,6 +37,7 @@ const Chats = ({ showChatHandler }) => {
               ?.sort((a, b) => b[1].date - a[1].date)
               .map((chat) => (
                 <li
+                  onClick={() => handleSelect(chat[1].userInfo)}
                   key={chat[0]}
                   className="cursor-pointer w-full bg-[#f5f5f5] dark:bg-[#181818] transition-all h-14 gap-2 flex items-center pr-4 pl-2 rounded-2xl"
                 >

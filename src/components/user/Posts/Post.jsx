@@ -252,7 +252,7 @@ const Post = ({
             >
               <img
                 src={profilePhoto}
-                className="object-cover rounded-full"
+                className="object-cover h-full rounded-full"
                 alt="user-profile"
               />
             </Link>
