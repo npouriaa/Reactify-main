@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo/Reactify-black.png";
-import { Button, Form, Input, Tooltip, Upload } from "antd";
+import { Button, Form, Input, message, Tooltip, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import useNotification from "../../Hooks/useNotification";
@@ -13,11 +13,11 @@ import { RequestsContext } from "../../context/RequestsContext";
 
 const SignUp = () => {
   const frmRef = useRef();
-  const { openNotificationError, contextHolder } = useNotification();
   const { setSendVerificationLink, loading, setLoading } =
     useContext(RequestsContext);
   const [headerBgFile, setHeaderBgFile] = useState(null);
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const createNewUser = async (
     email,
@@ -27,92 +27,121 @@ const SignUp = () => {
   ) => {
     setLoading(true);
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
+      const querySnapShot = await getDocs(collection(db, "users"));
+      const existingDisplayName = querySnapShot.docs.find(
+        (user) =>
+          user.data().displayName.toLowerCase() === displayName.toLowerCase()
       );
-
-      const userProfileStorageRef = ref(
-        storage,
-        `profile/${displayName}-${response.user.uid}`
+      const existingEmail = querySnapShot.docs.find(
+        (user) => user.data().email.toLowerCase() === email.toLowerCase()
       );
-      const headerBgStorageRef = ref(
-        storage,
-        `headerBg/${displayName}-${response.user.uid}`
-      );
-
-      const userProfileUploadTask = uploadBytesResumable(
-        userProfileStorageRef,
-        userProfileImage
-      );
-      const headerBgUploadTask = uploadBytesResumable(
-        headerBgStorageRef,
-        headerBgFile
-      );
-
-      const userProfileUploadPromise = new Promise((resolve, reject) => {
-        userProfileUploadTask.on("state_changed", null, reject, () => {
-          resolve();
+      if (existingDisplayName) {
+        messageApi.open({
+          key: "existingDisplayName",
+          type: "error",
+          content: "The username you entered is already in use.",
+          duration: 4,
         });
-      });
-
-      const headerBgUploadPromise = new Promise((resolve, reject) => {
-        headerBgUploadTask.on("state_changed", null, reject, () => {
-          resolve();
+      } else if (existingEmail) {
+        messageApi.open({
+          key: "existingEmail",
+          type: "error",
+          content: "The email you entered is already in use.",
+          duration: 4,
         });
-      });
+      } else {
+        const response = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
 
-      await Promise.all([userProfileUploadPromise, headerBgUploadPromise]);
+        const userProfileStorageRef = ref(
+          storage,
+          `profile/${displayName}-${response.user.uid}`
+        );
+        const headerBgStorageRef = ref(
+          storage,
+          `headerBg/${displayName}-${response.user.uid}`
+        );
 
-      const userProfileDownloadURL = await getDownloadURL(
-        userProfileUploadTask.snapshot.ref
-      );
-      const headerBgDownloadURL = await getDownloadURL(
-        headerBgUploadTask.snapshot.ref
-      );
+        const userProfileUploadTask = uploadBytesResumable(
+          userProfileStorageRef,
+          userProfileImage
+        );
+        const headerBgUploadTask = uploadBytesResumable(
+          headerBgStorageRef,
+          headerBgFile
+        );
 
-      await updateProfile(response.user, {
-        displayName: displayName,
-        photoURL: userProfileDownloadURL,
-      });
+        const userProfileUploadPromise = new Promise((resolve, reject) => {
+          userProfileUploadTask.on("state_changed", null, reject, () => {
+            resolve();
+          });
+        });
 
-      await setDoc(doc(db, "users", response.user.uid), {
-        uid: response.user.uid,
-        displayName,
-        email,
-        photoURL: userProfileDownloadURL,
-        headerBgProfile: headerBgDownloadURL,
-        creationTime: response.user.metadata.creationTime,
-        followers: [],
-        following: [],
-        about: {
-          bio: "Hey there! I'm using Reactify.",
-          phoneNumber: "",
-          location: "",
-          web: "",
-          interests: [],
-          socials: [
-            {
-              instagram: "",
-            },
-            {
-              telegram: "",
-            },
-            {
-              linkedin: "",
-            },
-            {
-              x: "",
-            },
-          ],
-        },
-      });
-      await setDoc(doc(db, "userChats", response.user.uid), {});
-      setSendVerificationLink(true);
-      navigate("/verify-email");
+        const headerBgUploadPromise = new Promise((resolve, reject) => {
+          headerBgUploadTask.on("state_changed", null, reject, () => {
+            resolve();
+          });
+        });
+
+        await Promise.all([userProfileUploadPromise, headerBgUploadPromise]);
+
+        const userProfileDownloadURL = await getDownloadURL(
+          userProfileUploadTask.snapshot.ref
+        );
+        const headerBgDownloadURL = await getDownloadURL(
+          headerBgUploadTask.snapshot.ref
+        );
+
+        await updateProfile(response.user, {
+          displayName: displayName,
+          photoURL: userProfileDownloadURL,
+        });
+
+        await setDoc(doc(db, "users", response.user.uid), {
+          uid: response.user.uid,
+          displayName,
+          email,
+          photoURL: userProfileDownloadURL,
+          headerBgProfile: headerBgDownloadURL,
+          creationTime: response.user.metadata.creationTime,
+          followers: [],
+          following: [],
+          about: {
+            bio: "Hey there! I'm using Reactify.",
+            phoneNumber: "",
+            location: "",
+            web: "",
+            interests: [],
+            socials: [
+              {
+                instagram: "",
+              },
+              {
+                telegram: "",
+              },
+              {
+                linkedin: "",
+              },
+              {
+                x: "",
+              },
+            ],
+          },
+        });
+        await setDoc(doc(db, "userChats", response.user.uid), {});
+        setSendVerificationLink(true);
+        navigate("/verify-email");
+      }
     } catch (err) {
-      openNotificationError("Error", err.message, "top");
+      messageApi.open({
+        key: "errorSignUp",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
     }
 
     setLoading(false);
