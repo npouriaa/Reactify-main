@@ -22,7 +22,7 @@ const ChatsScreen = ({ showChatHandler }) => {
           <div className="flex items-center gap-2 ">
             <Link
               to={`/${currentUser?.displayName}/profile/${data?.user?.uid}`}
-              className="relative flex justify-center items-center max-sm:h-12 max-sm:w-12 md4:w-14 md4:h-14 p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0"
+              className="max-sm:h-12 max-sm:w-12 md4:w-14 md4:h-14 flex justify-center items-center overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')] after:rotate-0 after:transition-all after:ease-in-out hover:after:rotate-[30deg]"
             >
               <img
                 src={data?.user?.profilePhoto}
