@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { GoPencil } from "react-icons/go";
-import { ConfigProvider, Modal, message } from "antd";
+import { ConfigProvider, Modal, Tooltip, message } from "antd";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { DarkModeContext } from "../../../context/DarkModeContext";
 import { db, storage } from "../../../firebase";
@@ -339,12 +339,17 @@ const ProfileHeader = ({ userData, postsLength }) => {
                           Follow
                         </button>
                       )}
-                      <button
-                        onClick={() => handleSendMessage()}
-                        className=" p-[.4rem] border-2 rounded-full"
+                      <Tooltip
+                        color={isDark ? "#615DFA" : "#F5658C"}
+                        title={`Add ${userData?.displayName} to your chats`}
                       >
-                        <HiOutlineEnvelope size={20} />
-                      </button>
+                        <button
+                          onClick={() => handleSendMessage()}
+                          className=" p-[.4rem] border-2 rounded-full"
+                        >
+                          <HiOutlineEnvelope size={20} />
+                        </button>
+                      </Tooltip>
                     </div>
                   )}
                 </div>
