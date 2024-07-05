@@ -26,11 +26,8 @@ const Chats = ({ showChatHandler }) => {
   }, [currentUser.uid]);
 
   return (
-    <div className="max-sm:w-full md2:w-1/4 h-full max-sm:p-3 md2:py-7">
+    <div className="max-sm:w-full md4:w-1/4 h-full max-sm:p-3 md4:py-7">
       <div className="bg-white dark:bg-[#111] transition-all w-full h-full p-4 rounded-xl">
-        <button onClick={() => showChatHandler()} className="text-white max-sm:block md2:hidden">
-          <FaLongArrowAltLeft size={20} />
-        </button>
         <ul className="w-full py-2 gap-3 flex flex-col">
           {chats ? (
             Object.entries(chats)
@@ -38,7 +35,7 @@ const Chats = ({ showChatHandler }) => {
               .map((chat) => (
                 <li
                   key={chat[0]}
-                  className="cursor-pointer w-full bg-[#f5f5f5] dark:bg-[#181818] transition-all h-14 gap-2 flex items-center px-2 rounded-2xl"
+                  className="cursor-pointer w-full bg-[#f5f5f5] dark:bg-[#181818] transition-all h-14 gap-2 flex items-center pr-4 pl-2 rounded-2xl"
                 >
                   <img
                     className="rounded-full border-[#6b7280] h-10 w-10 object-cover border-[1px]"

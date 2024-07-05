@@ -12,7 +12,7 @@ const UserChats = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 900) {
         setMultiple(true);
       } else {
         setMultiple(false);
@@ -35,7 +35,7 @@ const UserChats = () => {
             <ChatsScreen />
           </>
         ) : showChat ? (
-          <ChatsScreen />
+          <ChatsScreen showChatHandler={showChatHandler} />
         ) : (
           <Chats showChatHandler={showChatHandler} />
         )}
