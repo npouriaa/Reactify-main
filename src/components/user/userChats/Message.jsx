@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
 
-const px-3 = ({ message }) => {
+const Message = ({ message }) => {
   const { currentUser } = useContext(RequestsContext);
   const ref = useRef();
 
