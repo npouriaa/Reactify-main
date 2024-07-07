@@ -16,7 +16,7 @@ const ChatsScreen = ({ showChatHandler }) => {
       {data.chatID === null ? (
         <div className="flex bg-white dark:bg-[#111] w-full h-full justify-center items-center rounded-xl">
           <div className="w-64 h-40 rounded-2xl bg-[#f5f5f5] dark:bg-[#181818] transition-all flex justify-center items-center">
-            <h3 className="text-lg dark:text-white transition-all">
+            <h3 className="text-base dark:text-white transition-all">
               Please select a chat !
             </h3>
           </div>
