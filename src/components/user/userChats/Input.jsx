@@ -40,13 +40,13 @@ const Input = () => {
               key: "upload",
               type: "error",
               content: "Error on upload !",
-              duration: 500,
+              duration: 4,
             });
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(
               async (downloadURL) => {
-                await Doc(doc(db, "chats", data.chatID), {
+                await updateDoc(doc(db, "chats", data.chatID), {
                   messages: arrayUnion({
                     id: uuid(),
                     text,
@@ -87,12 +87,18 @@ const Input = () => {
       setText("");
       setImg(null);
     } else {
-      openNotificationError("top", "Please send text or image !");
+      messageApi.open({
+        key: "senMessage",
+        type: "error",
+        content: "Please send text or image !",
+        duration: 4,
+      });
     }
   };
 
   return (
     <div className="w-full dark:text-white absolute bottom-0 h-[60px] left-0 rounded-b-xl border-t border-[#a9a9a9] dark:border-[#424242] transition-all p-2">
+      {contextHolder}
       <form
         onSubmit={(e) => handleSend(e)}
         className="flex w-full h-full dark:text-white items-center gap-3"
@@ -100,6 +106,7 @@ const Input = () => {
         <input
           value={text}
           type="text"
+          maxLength={200}
           className="h-full p-4 bg-transparent outline-none w-[calc(100%_-_85px)] h-full'"
           placeholder="Message"
           onChange={(e) => setText(e.target.value)}

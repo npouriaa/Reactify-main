@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { Link } from "react-router-dom";
 import Input from "./Input";
+import Messages from "./Messages";
 
 const ChatsScreen = ({ showChatHandler }) => {
   const { data } = useContext(ChatContext);
@@ -21,8 +22,8 @@ const ChatsScreen = ({ showChatHandler }) => {
           </div>
         </div>
       ) : (
-        <div className="relative bg-white dark:bg-[#111] transition-all w-full h-full p-4 rounded-xl">
-          <div className="w-full bg-[#615DFA] flex gap-1 items-center absolute top-0 left-0 rounded-t-xl py-3 px-4">
+        <div className="relative bg-white dark:bg-[#111] transition-all w-full h-full rounded-xl">
+          <div className="w-full bg-[#615DFA] flex gap-1 items-center rounded-t-xl py-3 px-4">
             <button
               onClick={() => showChatHandler()}
               className="text-white mr-2 max-sm:block md4:hidden"
@@ -48,6 +49,7 @@ const ChatsScreen = ({ showChatHandler }) => {
               </Link>
             </div>
           </div>
+          <Messages />
           <Input />
         </div>
       )}

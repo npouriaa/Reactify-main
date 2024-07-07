@@ -1,0 +1,53 @@
+import { useContext, useEffect, useRef } from "react";
+import { RequestsContext } from "../../../context/RequestsContext";
+
+const Message = ({ message }) => {
+  const { currentUser } = useContext(RequestsContext);
+  const ref = useRef();
+
+  const convertTimestampToString = (timestamp) => {
+    const { seconds, nanoseconds } = timestamp;
+    const milliseconds = seconds * 1000 + nanoseconds / 1000000;
+
+    const dateObj = new Date(milliseconds);
+    const month = new Intl.DateTimeFormat("en", { month: "short" }).format(
+      dateObj
+    );
+    const dateString = `${month} ${dateObj.getDate()}, ${dateObj.getFullYear()} at ${dateObj.getHours()}:${String(
+      dateObj.getMinutes()
+    ).padStart(2, "0")} ${dateObj.getHours() >= 12 ? "PM" : "AM"}`;
+
+    return dateString;
+  };
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+
+  return (
+    <div
+      ref={ref}
+      className={`w-full flex ${
+        message.senderId === currentUser.uid ? "justify-end" : ""
+      }`}
+    >
+      <div
+        className={`py-2 px-3 max-sm:max-w-[300px] sm:w-[400px] max-w-[max-content] ${
+          message.senderId === currentUser.uid
+            ? "bg-[#615DFA] text-white rounded-b-none rounded-l-3xl rounded-tr-3xl"
+            : "bg-[#d5d5d5] dark:bg-[#181818] dark:text-white transition-all rounded-b-none rounded-r-3xl rounded-tl-3xl"
+        }`}
+      >
+        {message.img && <img className="rounded-xl" src={message.img} />}
+        <p className="break-words p-2 max-sm:text-sm sm:text-sm md:text-base">
+          {message.text}
+        </p>
+        <p className="w-full text-right pr-[1px] text-xs">
+          {convertTimestampToString(message.date)}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Message;
