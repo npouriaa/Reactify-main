@@ -3,6 +3,7 @@ import { ChatContext } from "../../../context/ChatContext";
 import { useContext } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { Link } from "react-router-dom";
+import Input from "./Input";
 
 const ChatsScreen = ({ showChatHandler }) => {
   const { data } = useContext(ChatContext);
@@ -11,14 +12,16 @@ const ChatsScreen = ({ showChatHandler }) => {
 
   return (
     <div className="max-sm:w-full md4:w-3/4 h-full flex justify-center items-center md4:py-7 md4:pr-3 max-sm:py-3 max-sm:px-3 md4:pl-0">
-      <div className="relative bg-white dark:bg-[#111] transition-all w-full h-full p-4 rounded-xl">
-        {data.chatID === null ? (
-          <div className="flex w-full h-full justify-center items-center rounded-xl">
-            <div className="w-64 h-40 rounded-2xl bg-[#f5f5f5] dark:bg-[#181818] transition-all flex justify-center items-center">
-              <h3 className="text-lg text-white">Please select a chat !</h3>
-            </div>
+      {data.chatID === null ? (
+        <div className="flex bg-white dark:bg-[#111] w-full h-full justify-center items-center rounded-xl">
+          <div className="w-64 h-40 rounded-2xl bg-[#f5f5f5] dark:bg-[#181818] transition-all flex justify-center items-center">
+            <h3 className="text-lg dark:text-white transition-all">
+              Please select a chat !
+            </h3>
           </div>
-        ) : (
+        </div>
+      ) : (
+        <div className="relative bg-white dark:bg-[#111] transition-all w-full h-full p-4 rounded-xl">
           <div className="w-full bg-[#615DFA] flex gap-1 items-center absolute top-0 left-0 rounded-t-xl py-3 px-4">
             <button
               onClick={() => showChatHandler()}
@@ -45,8 +48,9 @@ const ChatsScreen = ({ showChatHandler }) => {
               </Link>
             </div>
           </div>
-        )}
-      </div>
+          <Input />
+        </div>
+      )}
     </div>
   );
 };
