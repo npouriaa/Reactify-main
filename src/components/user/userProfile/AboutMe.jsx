@@ -254,9 +254,11 @@ const AboutMe = ({ userData }) => {
           )}
           {userData?.about.interests.length !== 0 && (
             <div className="flex items-center gap-1">
-              <p className="font-normal dark:text-[#aeaeae] transition-all flex w-[4.8rem]">
-                Interests :
-              </p>
+              <div>
+                <p className="font-normal dark:text-[#aeaeae] transition-all flex w-[4.8rem]">
+                  Interests :
+                </p>
+              </div>
               <div className="flex gap-[2px] flex-wrap">
                 {userData?.about.interests.map((interest, index) => (
                   <Tag key={index} color={interest.split("-")[1]}>
