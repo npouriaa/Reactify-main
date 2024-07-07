@@ -32,14 +32,14 @@ const Message = ({ message }) => {
       }`}
     >
       <div
-        className={`py-2 px-3 max-sm:max-w-[300px] sm:w-[400px] max-w-[max-content] ${
+        className={`py-2 px-3 max-sm:max-w-[300px] max-w-[max-content] ${
           message.senderId === currentUser.uid
             ? "bg-[#615DFA] text-white rounded-b-none rounded-l-3xl rounded-tr-3xl"
             : "bg-[#d5d5d5] dark:bg-[#181818] dark:text-white transition-all rounded-b-none rounded-r-3xl rounded-tl-3xl"
         }`}
       >
         {message.img && <img className="rounded-xl" src={message.img} />}
-        <p className="break-words p-2 max-sm:text-sm sm:text-sm md:text-base">
+        <p className="break-words p-2 max-sm:text-sm sm:text-sm">
           {message.text}
         </p>
         <p className="w-full text-right pr-[1px] text-xs">
