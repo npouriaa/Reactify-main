@@ -17,10 +17,8 @@ const SideMenu = () => {
   const [initialSideMenuOpen, setInitialSideMenuOpen] = useState(false);
   const { isDark } = useContext(DarkModeContext);
   const { currentUser } = useContext(RequestsContext);
-  const [activeIndex, setActiveIndex] = useState(0);
   const hMenuRef = useRef();
   const sideMenuRef = useRef();
-  const location = useLocation();
 
   const sideMenuHandler = () => {
     hMenuRef.current.classList.toggle("active");
@@ -33,40 +31,18 @@ const SideMenu = () => {
       text: "Home",
       icon: <TiHome size={25} />,
       to: "",
-      active: activeIndex === 0 ? true : false,
     },
     {
       text: "Chats",
       icon: <PiChatsCircleDuotone size={25} />,
       to: "chats",
-      active: activeIndex === 1 ? true : false,
     },
-    // {
-    //   text: "Friends",
-    //   icon: <PiUsersBold size={25} />,
-    //   to: "/friends",
-    //   active: activeIndex === 3 ? true : false,
-    // },
     {
       text: "Profile",
       icon: <RiUserSettingsLine size={25} />,
       to: `profile/${currentUser.uid}`,
-      active: activeIndex === 3 ? true : false,
     },
   ];
-
-  useEffect(() => {
-    if (location.pathname === `/${currentUser?.displayName}`) {
-      setActiveIndex(0);
-    } else if (location.pathname === `/${currentUser?.displayName}/chats`) {
-      setActiveIndex(1);
-    } else if (
-      location.pathname ===
-      `/${currentUser?.displayName}/chats/${currentUser?.uid}`
-    ) {
-      setActiveIndex(3);
-    }
-  }, []);
 
   return (
     <div
@@ -140,9 +116,7 @@ const SideMenu = () => {
                       ? "justify-start"
                       : "animate-justifyEnd"
                     : "justify-end"
-                } flex items-center gap-2 pr-7 transition-all pl-[1rem] ${
-                  item.active && "text-[#F5658C] dark:text-[#615DFA]"
-                }`}
+                } flex items-center gap-2 pr-7 transition-all pl-[1rem]`}
               >
                 <div>{item.icon}</div>
                 <span
