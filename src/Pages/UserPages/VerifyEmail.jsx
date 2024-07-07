@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { RequestsContext } from "../../context/RequestsContext";
 import { sendEmailVerification } from "firebase/auth";
-import useNotification from "../../Hooks/useNotification";
 import LoaderModal from "../../components/LoaderModal";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Modal } from "antd";
@@ -15,7 +14,7 @@ const modalConfig = {
 const VerifyEmail = () => {
   const { setCurrentUser, sendVerificationLink, loading, setLoading } =
     useContext(RequestsContext);
-  const { openNotificationError, contextHolder } = useNotification();
+  const [messageApi, contextHolder] = message.useMessage();
   const [modal, modalContextHolder] = Modal.useModal();
   const timerRef = useRef(null);
   const [timer, setTimer] = useState("00:00");
@@ -65,7 +64,12 @@ const VerifyEmail = () => {
     try {
       await sendEmailVerification(auth.currentUser);
     } catch (err) {
-      openNotificationError("Error", err.message, "top");
+      messageApi.open({
+        key: "sendError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
     }
     setLoading(false);
   };

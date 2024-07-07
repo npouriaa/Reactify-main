@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import "../../assets/styles/sideMenu.css";
 import logoBlack from "../../assets/images/logo/Reactify-black.png";
 import logoWhite from "../../assets/images/logo/Reactify-white.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TiHome } from "react-icons/ti";
 import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiUserSettingsLine } from "react-icons/ri";
-import { LuClipboardList } from "react-icons/lu";
-import { PiUsersBold } from "react-icons/pi";
 import { Tooltip } from "antd";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import { RequestsContext } from "../../context/RequestsContext";

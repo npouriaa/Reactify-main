@@ -7,7 +7,6 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import useNotification from "../../Hooks/useNotification";
 import LoaderModal from "../../components/LoaderModal";
 import { RequestsContext } from "../../context/RequestsContext";
 

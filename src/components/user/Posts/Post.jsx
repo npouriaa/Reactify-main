@@ -15,7 +15,6 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../../../firebase";
 import { RequestsContext } from "../../../context/RequestsContext";
-import useNotification from "../../../Hooks/useNotification";
 import { DarkModeContext } from "../../../context/DarkModeContext";
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
@@ -38,7 +37,6 @@ const Post = ({
   const [comment, setComment] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
   const { currentUser, currentUserDBObj } = useContext(RequestsContext);
-  const { openNotificationError, contextHolder } = useNotification();
   const [postFileWidth, setPostFileWidth] = useState(0);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
@@ -48,7 +46,7 @@ const Post = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [disableBtn, setDisableBtn] = useState(false);
   const [commentId, setCommentId] = useState();
-  const [messageApi, contextHolder2] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
   const searchedData = likes.filter((obj) =>
     obj.username.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
@@ -105,13 +103,18 @@ const Post = ({
       );
       await updateDoc(postRef, { likes: filteredLikesArray });
     } catch (err) {
-      openNotificationError("Error", err.message, "top");
+      messageApi.open({
+        key: "disLikeError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
       console.log(err);
     }
   };
 
   const handleComment = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (comment !== "") {
       try {
         setCommentLoading(true);
@@ -242,7 +245,6 @@ const Post = ({
   return (
     <>
       {contextHolder}
-      {contextHolder2}
       <div className="w-full min-h-[25rem] px-6 py-2 bg-white dark:bg-[#111] transition-all rounded-md flex gap-4 flex-col">
         <div className="flex justify-between items-center">
           <div className="flex w-[90%] items-center gap-4 pt-4">

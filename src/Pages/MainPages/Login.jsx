@@ -2,14 +2,13 @@ import { Form, Input, Tooltip } from "antd";
 import logo from "../../assets/images/logo/Reactify-black.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import useNotification from "../../Hooks/useNotification";
 import { RequestsContext } from "../../context/RequestsContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import LoaderModal from "../../components/LoaderModal";
 
 const Login = () => {
-  const { openNotificationError, contextHolder } = useNotification();
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const { setCurrentUser, loading, setLoading, setSendVerificationLink } =
     useContext(RequestsContext);
@@ -27,7 +26,12 @@ const Login = () => {
         navigate("/verify-email");
       }
     } catch (err) {
-      openNotificationError("Error", err.message, "top");
+      messageApi.open({
+        key: "loginError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
       console.log(err);
     }
     setLoading(false);
