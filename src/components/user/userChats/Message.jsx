@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
 
-const Message = ({ message }) => {
+const px-3 = ({ message }) => {
   const { currentUser } = useContext(RequestsContext);
   const ref = useRef();
 
@@ -32,7 +32,7 @@ const Message = ({ message }) => {
       }`}
     >
       <div
-        className={`py-2 px-3 max-sm:max-w-[300px] sm:w-[400px] max-w-[max-content] ${
+        className={`py-2 px-4 max-sm:max-w-[300px] sm:w-[400px] max-w-[max-content] ${
           message.senderId === currentUser.uid
             ? "bg-[#615DFA] text-white rounded-b-none rounded-l-3xl rounded-tr-3xl"
             : "bg-[#d5d5d5] dark:bg-[#181818] dark:text-white transition-all rounded-b-none rounded-r-3xl rounded-tl-3xl"
