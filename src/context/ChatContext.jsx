@@ -7,7 +7,7 @@ const ChatContextProvider = ({ children }) => {
   const { currentUser } = useContext(RequestsContext);
 
   const INITIAL_STATE = {
-    chatID: "null",
+    chatID: null,
     user: {},
   };
 
