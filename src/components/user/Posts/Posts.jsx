@@ -1,9 +1,11 @@
 import Post from "./Post";
 
 const Posts = ({ postsArray }) => {
+  const sortedPosts = postsArray.slice().sort((a, b) => b.timestamp - a.timestamp);
+
   return (
     <>
-      {postsArray?.map((post) => (
+      {sortedPosts.map((post) => (
         <Post
           key={post.postId}
           postId={post.postId}
