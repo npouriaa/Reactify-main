@@ -112,7 +112,7 @@ const SearchUser = ({ styles, bioWidth }) => {
                     >
                       <img
                         src={user?.photoURL}
-                        className="object-cover rounded-full h-full"
+                        className="object-cover rounded-full w-full h-full"
                         alt="user-profile"
                       />
                     </Link>

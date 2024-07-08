@@ -54,7 +54,7 @@ const Chats = ({ showChatHandler }) => {
                     <div>
                       <div className="h-12 w-12 flex justify-center items-center overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:transition-all after:ease-in-out after:right-0 after:bg-[url('../../assets/images/user/border-gray.png')] before:absolute before:z-10 before:right-0 before:top-0 before:transition-all before:rotate-[30deg] before:opacity-0 before:bg-[url('../../assets/images/user/border-purple.png')] before:bg-cover before:bg-no-repeat before:ease-linear before:w-full before:h-full hover:before:opacity-100 hover:before:rotate-0">
                         <img
-                          className="object-cover h-full rounded-full"
+                          className="object-cover w-full h-full rounded-full"
                           src={chat[1].userInfo.profilePhoto}
                           alt="user-profile"
                         />

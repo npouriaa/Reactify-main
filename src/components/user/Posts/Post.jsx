@@ -410,7 +410,7 @@ const Post = ({
                         >
                           <img
                             src={likedUser?.profilePhoto}
-                            className="object-cover rounded-full h-full"
+                            className="object-cover rounded-full w-full h-full"
                             alt="user-profile"
                           />
                         </Link>
@@ -444,7 +444,7 @@ const Post = ({
                         >
                           <img
                             src={comment?.profilePhoto}
-                            className="object-cover h-full rounded-full"
+                            className="object-cover h-full w-full rounded-full"
                             alt="user-profile"
                           />
                         </Link>

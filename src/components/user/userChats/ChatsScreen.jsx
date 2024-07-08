@@ -36,7 +36,7 @@ const ChatsScreen = ({ showChatHandler }) => {
               >
                 <img
                   src={data?.user?.profilePhoto}
-                  className="object-cover h-full rounded-full"
+                  className="object-cover w-full h-full rounded-full"
                   alt="user-profile"
                 />
               </Link>
