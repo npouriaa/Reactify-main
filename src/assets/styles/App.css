@@ -184,7 +184,8 @@ body {
 .post-caption-con * {
   box-shadow: none !important;
 }
-#add-post-form_post_caption::placeholder {
+#add-post-form_post_caption::placeholder,
+#register_form_bio::placeholder {
   color: #7b7b7b;
 }
 .add-post-form .ant-upload-select {
