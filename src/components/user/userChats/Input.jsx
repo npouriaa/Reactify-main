@@ -97,7 +97,7 @@ const Input = () => {
   };
 
   return (
-    <div className="w-full dark:text-white absolute bottom-0 h-[60px] left-0 rounded-b-xl border-t border-[#a9a9a9] dark:border-[#424242] transition-all p-2">
+    <div className="w-full bg-white dark:bg-[#111111] dark:text-white absolute bottom-0 h-[60px] left-0 rounded-b-xl border-t border-[#a9a9a9] dark:border-[#424242] transition-all p-2">
       {contextHolder}
       <form
         onSubmit={(e) => handleSend(e)}
