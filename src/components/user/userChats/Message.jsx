@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { RequestsContext } from "../../../context/RequestsContext";
+import { Image } from "antd";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(RequestsContext);
@@ -38,7 +39,11 @@ const Message = ({ message }) => {
             : "bg-[#d5d5d5] dark:bg-[#181818] dark:text-white transition-all rounded-b-none rounded-r-3xl rounded-tl-3xl"
         }`}
       >
-        {message.img && <img className="rounded-xl" src={message.img} />}
+        {message.img && (
+          <div className="rounded-xl">
+            <Image src={message.img} alt="message-image" />
+          </div>
+        )}
         <p className="break-words p-2 max-sm:text-sm sm:text-sm">
           {message.text}
         </p>

@@ -18,8 +18,8 @@ const ChatContextProvider = ({ children }) => {
           user: action.payload,
           chatID:
             currentUser?.uid > action.payload.uid
-              ? currentUser.uid + action.payload.uid
-              : action.payload.uid + currentUser.uid,
+              ? currentUser?.uid + action.payload.uid
+              : action.payload.uid + currentUser?.uid,
         };
       case "RESET_INITIAL_STATE":
         return INITIAL_STATE;
