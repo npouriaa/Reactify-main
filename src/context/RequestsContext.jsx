@@ -11,11 +11,17 @@ const RequestsContextProvider = ({ children }) => {
   const [sendVerificationLink, setSendVerificationLink] = useState(false);
   const [loading, setLoading] = useState(false);
   const [PRLoading, setPRLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const getUserData = () => {
-    onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-      setCurrentUserDBObj(doc.data());
-    });
+    try {
+      onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+        setCurrentUserDBObj(doc.data());
+      });
+    } catch (err) {
+      console.log(err.message);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -32,6 +38,7 @@ const RequestsContextProvider = ({ children }) => {
         }
       } catch (err) {
         console.log(err);
+        setError(true);
       }
       setPRLoading(false);
     };
@@ -56,6 +63,8 @@ const RequestsContextProvider = ({ children }) => {
         currentUserDBObj,
         setCurrentUserDBObj,
         getUserData,
+        error,
+        setError,
       }}
     >
       {children}

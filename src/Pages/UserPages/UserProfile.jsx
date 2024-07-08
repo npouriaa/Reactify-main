@@ -12,28 +12,38 @@ import LoaderModal from "../../components/LoaderModal";
 
 const UserProfile = () => {
   const { uid } = useParams();
-  const { currentUserDBObj } = useContext(RequestsContext);
+  const { currentUserDBObj, setError } = useContext(RequestsContext);
   const [postsArray, setPostsArray] = useState([]);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const getUserPosts = (uid) => {
-    onSnapshot(collection(db, "posts"), async (snapshot) => {
-      const posts = [];
-      snapshot.forEach((doc) => {
-        if (doc.data().uid === uid) posts.push(doc.data());
+    try {
+      onSnapshot(collection(db, "posts"), async (snapshot) => {
+        const posts = [];
+        snapshot.forEach((doc) => {
+          if (doc.data().uid === uid) posts.push(doc.data());
+        });
+        setPostsArray(posts);
       });
-      setPostsArray(posts);
-    });
+    } catch (err) {
+      console.log(err.message);
+      setError(true);
+    }
   };
 
   const getSpecificUserData = () => {
-    setLoading(true);
-    getUserPosts(uid);
-    onSnapshot(doc(db, "users", uid), (doc) => {
-      setUserData(doc.data());
-      setLoading(false);
-    });
+    try {
+      setLoading(true);
+      getUserPosts(uid);
+      onSnapshot(doc(db, "users", uid), (doc) => {
+        setUserData(doc.data());
+        setLoading(false);
+      });
+    } catch (err) {
+      console.log(err.message);
+      setError(true);
+    }
   };
 
   useEffect(() => {
