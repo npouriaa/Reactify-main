@@ -38,7 +38,7 @@ const Home = () => {
       <div className="w-full flex relative gap-4">
         <div className="max-sm:w-full min-h-full lg:w-3/5 xl:w-2/3 flex-col gap-3 flex justify-center items-center">
           {loading ? (
-            <LoaderModal />
+            <LoaderModal bg={"dark:bg-[#181818] bg-[#e8e8e8]"}/>
           ) : postsArray.length === 0 ? (
             <NoPosts text="No Posts To Show" />
           ) : (

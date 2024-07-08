@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
   if (!localStorage.getItem("accessToken")) {
     return <Navigate to="/403" />;
   } else if (PRLoading) {
-    return <LoaderModal />;
+    return <LoaderModal bg={"dark:bg-[#181818] bg-[#e8e8e8]"} />;
   } else if (currentUser) {
     if (username !== currentUser.displayName) {
       return <Navigate to="/404" />;

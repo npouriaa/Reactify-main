@@ -22,7 +22,6 @@ const RequestsContextProvider = ({ children }) => {
     const asyncHandler = async (user) => {
       setPRLoading(true);
       const data = await user;
-      console.log(user);
       if (data?.emailVerified) {
         setCurrentUser(user);
         localStorage.setItem("accessToken", user.accessToken);
@@ -52,8 +51,6 @@ const RequestsContextProvider = ({ children }) => {
         currentUserDBObj,
         setCurrentUserDBObj,
         getUserData,
-        error,
-        setError,
       }}
     >
       {children}

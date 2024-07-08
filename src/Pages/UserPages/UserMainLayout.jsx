@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { Layout } from "antd";
 import Header from "../../components/user/Header";
 import SideMenu from "../../components/user/SideMenu";
@@ -7,7 +7,7 @@ import { RequestsContext } from "../../context/RequestsContext";
 import LoaderModal from "../../components/LoaderModal";
 
 const UserMainLayout = () => {
-  const { getUserData, loading, currentUserDBObj, currentUser } =
+  const { getUserData, loading, currentUserDBObj } =
     useContext(RequestsContext);
 
   useEffect(() => {
@@ -19,8 +19,8 @@ const UserMainLayout = () => {
       <SideMenu />
       <Layout className="w-screen h-screen overflow-y-auto dark:bg-[#181818] bg-[#e8e8e8] transition-all">
         <Header />
-        {loading ? (
-          <LoaderModal />
+        {loading || !currentUserDBObj ? (
+          <LoaderModal bg={"dark:bg-[#181818] bg-[#e8e8e8]"}/>
         ) : (
           <>
             <div className="w-full max-sm:mt-16 lg:mt-24 flex justify-center items-center max-sm:px-4 max-sm:py-8">
