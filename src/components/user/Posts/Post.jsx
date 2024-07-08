@@ -47,9 +47,14 @@ const Post = ({
   const [disableBtn, setDisableBtn] = useState(false);
   const [commentId, setCommentId] = useState();
   const [messageApi, contextHolder] = message.useMessage();
-  const searchedData = likes.filter((obj) =>
+  const sortedLikes = likes.slice().sort((a, b) => b.timestamp - a.timestamp);
+  const sortedComments = comments
+  .slice()
+  .sort((a, b) => b.timestamp - a.timestamp);
+  const searchedData = sortedLikes.filter((obj) =>
     obj.username.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
+  
   const postRef = doc(db, "posts", postId);
 
   const convertTimestampToString = (timestamp) => {
@@ -427,7 +432,7 @@ const Post = ({
                 {comments.length === 0 ? (
                   <p className="text-[#858585]">No comments yet.</p>
                 ) : (
-                  comments?.map((comment) => (
+                  sortedComments?.map((comment) => (
                     <div
                       key={comment?.commentId}
                       className="flex items-center justify-between dark:text-white "
