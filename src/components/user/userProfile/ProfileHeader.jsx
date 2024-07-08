@@ -280,7 +280,6 @@ const ProfileHeader = ({ userData, postsLength }) => {
   };
 
   useEffect(() => {
-    console.log(userData);
     userData?.followers.map((follower) => {
       if (follower.uid === currentUser?.uid) {
         setFollowed(true);

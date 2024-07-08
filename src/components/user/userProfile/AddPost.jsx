@@ -89,7 +89,6 @@ const AddPost = () => {
           const fileDownloadURL = await getDownloadURL(
             fileUploadTask.snapshot.ref
           );
-          console.log(fileDownloadURL);
           const postFileObj = {
             type: file.type,
             src: fileDownloadURL,

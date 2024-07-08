@@ -17,7 +17,6 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
       if (response.user.emailVerified) {
         setCurrentUser(response.user);
         navigate(`/${response.user.displayName}`);

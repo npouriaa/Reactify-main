@@ -9,7 +9,6 @@ import Messages from "./Messages";
 const ChatsScreen = ({ showChatHandler }) => {
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(RequestsContext);
-  console.log(data);
 
   return (
     <div className="max-sm:w-full md4:w-3/4 h-full flex justify-center items-center md4:py-7 md4:pr-3 max-sm:py-3 max-sm:px-3 md4:pl-0">
