@@ -107,7 +107,6 @@ const SideMenu = () => {
               to={item.to}
             >
               <li
-                onClick={() => setActiveIndex(index)}
                 className={`${
                   initialSideMenuOpen
                     ? openSideMenu

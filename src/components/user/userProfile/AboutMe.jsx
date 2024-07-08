@@ -14,6 +14,7 @@ import {
   AutoComplete,
   Tag,
   ConfigProvider,
+  message,
 } from "antd";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
@@ -88,6 +89,7 @@ const AboutMe = ({ userData }) => {
     useContext(RequestsContext);
   const { isDark } = useContext(DarkModeContext);
   const [open, setOpen] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const frmRef = useRef();
   const bioRef = useRef();
@@ -143,6 +145,13 @@ const AboutMe = ({ userData }) => {
       });
     } catch (err) {
       console.log(err);
+      messageApi.open({
+        key: "updateError",
+        type: "error",
+        content: err.message,
+        duration: 4,
+      });
+      setLoading(false);
     }
     setLoading(false);
   };
@@ -186,6 +195,7 @@ const AboutMe = ({ userData }) => {
 
   return (
     <div className="flex flex-col gap-4 relative transition-all rounded-md bg-white dark:bg-[#111]  px-7 py-5">
+      {contextHolder}
       <div className="w-full h-9 flex item-center justify-between">
         <h3 className="dark:text-white transition-all text-[1.05rem] relative after:absolute after:bottom-0 after:left-0 after:rounded-md after:h-1 after:w-3 after:bg-[#615DFA] before:absolute before:bottom-0 before:left-4 before:h-1 before:rounded-md before:w-6 before:bg-[#615DFA]">
           About Me

@@ -10,10 +10,10 @@ const Nav = () => {
 
   const disableScrollHandler = () => {
     if (disableScroll) {
-      setDisableScroll(false)
+      setDisableScroll(false);
       document.body.style.overflow = "visible";
-    }else{
-      setDisableScroll(true)
+    } else {
+      setDisableScroll(true);
       document.body.style.overflow = "hidden";
     }
   };
@@ -47,24 +47,24 @@ const Nav = () => {
           </Link>
         </ul>
         <div className="flex max-sm:gap-2 sm:gap-5 text-[#162167]">
-          <Link to="login">
-            <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-white hover:bg-[#615DFA] hover:text-white transition-all duration-500">
-              Login
-            </button>
+          <Link
+            className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-white hover:bg-[#615DFA] hover:text-white transition-all duration-500 flex justify-center items-center"
+            to="login"
+          >
+            Login
           </Link>
-          <Link to="signup">
-            <Link to="/sign-up">
-              <button className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500">
-                Sign up
-              </button>
-            </Link>
+          <Link
+            className="max-sm:w-20 max-sm:text-xs max-sm:h-10 sm:text-sm sm:w-24 lg:w-28 lg:h-12 rounded-lg bg-[#615DFA] text-white hover:bg-[#F5658C] transition-all duration-500 flex justify-center items-center"
+            to="/sign-up"
+          >
+            Sign up
           </Link>
           <button
             ref={hMenuBtnRef}
             onClick={() => {
               hMenuBtnRef.current.classList.toggle("active");
               hMenuRef.current.classList.toggle("h-screen");
-              disableScrollHandler()
+              disableScrollHandler();
             }}
             className="max-sm:block rounded-full lg:hidden plate plate5  h-10 w-10 bg-white z-20 relative"
           >

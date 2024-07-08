@@ -33,6 +33,7 @@ const Login = () => {
         duration: 4,
       });
       console.log(err);
+      
     }
     setLoading(false);
   };

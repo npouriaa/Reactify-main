@@ -9,6 +9,8 @@ import Home from "../Pages/UserPages/Home";
 import UserMainLayout from "../Pages/UserPages/UserMainLayout";
 import UserProfile from "../Pages/UserPages/UserProfile";
 import UserChats from "../Pages/UserPages/UserChats";
+import Page404 from "../Pages/MainPages/Page404";
+import Page403 from "../Pages/MainPages/Page403";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,18 @@ const router = createBrowserRouter([
         element: <UserChats />,
       },
     ],
+  },
+  {
+    path: "/*",
+    element: <Page404 />,
+  },
+  {
+    path: "/404",
+    element: <Page404 />,
+  },
+  {
+    path: "/403",
+    element: <Page403 />,
   },
 ]);
 

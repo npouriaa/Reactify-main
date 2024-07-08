@@ -149,6 +149,7 @@ const ProfileHeader = ({ userData, postsLength }) => {
         duration: 4,
       });
       console.log(err);
+      setLoading(false);
     }
   };
 

@@ -8,12 +8,12 @@ const ProtectedRoute = ({ children }) => {
   const { currentUser, PRLoading } = useContext(RequestsContext);
 
   if (!localStorage.getItem("accessToken")) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/403" />;
   } else if (PRLoading) {
     return <LoaderModal />;
   } else if (currentUser) {
     if (username !== currentUser.displayName) {
-      return <Navigate to="/login" />;
+      return <Navigate to="/404" />;
     } else {
       return <>{children}</>;
     }
