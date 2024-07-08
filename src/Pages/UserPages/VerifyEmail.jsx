@@ -3,7 +3,7 @@ import { RequestsContext } from "../../context/RequestsContext";
 import { sendEmailVerification } from "firebase/auth";
 import LoaderModal from "../../components/LoaderModal";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import { auth } from "../../firebase";
 
 const modalConfig = {
