@@ -3,7 +3,7 @@ import { IoMdSend } from "react-icons/io";
 import { MdOutlinePermMedia } from "react-icons/md";
 import { RequestsContext } from "../../../context/RequestsContext";
 import { ChatContext } from "../../../context/ChatContext";
-import { message, Tooltip } from "antd";
+import { message } from "antd";
 import {
   Timestamp,
   arrayUnion,
@@ -14,8 +14,6 @@ import {
 import { db, storage } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuid } from "uuid";
-import { HiMiniXMark } from "react-icons/hi2";
-import { DarkModeContext } from "../../../context/DarkModeContext";
 import RequestsLoader from "../RequestsLoader";
 
 const Input = () => {
@@ -25,14 +23,13 @@ const Input = () => {
   const [img, setImg] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
-  const { isDark } = useContext(DarkModeContext);
 
   const handleSend = async (e) => {
     e.preventDefault();
     if (text !== "" || img !== null) {
       setLoading(true);
       if (img) {
-        const storageRef = ref(storage, uuid());
+        const storageRef = ref(storage, `messagesImage/${uuid()}`);
         const uploadTask = uploadBytesResumable(storageRef, img);
         uploadTask.on(
           (err) => {

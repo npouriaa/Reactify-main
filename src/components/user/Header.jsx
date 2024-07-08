@@ -4,7 +4,6 @@ import { IoPower } from "react-icons/io5";
 import { Tooltip } from "antd";
 import { useContext } from "react";
 import { RequestsContext } from "../../context/RequestsContext";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { DarkModeContext } from "../../context/DarkModeContext";
