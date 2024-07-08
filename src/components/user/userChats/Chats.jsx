@@ -42,7 +42,7 @@ const Chats = ({ showChatHandler }) => {
           </div>
         ) : (
           <ul className="w-full gap-3 flex flex-col">
-            {chats ? (
+            {chats &&
               Object.entries(chats)
                 ?.sort((a, b) => b[1].date - a[1].date)
                 .map((chat) => (
@@ -71,12 +71,7 @@ const Chats = ({ showChatHandler }) => {
                       </p>
                     </div>
                   </li>
-                ))
-            ) : (
-              <p className="text-center text-xs text-gray-500 w-full">
-                No chats to show!
-              </p>
-            )}
+                ))}
           </ul>
         )}
       </div>

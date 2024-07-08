@@ -130,7 +130,7 @@ const SignUp = () => {
             ],
           },
         });
-        await setDoc(doc(db, "userChats", response.user.uid), null);
+        await setDoc(doc(db, "userChats", response.user.uid), {});
         setSendVerificationLink(true);
         navigate("/verify-email");
       }
