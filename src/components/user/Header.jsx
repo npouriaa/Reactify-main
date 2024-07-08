@@ -42,7 +42,7 @@ const Header = () => {
               className="h-14 w-14 flex justify-center items-center overflow-hidden relative p-[5px] after:absolute after:bg-cover after:w-full after:h-full after:top-0 after:right-0 after:bg-[url('../../assets/images/user/border-profile-image.png')] after:rotate-0 after:transition-all after:ease-in-out hover:after:rotate-[30deg]"
             >
               <img
-                className="object-cover object-center h-full rounded-full"
+                className="object-cover object-center h-full w-full rounded-full"
                 src={currentUser?.photoURL}
                 alt="user"
               />
