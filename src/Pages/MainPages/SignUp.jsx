@@ -238,7 +238,7 @@ const SignUp = () => {
                     /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
                   ),
                   message:
-                    "Please enter a valid email address with only English characters.",
+                    "Please enter only English characters.",
                 },
               ]}
             >
