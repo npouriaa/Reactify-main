@@ -21,8 +21,34 @@ const Input = () => {
   const { data } = useContext(ChatContext);
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
+  const [imgName, setImgName] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file.type.includes("image")) {
+      messageApi.open({
+        key: "uploadError",
+        type: "error",
+        content: "Please select an image file",
+        duration: 4,
+      });
+      return;
+    }
+    if (file.size > 600 * 1024) {
+      messageApi.open({
+        key: "uploadError",
+        type: "error",
+        content: "Image size should be less than 600KB",
+        duration: 4,
+      });
+      return;
+    } else {
+      setImg(file);
+      setImgName(file.name);
+    }
+  };
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -68,9 +94,13 @@ const Input = () => {
       }
 
       await updateDoc(doc(db, "userChats", currentUser.uid), {
-        [data.chatID + ".lastMessage"]: {
-          text,
-        },
+        [data.chatID + ".lastMessage"]: text
+          ? {
+              text,
+            }
+          : {
+              imgName,
+            },
         [data.chatID + ".data"]: serverTimestamp(),
       });
 
@@ -117,7 +147,7 @@ const Input = () => {
           type="file"
           accept="image/*"
           className="hidden"
-          onChange={(e) => setImg(e.target.files[0])}
+          onChange={handleFileUpload}
           id="file"
         />
         <label htmlFor="file" className="cursor-pointer text-[#717171]">

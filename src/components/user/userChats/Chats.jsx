@@ -67,6 +67,8 @@ const Chats = ({ showChatHandler }) => {
                       <p className="text-start text-xs text-gray-500 truncate">
                         {chat[1].lastMessage?.text
                           ? chat[1].lastMessage?.text
+                          : chat[1].lastMessage?.imgName
+                          ? chat[1].lastMessage?.imgName
                           : "No recent message"}
                       </p>
                     </div>
