@@ -234,11 +234,9 @@ const SignUp = () => {
                   message: "Please enter a valid email address!",
                 },
                 {
-                  pattern: new RegExp(
-                    /^[a-zA-Z@~`!@#$%^&*()_=+\\\\';:\"\\/?>.<,-]+$/i
-                  ),
+                  pattern: new RegExp(/^[a-zA-Z0-9.@]*$/),
                   message:
-                    "Please enter only English characters.",
+                    "Only letters (a-z), numbers (0-9), and periods (.) are allowed.",
                 },
               ]}
             >
